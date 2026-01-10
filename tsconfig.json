@@ -4,6 +4,7 @@
     "target": "ESNext",
     "module": "Nodenext",
     "lib": ["ESNext"],
-    "allowImportingTsExtensions": true
+    "allowImportingTsExtensions": true,
+    "strict": true
   }
 }

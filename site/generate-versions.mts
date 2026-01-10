@@ -255,3 +255,6 @@ export async function vultrCli() {
 }
 
 // https://nodejs.org/download/release/v18.20.8/node-v18.20.8-win-/mnt/data/Developmen
+if (process.argv.includes('--run')) {
+  main()
+}

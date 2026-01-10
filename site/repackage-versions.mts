@@ -29,8 +29,9 @@ import {
 } from "./repackage-versions/infer-format.mts";
 import { renderEjs } from "./utils/render-ejs.mts";
 import * as packages from "./packages/index.mts";
+import { Paths } from "./platform/paths.mts";
 
-const REPO = "alshdavid/install-scripts";
+const REPO = "alshdavid/xpkg";
 
 const filename = url.fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -42,7 +43,7 @@ export type DownloadManifestEntry = {
   project: string;
   version: string;
   format?: ArchiveFormat;
-  url: string;
+  url: undefined | string | (() => Promise<string | undefined>);
   os: Os;
   arch: Arch;
   stripComponents?: number;
@@ -51,10 +52,14 @@ export type DownloadManifestEntry = {
 export type DownloadManifest = Record<string, Array<DownloadManifestEntry>>;
 
 export async function main() {
-  if (fs.existsSync(tmpRoot)) {
-    await fs.promises.rm(tmpRoot, { recursive: true, force: true });
+  if (fs.existsSync(Paths["~/tmp"])) {
+    await fs.promises.rm(Paths["~/tmp"], { recursive: true, force: true });
   }
-  await fs.promises.mkdir(tmpDownloads, { recursive: true });
+  if (fs.existsSync(Paths["~/binaries"])) {
+    await fs.promises.rm(Paths["~/binaries"], { recursive: true, force: true });
+  }
+  await fs.promises.mkdir(Paths["~/tmp"], { recursive: true });
+  await fs.promises.mkdir(Paths["~/binaries"], { recursive: true });
 
   const downloadManifest: DownloadManifest = {};
   await Promise.all(
@@ -112,9 +117,19 @@ export async function main() {
       os,
       arch,
       format,
-      url,
+      url: url_original,
       stripComponents,
     } of downloads) {
+      let url = url_original
+      if (typeof url === 'function') {
+        url = await url()
+      }
+
+      if (!url) {
+        console.log(`[${releaseName}] SKIP_DOWNLOAD: ${url}`);
+        continue
+      }
+
       const success = await recompress(
         tmpRoot,
         tmpDownloads,
@@ -211,4 +226,8 @@ export async function main() {
       process.exit(1);
     }
   }
+}
+
+if (process.argv.includes('--run')) {
+  main()
 }

@@ -20,29 +20,163 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+  build_linux_amd64:
+    name: 🐥 Linux AMD64
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: ${{ github.workspace }}
+    container:
+      image: debian:12
+      env:
+        DEBIAN_FRONTEND: noninteractive
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/configure-pages@v5
-      - uses: actions/setup-node@v5
+      - run: apt-get update -y && apt-get install -y curl build-essential wget unzip zip
+      # Install Rust
+      - run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+      # Install Deno
+      - run: wget https://github.com/denoland/deno/releases/download/v2.6.4/deno-x86_64-unknown-linux-gnu.zip -O /tmp/deno.zip
+      - run: unzip /tmp/deno.zip -d /tmp
+      - run: mv /tmp/deno /usr/local/bin/deno
+      # Do the thing
+      - run: deno install
+      - run: deno -A ./site/build-packages.mts --run
+      - uses: actions/upload-artifact@v6
         with:
-          node-version: 'latest'
-      # - run: eval $(curl -sSf "sh.davidalsh.com/nodejs.sh" | sh -s)
-      - run: npm install
-      - run: node ./site/main.mts
+          name: packages-linux-amd64
+          path: ${{ github.workspace }}/binaries/**/*
+          if-no-files-found: error
+          retention-days: 1
+
+  build_linux_arm64:
+    name: 🐥 Linux ARM64
+    runs-on: ubuntu-24.04-arm
+    defaults:
+      run:
+        working-directory: ${{ github.workspace }}
+    container:
+      image: debian:12
+      env:
+        DEBIAN_FRONTEND: noninteractive
+    steps:
+      - uses: actions/checkout@v4
+      - run: apt-get update -y && apt-get install -y curl build-essential
+      - run: apt-get update -y && apt-get install -y curl build-essential wget unzip zip
+      # Install Rust
+      - run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+      # Install Deno
+      - run: wget https://github.com/denoland/deno/releases/download/v2.6.4/deno-aarch64-unknown-linux-gnu.zip -O /tmp/deno.zip
+      - run: unzip /tmp/deno.zip -d /tmp
+      - run: mv /tmp/deno /usr/local/bin/deno
+      # Do the thing
+      - run: deno install
+      - run: deno -A ./site/build-packages.mts --run
+      - uses: actions/upload-artifact@v6
+        with:
+          name: packages-linux-arm64
+          path: ${{ github.workspace }}/binaries/**/*
+          if-no-files-found: error
+          retention-days: 1
+
+  build_macos_arm64:
+    name: 🍎 MacOS ARM64
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      # Install Rust
+      - run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+      # Install Deno
+      - run: wget https://github.com/denoland/deno/releases/download/v2.6.4/deno-aarch64-apple-darwin.zip -O /tmp/deno.zip
+      - run: unzip /tmp/deno.zip -d /tmp
+      - run: mv /tmp/deno /usr/local/bin/deno
+      # Do the thing
+      - run: deno install
+      - run: deno -A ./site/build-packages.mts --run
+      - uses: actions/upload-artifact@v6
+        with:
+          name: packages-macos-arm64
+          path: ${{ github.workspace }}/binaries/**/*
+          if-no-files-found: error
+          retention-days: 1
+
+  # build_windows_amd64:
+  #   name: 🟦 Windows amd64
+  #   runs-on: windows-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - run: choco install wget unzip zip
+  #     # Install Rust
+  #     - run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+  #     - run: cargo --version
+  #     # Install Deno
+  #     - run: wget https://github.com/denoland/deno/releases/download/v2.6.4/deno-x86_64-pc-windows-msvc.zip -O /tmp/deno.zip
+  #     - run: unzip /tmp/deno.zip -d /tmp
+  #     - run: mv /tmp/deno.exe /usr/bin/deno.exe
+  #     # Do the thing
+  #     - run: deno install
+  #     - run: deno -A ./site/build-packages.mts --run
+  #     - uses: actions/upload-artifact@v6
+  #       with:
+  #         name: packages-windows-amd64
+  #         path: ${{ github.workspace }}/binaries/**/*
+  #         if-no-files-found: error
+  #         retention-days: 1
+
+  publish-github-release:
+    name: "🔄 Publish Github Release"
+    runs-on: ubuntu-24.04
+    needs:
+      - build_macos_arm64
+      - build_linux_amd64
+      - build_linux_arm64
+      # - build_windows_amd64
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v7
+        with: 
+          path: artifacts
+          merge-multiple: true
+      - name: Publish` Github Release
         env:
-          GH_TOKEN: ${{ github.token }}
-          GITHUB_TOKEN: ${{ github.token }}
-      - uses: actions/upload-pages-artifact@v3
-        with: { path: 'dist' }
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          VERSION: ${{needs.version.outputs.VERSION}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ls -la
+          ls -la ./artifacts
+          ls -la ./artifacts/binaries
+
+  # deploy:
+  #   needs:
+  #     - build_macos_arm64
+  #     - build_linux_amd64
+  #     - build_linux_arm64
+  #     - build_windows_amd64
+  #   environment:
+  #     name: github-pages
+  #     url: ${{ steps.deployment.outputs.page_url }}
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/configure-pages@v5
+  #     - uses: actions/setup-node@v5
+  #       with:
+  #         node-version: 'latest'
+  #     # - run: eval $(curl -sSf "sh.davidalsh.com/nodejs.sh" | sh -s)
+  #     - run: npm install
+  #     - run: node ./site/main.mts
+  #       env:
+  #         GH_TOKEN: ${{ github.token }}
+  #         GITHUB_TOKEN: ${{ github.token }}
+  #     - uses: actions/upload-pages-artifact@v3
+  #       with: { path: 'dist' }
+  #     - name: Deploy to GitHub Pages
+  #       id: deployment
+  #       uses: actions/deploy-pages@v4
 
   # test-linux:
   #   runs-on: 'ubuntu-latest'

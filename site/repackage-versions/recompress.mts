@@ -14,7 +14,7 @@ import type { ArchiveFormat, OsArch } from "../utils/types.mts";
 export async function recompress(
   tmpRoot: string,
   tmpDownloads: string,
-  url: string,
+  url_original: string,
   format: ArchiveFormat,
   project: string,
   os_arch: OsArch,
@@ -24,6 +24,10 @@ export async function recompress(
   const inputName = `${project}-${version}-${os_arch}`;
   const inputArchive = `${project}-${version}-${os_arch}.${format}`;
 
+  if (!fs.existsSync(path.dirname(tmpRoot))) {
+    await fs.promises.mkdir(path.dirname(tmpRoot), { recursive: true });
+  }
+
   if (
     fs.existsSync(path.join(tmpRoot, `${inputName}.tar.xz`)) &&
     fs.existsSync(path.join(tmpRoot, `${inputName}.tar.gz`)) &&
@@ -32,14 +36,26 @@ export async function recompress(
     console.log(
       `[${project}-${version}-${os_arch}] Already Downloaded, skipping`,
     );
-    return;
-  }
-
-  if (!(await checkUrlExists(url))) {
     return false;
   }
 
-  await wget(url, path.join(tmpDownloads, inputArchive));
+  let url = url_original
+  if (url.startsWith('file://')) {
+    const local_path = url.replace('file://', '')
+    if (!fs.existsSync(local_path)) {
+      return false
+    }
+
+    await fs.promises.rename(local_path, path.join(tmpDownloads, inputArchive))
+    url = local_path
+  } else {
+    if (!(await checkUrlExists(url))) {
+      return false;
+    }
+    
+    await wget(url, path.join(tmpDownloads, inputArchive));
+  }
+
 
   switch (format) {
     case "tar.gz":

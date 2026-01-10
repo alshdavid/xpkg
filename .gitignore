@@ -4,3 +4,5 @@ index.html
 dist
 tmp
 target
+binaries
+build

@@ -114,7 +114,7 @@ export type GithubReleaseViewOptions = {
 export async function githubReleaseView({
   repo,
   tag,
-}: GithubReleaseViewOptions): Promise<
+}: GithubReleaseViewOptions): Promise<undefined | 
   Array<{
     id: string;
     name: string;

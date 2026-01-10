@@ -16,10 +16,10 @@ export async function untarGz(
   stripComponents?: number,
 ): Promise<void> {
   console.log(`[extract] ${archive}`);
-  if (fs.existsSync(dest)) {
+  if (path.dirname(archive) !== dest && fs.existsSync(dest)) {
     fs.rmSync(dest, { recursive: true, force: true });
   }
-  fs.mkdirSync(dest);
+  fs.mkdirSync(dest, { recursive: true });
   await sh(
     "tar",
     [

@@ -53,3 +53,7 @@ export async function main() {
   if (fs.existsSync(outfile)) await fs.promises.rm(outfile);
   await fs.promises.writeFile(outfile, formatted, { encoding: "utf-8" });
 }
+
+if (process.argv.includes('--run')) {
+  main()
+}

@@ -1,8 +1,6 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 import * as url from "node:url";
-import * as githubApi from "./utils/github.mts";
-import * as nodejsApi from "./utils/nodejs.mts";
 
 import { getReleases, type GithubReleasesResponse } from "./utils/github.mts";
 import type { Arch, ArchiveFormat, Os, ReleaseMeta } from "./utils/types.mts";
@@ -68,11 +66,11 @@ export async function main() {
   if (fs.existsSync(dir_versions)) {
     fs.rmSync(dir_versions, { recursive: true, force: true });
   }
-  fs.mkdirSync(dir_versions);
+  fs.mkdirSync(dir_versions, { recursive: true });
 
   const index: VersionIndex = {};
 
-  const releases = await getReleases("alshdavid/install-scripts");
+  const releases = await getReleases("alshdavid/xpkg");
 
   for (const release of releases) {
     if (!release.body) {
@@ -266,4 +264,8 @@ async function createVersionTexts(version: VersionEntry, name?: string) {
       "utf8",
     );
   }
+}
+
+if (process.argv.includes('--run')) {
+  main()
 }
