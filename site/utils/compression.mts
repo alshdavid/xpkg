@@ -3,7 +3,7 @@ import * as path from "node:path";
 import { sh } from "./sh.mts";
 
 export async function tarGz(folder: string, dest: string): Promise<void> {
-  console.log(`[compress:tar.gz] ${dest}`)
+  console.log(`[compress:tar.gz] ${dest}`);
   await sh("tar", ["-czf", dest, `.`], {
     stdio: "inherit",
     cwd: folder,
@@ -15,7 +15,7 @@ export async function untarGz(
   dest: string,
   stripComponents?: number,
 ): Promise<void> {
-  console.log(`[extract] ${archive}`)
+  console.log(`[extract] ${archive}`);
   if (fs.existsSync(dest)) {
     fs.rmSync(dest, { recursive: true, force: true });
   }
@@ -34,7 +34,7 @@ export async function untarGz(
 }
 
 export async function tarXz(folder: string, dest: string): Promise<void> {
-  console.log(`[compress:tar.xz] ${dest}`)
+  console.log(`[compress:tar.xz] ${dest}`);
   await sh("tar", ["-cJf", dest, `.`], {
     stdio: "inherit",
     cwd: folder,
@@ -46,7 +46,7 @@ export async function untarXz(
   dest: string,
   stripComponents?: number,
 ): Promise<void> {
-  console.log(`[extract] ${archive}`)
+  console.log(`[extract] ${archive}`);
   if (fs.existsSync(dest)) {
     fs.rmSync(dest, { recursive: true, force: true });
   }
@@ -65,7 +65,7 @@ export async function untarXz(
 }
 
 export async function zip(folder: string, dest: string): Promise<void> {
-  console.log(`[compress:zip] ${dest}`)
+  console.log(`[compress:zip] ${dest}`);
   await sh("zip", ["-q", "-r", dest, `.`], {
     stdio: "inherit",
     cwd: folder,
@@ -77,7 +77,7 @@ export async function unzip(
   dest: string,
   stripComponents?: number,
 ): Promise<void> {
-  console.log(`[extract] ${archive}`)
+  console.log(`[extract] ${archive}`);
   if (fs.existsSync(dest)) {
     fs.rmSync(dest, { recursive: true, force: true });
   }
