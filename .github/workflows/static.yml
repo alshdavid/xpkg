@@ -37,7 +37,7 @@ jobs:
         DEBIAN_FRONTEND: noninteractive
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - run: apt-get update -y && apt-get install -y curl build-essential wget unzip zip p7zip-full
       - run: 7z --help
       # Install Rust
@@ -75,7 +75,7 @@ jobs:
         DEBIAN_FRONTEND: noninteractive
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - run: apt-get update -y && apt-get install -y curl build-essential
       - run: apt-get update -y && apt-get install -y curl build-essential wget unzip zip p7zip-full
       - run: 7z --help
@@ -106,7 +106,7 @@ jobs:
     name: 🍎 MacOS ARM64
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - run: brew install p7zip
       - run: 7z --help
       # Install Rust
@@ -129,7 +129,7 @@ jobs:
     name: 🟦 Windows amd64
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - run: choco install -y wget unzip zip 7zip
       - run: 7z --help
       # Install Rust
@@ -158,7 +158,7 @@ jobs:
       - build_linux_arm64
       - build_windows_amd64
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: actions/download-artifact@v7
         with: 
           path: binaries
@@ -177,7 +177,7 @@ jobs:
     needs:
       - publish-github-release
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: actions/configure-pages@v5
       # Install Deno
       - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip -O /tmp/deno.zip
