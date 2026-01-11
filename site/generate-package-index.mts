@@ -266,6 +266,6 @@ async function createVersionTexts(version: VersionEntry, name?: string) {
   }
 }
 
-if (process.argv.includes('--run')) {
-  main()
+if (process.argv.includes("--run")) {
+  main();
 }

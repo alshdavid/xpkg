@@ -39,23 +39,33 @@ export async function recompress(
     return false;
   }
 
-  let url = url_original
-  if (url.startsWith('file://')) {
-    const local_path = url.replace('file://', '')
+  if (format === "bin") {
+    await fs.promises.mkdir(path.join(tmpDownloads, inputName), {
+      recursive: true,
+    });
+  }
+
+  let url = url_original;
+  if (url.startsWith("file://")) {
+    const local_path = url.replace("file://", "");
     if (!fs.existsSync(local_path)) {
-      return false
+      return false;
     }
 
-    await fs.promises.rename(local_path, path.join(tmpDownloads, inputArchive))
-    url = local_path
+    console.log({ local_path });
+    console.log({
+      local_path: path.join(tmpDownloads, path.basename(local_path)),
+    });
+    await fs.promises.rename(local_path, path.join(tmpDownloads, inputArchive));
+    url = local_path;
+    console.log({ url });
   } else {
     if (!(await checkUrlExists(url))) {
       return false;
     }
-    
+
     await wget(url, path.join(tmpDownloads, inputArchive));
   }
-
 
   switch (format) {
     case "tar.gz":
@@ -85,7 +95,7 @@ export async function recompress(
       });
       await fs.promises.cp(
         path.join(tmpDownloads, inputArchive),
-        path.join(tmpDownloads, inputName, inputName),
+        path.join(tmpDownloads, inputName, project),
       );
       break;
     default:

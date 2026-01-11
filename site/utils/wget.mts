@@ -10,7 +10,6 @@ export async function wget(url: string, dest: string): Promise<void> {
     return;
   }
 
-
   await sh("wget", [
     "--progress=bar:force:noscroll",
     "--trust-server-names",

@@ -120,14 +120,14 @@ export async function main() {
       url: url_original,
       stripComponents,
     } of downloads) {
-      let url = url_original
-      if (typeof url === 'function') {
-        url = await url()
+      let url = url_original;
+      if (typeof url === "function") {
+        url = await url();
       }
 
       if (!url) {
         console.log(`[${releaseName}] SKIP_DOWNLOAD: ${url}`);
-        continue
+        continue;
       }
 
       const success = await recompress(
@@ -228,6 +228,6 @@ export async function main() {
   }
 }
 
-if (process.argv.includes('--run')) {
-  main()
+if (process.argv.includes("--run")) {
+  main();
 }

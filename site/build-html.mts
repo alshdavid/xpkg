@@ -54,6 +54,6 @@ export async function main() {
   await fs.promises.writeFile(outfile, formatted, { encoding: "utf-8" });
 }
 
-if (process.argv.includes('--run')) {
-  main()
+if (process.argv.includes("--run")) {
+  main();
 }

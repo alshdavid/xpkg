@@ -148,7 +148,6 @@ jobs:
         run: |
           ls -la
           ls -la ./artifacts
-          ls -la ./artifacts/binaries
 
   # deploy:
   #   needs:

@@ -31,7 +31,7 @@ export async function main() {
 
   const downloadManifest: DownloadManifest = {};
   await Promise.all(
-    Object.values(packages).map((mod) => mod.default(downloadManifest))
+    Object.values(packages).map((mod) => mod.default(downloadManifest)),
   );
 
   for (const [packageName, _entries] of Object.entries(downloadManifest)) {
@@ -64,7 +64,7 @@ export async function main() {
         }
 
         return false;
-      }
+      },
     );
   }
 
@@ -88,10 +88,13 @@ export async function main() {
 
     await fs.promises.writeFile(
       Paths["~/binaries/"](`${releaseName}.json`),
-      JSON.stringify({ package: downloads[0].project, version: downloads[0].version }),
-      "utf8"
+      JSON.stringify({
+        package: downloads[0].project,
+        version: downloads[0].version,
+      }),
+      "utf8",
     );
-    
+
     console.log(`\n[${releaseName}] START`);
 
     const files: Array<{
@@ -120,7 +123,7 @@ export async function main() {
 
       if (!url) {
         console.log(
-          `[${releaseName}] SKIP_DOWNLOAD: ${project}-${version}-${os}-${arch}`
+          `[${releaseName}] SKIP_DOWNLOAD: ${project}-${version}-${os}-${arch}`,
         );
         continue;
       }
@@ -133,7 +136,7 @@ export async function main() {
         project,
         `${os}-${arch}`,
         version,
-        stripComponents
+        stripComponents,
       );
       if (!success) {
         console.log(`[${releaseName}] SKIP_DOWNLOAD: ${url}`);
@@ -147,15 +150,15 @@ export async function main() {
         arch,
         tar_gz: path.join(
           Paths["~/binaries"],
-          `${project}-${version}-${os}-${arch}.tar.gz`
+          `${project}-${version}-${os}-${arch}.tar.gz`,
         ),
         tar_xz: path.join(
           Paths["~/binaries"],
-          `${project}-${version}-${os}-${arch}.tar.xz`
+          `${project}-${version}-${os}-${arch}.tar.xz`,
         ),
         zip: path.join(
           Paths["~/binaries"],
-          `${project}-${version}-${os}-${arch}.zip`
+          `${project}-${version}-${os}-${arch}.zip`,
         ),
       });
     }

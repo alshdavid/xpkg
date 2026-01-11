@@ -12,12 +12,10 @@ import { sh } from "../utils/sh.mts";
 import { wget } from "../utils/wget.mts";
 
 const PROJECT = "eza";
-const REPO = "eza-community/eza"
-const BASE = "https://github.com/eza-community/eza/releases/download"
+const REPO = "eza-community/eza";
+const BASE = "https://github.com/eza-community/eza/releases/download";
 
-export default async function eza(
-  manifest: DownloadManifest,
-): Promise<void> {
+export default async function eza(manifest: DownloadManifest): Promise<void> {
   const resp = await githubApi.getRelease(REPO);
   const version = resp.tag_name.replace("v", "");
 
@@ -30,20 +28,74 @@ export default async function eza(
   ]
 }
 
-function buildMacOsArm64(version:string) {
-  return async function() {
-    if (process.arch !== 'arm64') {
-      return
+function buildMacOsArm64(version: string) {
+  return async function () {
+    if (process.arch !== "arm64") {
+      return;
     }
     try {
-      await wget(`https://github.com/eza-community/eza/archive/refs/tags/v${version}.tar.gz`, Paths["~/tmp/downloads/"]('eza','source', 'source.tar.gz'))
-      await untarGz(Paths["~/tmp/downloads/"]('eza','source', 'source.tar.gz'), Paths["~/tmp/downloads/"]('eza','source'), 1)
-      await fs.promises.rm(Paths["~/tmp/downloads/"]('eza','source', 'rust-toolchain.toml'))
-      await sh('cargo', ['build', '--release'], { cwd: Paths["~/tmp/downloads/"]('eza','source') })
-      await fs.promises.rename(Paths["~/tmp/downloads/"]('eza','source', 'target', 'release', 'eza'), Paths["~/build/"]('eza'))
-      return `file://${Paths["~/build/"]('eza')}`
+      await wget(
+        `https://github.com/eza-community/eza/archive/refs/tags/v${version}.tar.gz`,
+        Paths["~/tmp/downloads/"]("eza-source", "source.tar.gz"),
+      );
+      await untarGz(
+        Paths["~/tmp/downloads/"]("eza-source", "source.tar.gz"),
+        Paths["~/tmp/downloads/"]("eza-source"),
+        1,
+      );
+      await fs.promises.rm(
+        Paths["~/tmp/downloads/"]("eza-source", "rust-toolchain.toml"),
+      );
+      await sh("cargo", ["build", "--release"], {
+        cwd: Paths["~/tmp/downloads/"]("eza-source"),
+      });
+      await fs.promises.rename(
+        Paths["~/tmp/downloads/"]("eza-source", "target", "release", "eza"),
+        Paths["~/build/"]("eza"),
+      );
+      await fs.promises.rm(Paths["~/tmp/downloads/"]("eza-source"), {
+        recursive: true,
+        force: true,
+      });
+      return `file://${Paths["~/build/"]("eza")}`;
     } catch {
       // Continue
     }
-  }
+  };
+}
+
+function buildLinuxAmd64(version: string) {
+  return async function () {
+    if (process.arch !== "x64") {
+      return;
+    }
+    try {
+      await wget(
+        `https://github.com/eza-community/eza/archive/refs/tags/v${version}.tar.gz`,
+        Paths["~/tmp/downloads/"]("eza-source", "source.tar.gz"),
+      );
+      await untarGz(
+        Paths["~/tmp/downloads/"]("eza-source", "source.tar.gz"),
+        Paths["~/tmp/downloads/"]("eza-source"),
+        1,
+      );
+      await fs.promises.rm(
+        Paths["~/tmp/downloads/"]("eza-source", "rust-toolchain.toml"),
+      );
+      await sh("cargo", ["build"], {
+        cwd: Paths["~/tmp/downloads/"]("eza-source"),
+      });
+      await fs.promises.rename(
+        Paths["~/tmp/downloads/"]("eza-source", "target", "debug", "eza"),
+        Paths["~/build/"]("eza"),
+      );
+      await fs.promises.rm(Paths["~/tmp/downloads/"]("eza-source"), {
+        recursive: true,
+        force: true,
+      });
+      return `file://${Paths["~/build/"]("eza")}`;
+    } catch {
+      // Continue
+    }
+  };
 }
