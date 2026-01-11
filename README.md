@@ -2,7 +2,11 @@
 
 This repo contains mirrors for commonly used applications. Applications are repackaged into multiple archive formats with names and package directory structures normalized.
 
-Applications are published as Github releases on this repo, with a normalized naming convention `{package-name}-{semver}`.
+Applications are published as Github releases on this repo, with a normalized naming convention;
+
+```
+{package-name}-{semver}
+```
 
 A Github action runs routinely to scan projects for updates, automatically publishing a [Github release](https://github.com/alshdavid/xpkg/releases) when updates are detected.
 
