@@ -1,11 +1,11 @@
 import * as fs from "node:fs";
-import { Paths } from "./platform/paths.mts";
+import { Paths } from "../platform/paths.mts";
 import {
   githubReleaseCreate,
   githubReleaseDelete,
   githubReleaseEdit,
   githubReleaseUpload,
-} from "./platform/github-releases.mts";
+} from "../platform/github-releases.mts";
 
 const REPO = "alshdavid/xpkg";
 

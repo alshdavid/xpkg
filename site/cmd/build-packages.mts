@@ -1,14 +1,14 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { releaseExists } from "./platform/repackage-versions/release-exists.mts";
-import { recompress } from "./platform/repackage-versions/recompress.mts";
+import { releaseExists } from "../platform/repackage-versions/release-exists.mts";
+import { recompress } from "../platform/repackage-versions/recompress.mts";
 import {
   inferArchiveFormat,
   sortEntries,
-} from "./platform/repackage-versions/infer-format.mts";
-import * as packages from "./packages/index.mts";
-import { Paths } from "./platform/paths.mts";
-import { Arch, ArchiveFormat, Os } from "./platform/types.mts";
+} from "../platform/repackage-versions/infer-format.mts";
+import * as packages from "../packages/index.mts";
+import { Paths } from "../platform/paths.mts";
+import { Arch, ArchiveFormat, Os } from "../platform/types.mts";
 
 const REPO = "alshdavid/xpkg";
 

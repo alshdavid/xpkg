@@ -55,7 +55,7 @@ jobs:
       - run: gh --version
       # Do the thing
       - run: deno install
-      - run: deno -A ./site/build-packages.mts --run
+      - run: deno -A ./site/cmd/build-packages.mts --run
       - uses: actions/upload-artifact@v6
         with:
           name: packages-linux-amd64
@@ -94,7 +94,7 @@ jobs:
       - run: gh --version
       # Do the thing
       - run: deno install
-      - run: deno -A ./site/build-packages.mts --run
+      - run: deno -A ./site/cmd/build-packages.mts --run
       - uses: actions/upload-artifact@v6
         with:
           name: packages-linux-arm64
@@ -117,7 +117,7 @@ jobs:
       - run: mv /tmp/deno /usr/local/bin/deno
       # Do the thing
       - run: deno install
-      - run: deno -A ./site/build-packages.mts --run
+      - run: deno -A ./site/cmd/build-packages.mts --run
       - uses: actions/upload-artifact@v6
         with:
           name: packages-macos-arm64
@@ -141,7 +141,7 @@ jobs:
       - run: mv /tmp/deno.exe /usr/bin/deno.exe
       # Do the thing
       - run: deno install
-      - run: deno -A ./site/build-packages.mts --run
+      - run: deno -A ./site/cmd/build-packages.mts --run
       - uses: actions/upload-artifact@v6
         with:
           name: packages-windows-amd64
@@ -169,7 +169,7 @@ jobs:
       - run: mv /tmp/deno /usr/local/bin/deno
       # Generate release
       - run: deno install
-      - run: deno -A ./site/generate-release.mts --run
+      - run: deno -A ./site/cmd/generate-release.mts --run
 
   publish-pages:
     name: "📃 Publish Pages"
@@ -185,9 +185,9 @@ jobs:
       - run: mv /tmp/deno /usr/local/bin/deno
       # Generate pages
       - run: deno install
-      - run: deno -A ./site/generate-package-index.mts --run
-      - run: deno -A ./site/copy-files.mts --run
-      - run: deno -A ./site/build-page.mts --run
+      - run: deno -A ./site/cmd/generate-package-index.mts --run
+      - run: deno -A ./site/cmd/copy-files.mts --run
+      - run: deno -A ./site/cmd/build-page.mts --run
       - uses: actions/upload-pages-artifact@v3
         with: { path: 'dist' }
       - name: Deploy to GitHub Pages
