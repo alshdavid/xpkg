@@ -1,8 +1,14 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { sh } from "./sh.mts";
+import { commandExists, sh } from "./sh.mts";
+import * as sevenzip from "./compression-7zip.mts";
+
+const SEVEN_ZIP_EXISTS = commandExists("7z");
 
 export async function tarGz(folder: string, dest: string): Promise<void> {
+  if (SEVEN_ZIP_EXISTS) {
+    return sevenzip.tarGz(folder, dest);
+  }
   console.log(`[compress:tar.gz] ${dest}`);
   await sh("tar", ["-czf", dest, `.`], {
     stdio: "inherit",
@@ -15,6 +21,9 @@ export async function untarGz(
   dest: string,
   stripComponents?: number,
 ): Promise<void> {
+  if (SEVEN_ZIP_EXISTS) {
+    return sevenzip.untarGz(archive, dest, stripComponents);
+  }
   console.log(`[extract] ${archive}`);
   if (path.dirname(archive) !== dest && fs.existsSync(dest)) {
     fs.rmSync(dest, { recursive: true, force: true });
@@ -34,6 +43,9 @@ export async function untarGz(
 }
 
 export async function tarXz(folder: string, dest: string): Promise<void> {
+  if (SEVEN_ZIP_EXISTS) {
+    return sevenzip.tarXz(folder, dest);
+  }
   console.log(`[compress:tar.xz] ${dest}`);
   await sh("tar", ["-cJf", dest, `.`], {
     stdio: "inherit",
@@ -65,6 +77,9 @@ export async function untarXz(
 }
 
 export async function zip(folder: string, dest: string): Promise<void> {
+  if (SEVEN_ZIP_EXISTS) {
+    return sevenzip.zip(folder, dest);
+  }
   console.log(`[compress:zip] ${dest}`);
   await sh("zip", ["-q", "-r", dest, `.`], {
     stdio: "inherit",
@@ -77,6 +92,9 @@ export async function unzip(
   dest: string,
   stripComponents?: number,
 ): Promise<void> {
+  if (SEVEN_ZIP_EXISTS) {
+    return sevenzip.unzip(archive, dest, stripComponents);
+  }
   console.log(`[extract] ${archive}`);
   if (fs.existsSync(dest)) {
     fs.rmSync(dest, { recursive: true, force: true });

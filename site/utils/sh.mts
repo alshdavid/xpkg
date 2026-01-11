@@ -45,3 +45,13 @@ export function sh(
     });
   });
 }
+
+export function commandExists(command: string): boolean {
+  try {
+    const cmd = process.platform === "win32" ? "where" : "which";
+    child_process.execSync(`${cmd} ${command}`, { stdio: "ignore" });
+    return true;
+  } catch {
+    return false;
+  }
+}
