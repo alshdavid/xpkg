@@ -1,25 +1,74 @@
 # Install Scripts
 
+[https://sh.davidalsh.com](https://sh.davidalsh.com)
+
 ## Instructions
 
-More at: [https://sh.davidalsh.com](https://sh.davidalsh.com)
-
-### Install a binary with
+### Install a Binary
 
 ```bash
 # Download the latest GH Cli to the current directory
-curl -L $(curl https://sh.davidalsh.com/packages/gh/latest_linux_amd64_tar_xz.txt) | tar -xJf - -C .
-curl -L $(curl https://sh.davidalsh.com/packages/zenith/latest_linux_amd64_tar_xz.txt) | tar -xJf - -C .
+curl -L $(curl https://sh.davidalsh.com/packages/gh/latest_linux_amd64_tar_xz) | tar -xJf - -C .
+
+export PATH="$PWD:$PATH"
+gh --version
 ```
 
-### Linux and MacOS
+### Install a Binary (Verbose)
 
 ```bash
-eval $(curl -sSf sh.davidalsh.com/ping.sh | sh)
+# Download the latest Zenith to the current directory (broken down)
+ZENITH_LATEST_VERSION="$(curl https://sh.davidalsh.com/packages/zenith/latest_linux_amd64_tar_xz)"
+wget $ZENITH_LATEST_VERSION -o ./zenith.tar.xz
+tar -xJf ./zenith.tar.xz -C .
+
+export PATH="$PWD:$PATH"
+zenith --version
 ```
 
-### Windows
+### Supported Platforms
 
-```powershell
-iex ((New-Object System.Net.WebClient).DownloadString('https://sh.davidalsh.com/ping.ps1'))
+Binary support depends on the project but most projects have.
+
+- Linux AMD64
+- Linux ARM64
+- MacOS ARM64
+
+Some, but not all projects have.
+
+- MacOS AMD64
+- Windows ARM64
+
+Where possible, projects are recompiled to add support for these targets.
+
+```
+https://sh.davidalsh.com/packages/gh/latest_linux_amd64_tar_xz.txt
+https://sh.davidalsh.com/packages/gh/latest_linux_arm64_tar_xz.txt
+https://sh.davidalsh.com/packages/gh/latest_macos_amd64_tar_xz.txt
+https://sh.davidalsh.com/packages/gh/latest_macos_arm64_tar_xz.txt
+https://sh.davidalsh.com/packages/gh/latest_windows_amd64_tar_xz.txt
+https://sh.davidalsh.com/packages/gh/latest_windows_arm64_tar_xz.txt
+```
+
+### Archive Formats
+
+To maximize compatibility, applications are repackaged as:
+
+- `.zip`
+  - Maximum compatibility
+  - Worst compression
+  - Worst tooling
+- `.tar.gz`
+  - Supported on Windows 10+, MacOS, Linux
+  - Moderate compression
+  - Supports streamed decompression (one line download/extract)
+- `.tar.xz`
+  - Supported on Linux and MacOS
+  - Best compressions
+  - Supports streamed decompression (one line download/extract)
+
+```
+https://sh.davidalsh.com/packages/gh/latest_linux_amd64_zip.txt
+https://sh.davidalsh.com/packages/gh/latest_linux_amd64_tar_gz.txt
+https://sh.davidalsh.com/packages/gh/latest_linux_amd64_tar_xz.txt
 ```
