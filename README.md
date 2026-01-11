@@ -87,4 +87,4 @@ https://sh.davidalsh.com/packages/gh/latest_linux_amd64_tar_xz.txt
 
 ## Adding a Package
 
-If you'd like to add a package to the 
+If you'd like to add a package under [`/site/packages`](https://github.com/alshdavid/xpkg/blob/main/site/packages/index.mts).
