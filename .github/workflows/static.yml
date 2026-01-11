@@ -151,5 +151,27 @@ jobs:
       - run: unzip /tmp/deno.zip -d /tmp
       - run: mv /tmp/deno /usr/local/bin/deno
       # Generate release
-        run: deno -A ./site/generate-release.mts --run
+      - run: deno install
+      - run: deno -A ./site/generate-release.mts --run
+
+  publish-pages:
+    name: "🔄 Publish Github Release"
+    runs-on: ubuntu-24.04
+    needs:
+      - publish-github-release
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      # Install Deno
+      - run: wget https://github.com/denoland/deno/releases/download/v2.6.4/deno-aarch64-apple-darwin.zip -O /tmp/deno.zip
+      - run: unzip /tmp/deno.zip -d /tmp
+      - run: mv /tmp/deno /usr/local/bin/deno
+      # Generate pages
+      - run: deno install
+      - run: deno -A ./site/generate-package-index.mts --run
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: 'dist' }
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
   
