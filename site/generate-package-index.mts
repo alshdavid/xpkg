@@ -245,13 +245,15 @@ async function createVersionTexts(version: VersionEntry, name?: string) {
     if ((!key.includes("_tar") && !key.includes("_zip")) || !value) {
       continue;
     }
+    // @ts-expect-error
+    const meta = version[key];
     await fs.promises.writeFile(
       path.join(
         dir_versions,
         version.package,
         `${name || version.version}_${key}`,
       ),
-      version[key],
+      meta,
       "utf8",
     );
     await fs.promises.writeFile(
@@ -260,7 +262,7 @@ async function createVersionTexts(version: VersionEntry, name?: string) {
         version.package,
         `${name || version.version}_${key}.txt`,
       ),
-      version[key],
+      meta,
       "utf8",
     );
   }

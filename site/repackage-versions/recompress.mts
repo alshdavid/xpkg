@@ -14,6 +14,7 @@ import type { ArchiveFormat, OsArch } from "../utils/types.mts";
 export async function recompress(
   tmpRoot: string,
   tmpDownloads: string,
+  outDir: string,
   url_original: string,
   format: ArchiveFormat,
   project: string,
@@ -26,6 +27,10 @@ export async function recompress(
 
   if (!fs.existsSync(path.dirname(tmpRoot))) {
     await fs.promises.mkdir(path.dirname(tmpRoot), { recursive: true });
+  }
+
+  if (!fs.existsSync(outDir)) {
+    await fs.promises.mkdir(outDir, { recursive: true });
   }
 
   if (
@@ -104,17 +109,17 @@ export async function recompress(
 
   await tarXz(
     path.join(tmpDownloads, inputName),
-    path.join(tmpRoot, `${inputName}.tar.xz`),
+    path.join(outDir, `${inputName}.tar.xz`),
   );
 
   await tarGz(
     path.join(tmpDownloads, inputName),
-    path.join(tmpRoot, `${inputName}.tar.gz`),
+    path.join(outDir, `${inputName}.tar.gz`),
   );
 
   await zip(
     path.join(tmpDownloads, inputName),
-    path.join(tmpRoot, `${inputName}.zip`),
+    path.join(outDir, `${inputName}.zip`),
   );
 
   // await fs.promises.rm(

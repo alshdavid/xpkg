@@ -136,6 +136,7 @@ export async function githubReleaseView({
       ],
       { stdio: "pipe" },
     );
+    console.log(result.stdout)
     return JSON.parse(result.stdout);
   } catch (error) {
     return undefined;
