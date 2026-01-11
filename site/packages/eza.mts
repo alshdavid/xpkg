@@ -23,8 +23,8 @@ export default async function eza(
 
   // prettier-ignore
   manifest[`${PROJECT}-${version}`] = [
-    // { project: PROJECT, version, os: 'linux',    arch:  'amd64',    format: 'bin', url: buildLinuxAmd64(version)   },
-    { project: PROJECT, version, os: 'linux',    arch:  'amd64',    format: 'tar.gz', url: `${BASE}/v${version}/eza_x86_64-unknown-linux-musl.tar.gz`   },
+    { project: PROJECT, version, os: 'linux',    arch:  'amd64',    format: 'bin', url: buildLinuxAmd64(version)   },
+    // { project: PROJECT, version, os: 'linux',    arch:  'amd64',    format: 'tar.gz', url: `${BASE}/v${version}/eza_x86_64-unknown-linux-musl.tar.gz`   },
     { project: PROJECT, version, os: 'linux',    arch:  'arm64',    format: 'zip',    url: `${BASE}/v${version}/eza_aarch64-unknown-linux-gnu.zip`   },
     { project: PROJECT, version, os: 'windows',  arch:  'amd64',    format: 'zip',    url: `${BASE}/v${version}/eza.exe_x86_64-pc-windows-gnu.zip` },
     { project: PROJECT, version, os: 'macos',    arch:  'arm64',    format: 'bin',    url: buildMacOsArm64(version)  },
@@ -38,7 +38,7 @@ function buildMacOsArm64(version:string) {
     }
     try {
       await wget(`https://github.com/eza-community/eza/archive/refs/tags/v${version}.tar.gz`, Paths["~/tmp/downloads/"]('eza-source', 'source.tar.gz'))
-      await untarGz(Paths["~/tmp/downloads/"]('eza-source', 'source.tar.gz'), Paths["~/tmp/downloads/"]('eza-source'))
+      await untarGz(Paths["~/tmp/downloads/"]('eza-source', 'source.tar.gz'), Paths["~/tmp/downloads/"]('eza-source'), 1)
       await sh('ls', ['-la'], { cwd: Paths["~/tmp/downloads/"]()})
       await sh('ls', ['-la'], { cwd: Paths["~/tmp/downloads/"]('eza-source')})
       await fs.promises.rm(Paths["~/tmp/downloads/"]('eza-source', 'rust-toolchain.toml'))
@@ -61,6 +61,8 @@ function buildLinuxAmd64(version:string) {
     try {
       await wget(`https://github.com/eza-community/eza/archive/refs/tags/v${version}.tar.gz`, Paths["~/tmp/downloads/"]('eza-source', 'source.tar.gz'))
       await untarGz(Paths["~/tmp/downloads/"]('eza-source', 'source.tar.gz'), Paths["~/tmp/downloads/"]('eza-source'), 1)
+      await sh('ls', ['-la'], { cwd: Paths["~/tmp/downloads/"]()})
+      await sh('ls', ['-la'], { cwd: Paths["~/tmp/downloads/"]('eza-source')})
       await fs.promises.rm(Paths["~/tmp/downloads/"]('eza-source', 'rust-toolchain.toml'))
       await sh('cargo', ['build'], { cwd: Paths["~/tmp/downloads/"]('eza-source') })
       await fs.promises.rename(Paths["~/tmp/downloads/"]('eza-source', 'target', 'debug', 'eza'), Paths["~/build/"]('eza'))
