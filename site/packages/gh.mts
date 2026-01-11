@@ -5,9 +5,7 @@ const PROJECT = "gh";
 const REPO = "cli/cli";
 const BASE = `https://github.com/cli/cli/releases/download`;
 
-export default async function gh(
-  manifest: DownloadManifest,
-): Promise<void> {
+export default async function gh(manifest: DownloadManifest): Promise<void> {
   const resp = await githubApi.getRelease(REPO);
   const version = resp.tag_name.replace("v", "");
 

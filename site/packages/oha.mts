@@ -7,7 +7,7 @@ const BASE = `https://github.com/hatoo/oha/releases/download`;
 
 export default async function oha(manifest: DownloadManifest): Promise<void> {
   const resp = await githubApi.getRelease(REPO);
-  const version = resp.tag_name.replace("v", "");;
+  const version = resp.tag_name.replace("v", "");
 
   // prettier-ignore
   manifest[`${PROJECT}-${version}`] = [
