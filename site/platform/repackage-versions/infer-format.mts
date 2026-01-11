@@ -33,7 +33,7 @@ export function sortEntries(a: string, b: string) {
   }
 }
 
-export function tryParseSemver(str: string): semver.SemVer {
+export function tryParseSemver(str: string): semver.SemVer | undefined {
   const result = semver.parse(str);
   if (result) {
     return result;
@@ -43,5 +43,5 @@ export function tryParseSemver(str: string): semver.SemVer {
   if (result2) {
     return result2;
   }
-  throw new Error("Unable to parse semver");
+  return undefined
 }
