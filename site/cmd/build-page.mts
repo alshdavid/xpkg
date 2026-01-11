@@ -12,6 +12,8 @@ export async function main() {
   `;
   for (const [linkPath, linkType] of await flattenDirectory(Paths["~/dist"])) {
     if (linkType !== "file") continue;
+    if (linkPath.endsWith('.gitkeep')) continue;
+
     html += `
       <a href="${linkPath}">${linkPath}</a>
     `;
