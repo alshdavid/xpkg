@@ -1,5 +1,11 @@
 # Package Mirrors & Install Scripts
 
+This repo contains mirrors for commonly used applications. Applications are repackaged into multiple archive formats with names and package directory structures normalized.
+
+Applications are published as Github releases on this repo, with a normalized naming convention `{package-name}-{semver}`.
+
+A Github action runs routinely to scan projects for updates, automatically publishing a [Github release](https://github.com/alshdavid/xpkg/releases) when updates are detected.
+
 [https://sh.davidalsh.com](https://sh.davidalsh.com)
 
 ## Instructions
@@ -73,3 +79,7 @@ https://sh.davidalsh.com/packages/gh/latest_linux_amd64_zip.txt
 https://sh.davidalsh.com/packages/gh/latest_linux_amd64_tar_gz.txt
 https://sh.davidalsh.com/packages/gh/latest_linux_amd64_tar_xz.txt
 ```
+
+## Adding a Package
+
+If you'd like to add a package to the 
