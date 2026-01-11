@@ -39,7 +39,7 @@ export async function main() {
         await githubReleaseUpload({
           repo: REPO,
           tag: tagName,
-          file: fileName,
+          file: Paths["~/binaries/"](tagName, fileName),
         });
       }
 
