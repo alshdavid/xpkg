@@ -155,7 +155,7 @@ jobs:
       - run: deno -A ./site/generate-release.mts --run
 
   publish-pages:
-    name: "🔄 Publish Github Release"
+    name: "📃 Publish Pages"
     runs-on: ubuntu-24.04
     needs:
       - publish-github-release
