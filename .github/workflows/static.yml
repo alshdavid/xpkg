@@ -146,7 +146,6 @@ jobs:
         with: 
           path: artifacts
           merge-multiple: true
-      - name: Publish` Github Release
       # Install Deno
       - run: wget https://github.com/denoland/deno/releases/download/v2.6.4/deno-aarch64-apple-darwin.zip -O /tmp/deno.zip
       - run: unzip /tmp/deno.zip -d /tmp
