@@ -30,6 +30,10 @@ export default async function eza(manifest: DownloadManifest): Promise<void> {
 
 function buildMacOsArm64(version: string) {
   return async function () {
+    console.log({
+      os: process.platform,
+      arch: process.arch,
+    })
     if (process.arch !== "arm64") {
       return;
     }
