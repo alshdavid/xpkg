@@ -49,7 +49,7 @@ jobs:
       # Install GH CLI
       - run: wget https://github.com/cli/cli/releases/download/v2.83.2/gh_2.83.2_linux_amd64.tar.gz -O /tmp/deno.tar.gz
       - run: mkdir /usr/local/gh
-      - run: tar -xzf /tmp/deno.tar.gz -C /usr/local/gh
+      - run: tar -xzf /tmp/deno.tar.gz -C /usr/local/gh --strip-components=1
       - run: echo "/usr/local/gh/bin" >> $GITHUB_PATH
       - run: export PATH="/usr/local/gh/bin:$PATH"
       - run: ls -la /usr/local
