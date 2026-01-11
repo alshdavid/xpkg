@@ -1,4 +1,4 @@
-import type { DownloadManifest } from "../repackage-versions.mts";
+import type { DownloadManifest } from "../build-packages.mts";
 import * as nodejsApi from "../utils/nodejs.mts";
 import { sortEntries } from "../repackage-versions/infer-format.mts";
 

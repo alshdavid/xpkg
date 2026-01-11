@@ -13,3 +13,5 @@ export * as eza from "./eza.mts";
 export * as fnm from "./fnm.mts";
 export * as zenith from "./zenith.mts";
 export * as oha from "./oha.mts";
+export * as hyperfine from "./hyperfine.mts";
+export * as gh from "./gh.mts";

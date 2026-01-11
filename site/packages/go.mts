@@ -1,4 +1,4 @@
-import type { DownloadManifest } from "../repackage-versions.mts";
+import type { DownloadManifest } from "../build-packages.mts";
 
 export default async function go(manifest: DownloadManifest): Promise<void> {
   const project = "go";

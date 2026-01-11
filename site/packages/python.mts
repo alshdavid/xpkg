@@ -1,4 +1,4 @@
-import type { DownloadManifest } from "../repackage-versions.mts";
+import type { DownloadManifest } from "../build-packages.mts";
 import * as githubApi from "../utils/github.mts";
 import type { Arch, Os } from "../utils/types.mts";
 
