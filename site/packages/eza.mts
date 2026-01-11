@@ -11,7 +11,7 @@ import { sh } from "../platform/sh.mts";
 import { wget } from "../platform/wget.mts";
 import { DownloadManifest } from "../platform/download-manifest.mts";
 
-const PROJECT = "eza";
+export const PROJECT = "eza";
 const REPO = "eza-community/eza";
 const BASE = "https://github.com/eza-community/eza/releases/download";
 

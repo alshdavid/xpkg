@@ -1,7 +1,7 @@
 import * as githubApi from "../platform/github.mts";
 import { DownloadManifest } from "../platform/download-manifest.mts";
 
-const PROJECT = "zenith";
+export const PROJECT = "zenith";
 const REPO = "bvaisvil/zenith";
 const BASE = `https://github.com/bvaisvil/zenith/releases/download`;
 

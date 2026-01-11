@@ -2,10 +2,11 @@ import type { DownloadManifest } from "../platform/download-manifest.mts";
 import * as githubApi from "../platform/github.mts";
 import type { Arch, Os } from "../platform/types.mts";
 
+export const PROJECT = "python";
+
 export default async function python(
   manifest: DownloadManifest,
 ): Promise<void> {
-  const project = "python";
   const resp = await githubApi.getRelease("astral-sh/python-build-standalone");
 
   for (const asset of resp.assets) {
@@ -39,12 +40,12 @@ export default async function python(
       continue;
     }
 
-    const key = `${project}-${major}.${minor}.${patch}`;
+    const key = `${PROJECT}-${major}.${minor}.${patch}`;
     const version = `${major}.${minor}.${patch}`;
 
     manifest[key] = manifest[key] || [];
     manifest[key].push({
-      project,
+      project: PROJECT,
       version,
       os,
       arch,

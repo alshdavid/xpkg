@@ -1,7 +1,7 @@
 import * as githubApi from "../platform/github.mts";
 import { DownloadManifest } from "../platform/download-manifest.mts";
 
-const PROJECT = "fnm";
+export const PROJECT = "fnm";
 const REPO = "Schniz/fnm";
 const BASE = `https://github.com/Schniz/fnm/releases/download`;
 

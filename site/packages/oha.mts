@@ -1,7 +1,7 @@
 import * as githubApi from "../platform/github.mts";
 import { DownloadManifest } from "../platform/download-manifest.mts";
 
-const PROJECT = "oha";
+export const PROJECT = "oha";
 const REPO = "hatoo/oha";
 const BASE = `https://github.com/hatoo/oha/releases/download`;
 

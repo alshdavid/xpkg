@@ -13,7 +13,6 @@ import {
   DownloadManifestEntry,
 } from "../platform/download-manifest.mts";
 import { REPO } from "../platform/repo-name.mts";
-import { renderEjs } from "../platform/render-ejs.mts";
 
 export async function main() {
   if (fs.existsSync(Paths["~/tmp"])) {
@@ -74,22 +73,9 @@ export async function main() {
     Object.entries(downloadManifest);
   downloadManifestEntries.sort((a, b) => sortEntries(a[0], b[0]));
 
-  const doneShellScripts = new Set<string>();
-
   for (const [releaseName, downloads] of downloadManifestEntries) {
     await fs.promises.rm(Paths["~/tmp"], { recursive: true, force: true });
     await fs.promises.mkdir(Paths["~/tmp/downloads"], { recursive: true });
-
-    if (!doneShellScripts.has(releaseName)) {
-      doneShellScripts.add(releaseName);
-      await renderEjs({
-        inputFile: Paths["~/site/"]("templates", "install.sh"),
-        outputFile: Paths["~/dist/"](`${releaseName}.sh`),
-        packageName: releaseName,
-        PACKAGE_NAME: releaseName.toUpperCase().replaceAll("-", "_"),
-        package_name: releaseName.replaceAll("-", "_"),
-      });
-    }
 
     if (!downloads.length) {
       console.log(`[${releaseName}] SKIP: No downloads`);

@@ -2,10 +2,11 @@ import type { DownloadManifest } from "../platform/download-manifest.mts";
 import * as nodejsApi from "../platform/nodejs.mts";
 import { sortEntries } from "../platform/repackage-versions/infer-format.mts";
 
+export const PROJECT = "nodejs";
+
 export default async function nodejs(
   manifest: DownloadManifest,
 ): Promise<void> {
-  const project = "nodejs";
   const resp = await nodejsApi.getReleases();
 
   const allVersions: Record<string, Array<string>> = {};
@@ -57,13 +58,13 @@ export default async function nodejs(
     const [_, minorVersions] = entry;
     for (const version of minorVersions) {
       // prettier-ignore
-      manifest[`${project}-${version}`] = [
-        { project, version, os: 'linux',    arch:  'amd64', url: `https://nodejs.org/download/release/v${version}/node-v${version}-linux-x64.tar.gz`,     stripComponents: 1 },
-        { project, version, os: 'linux',    arch:  'arm64', url: `https://nodejs.org/download/release/v${version}/node-v${version}-linux-arm64.tar.gz`,   stripComponents: 1 },
-        { project, version, os: 'macos',    arch:  'amd64', url: `https://nodejs.org/download/release/v${version}/node-v${version}-darwin-x64.tar.gz`,    stripComponents: 1 },
-        { project, version, os: 'macos',    arch:  'arm64', url: `https://nodejs.org/download/release/v${version}/node-v${version}-darwin-arm64.tar.gz`,  stripComponents: 1 },
-        { project, version, os: 'windows',  arch:  'amd64', url: `https://nodejs.org/download/release/v${version}/node-v${version}-win-x64.zip`,          stripComponents: 1 },
-        { project, version, os: 'windows',  arch:  'arm64', url: `https://nodejs.org/download/release/v${version}/node-v${version}-win-arm64.zip`,        stripComponents: 1 },
+      manifest[`${PROJECT}-${version}`] = [
+        { project: PROJECT, version, os: 'linux',    arch:  'amd64', url: `https://nodejs.org/download/release/v${version}/node-v${version}-linux-x64.tar.gz`,     stripComponents: 1 },
+        { project: PROJECT, version, os: 'linux',    arch:  'arm64', url: `https://nodejs.org/download/release/v${version}/node-v${version}-linux-arm64.tar.gz`,   stripComponents: 1 },
+        { project: PROJECT, version, os: 'macos',    arch:  'amd64', url: `https://nodejs.org/download/release/v${version}/node-v${version}-darwin-x64.tar.gz`,    stripComponents: 1 },
+        { project: PROJECT, version, os: 'macos',    arch:  'arm64', url: `https://nodejs.org/download/release/v${version}/node-v${version}-darwin-arm64.tar.gz`,  stripComponents: 1 },
+        { project: PROJECT, version, os: 'windows',  arch:  'amd64', url: `https://nodejs.org/download/release/v${version}/node-v${version}-win-x64.zip`,          stripComponents: 1 },
+        { project: PROJECT, version, os: 'windows',  arch:  'arm64', url: `https://nodejs.org/download/release/v${version}/node-v${version}-win-arm64.zip`,        stripComponents: 1 },
       ]
     }
   }

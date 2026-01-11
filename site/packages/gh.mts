@@ -1,7 +1,7 @@
 import * as githubApi from "../platform/github.mts";
 import { DownloadManifest } from "../platform/download-manifest.mts";
 
-const PROJECT = "gh";
+export const PROJECT = "gh";
 const REPO = "cli/cli";
 const BASE = `https://github.com/cli/cli/releases/download`;
 
