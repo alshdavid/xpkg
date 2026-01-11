@@ -5,6 +5,7 @@ const filename = url.fileURLToPath(import.meta.url);
 const platform = path.dirname(filename);
 const site = path.dirname(platform);
 const root = path.dirname(site);
+const distRoot = path.join(root, "dist");
 const binariesRoot = path.join(root, "binaries");
 const buildRoot = path.join(root, "build");
 const tmpRoot = path.join(root, "tmp");
@@ -26,6 +27,8 @@ export const Paths = Object.freeze({
   ["~/tmp/downloads"]: tmpDownloads,
   ["~/tmp/downloads/"]: $(tmpDownloads),
   ["~/binaries"]: binariesRoot,
+  ["~/dist"]: distRoot,
+  ["~/dist/"]: $(distRoot),
   ["~/binaries/"]: $(binariesRoot),
   ["~/build"]: buildRoot,
   ["~/build/"]: $(buildRoot),
