@@ -5,10 +5,10 @@
 
 import * as fs from "node:fs";
 import { Paths } from "../platform/paths.mts";
-import { untarGz } from "../utils/compression.mts";
-import * as githubApi from "../utils/github.mts";
-import { sh } from "../utils/sh.mts";
-import { wget } from "../utils/wget.mts";
+import { untarGz } from "../platform/compression.mts";
+import * as githubApi from "../platform/github.mts";
+import { sh } from "../platform/sh.mts";
+import { wget } from "../platform/wget.mts";
 import { DownloadManifest } from "../build-packages.mts";
 
 const PROJECT = "eza";

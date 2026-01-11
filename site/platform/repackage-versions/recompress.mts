@@ -1,15 +1,8 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { wget } from "../utils/wget.mts";
-import {
-  tarGz,
-  tarXz,
-  untarGz,
-  untarXz,
-  unzip,
-  zip,
-} from "../utils/compression.mts";
-import type { ArchiveFormat, OsArch } from "../utils/types.mts";
+import { wget } from "../wget.mts";
+import { tarGz, tarXz, untarGz, untarXz, unzip, zip } from "../compression.mts";
+import type { ArchiveFormat, OsArch } from "../types.mts";
 
 export async function recompress(
   tmpRoot: string,

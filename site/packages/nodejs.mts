@@ -1,5 +1,5 @@
 import type { DownloadManifest } from "../build-packages.mts";
-import * as nodejsApi from "../utils/nodejs.mts";
+import * as nodejsApi from "../platform/nodejs.mts";
 import { sortEntries } from "../repackage-versions/infer-format.mts";
 
 export default async function nodejs(

@@ -1,5 +1,5 @@
 import semver from "semver";
-import type { ArchiveFormat } from "../utils/types.mts";
+import type { ArchiveFormat } from "../types.mts";
 
 export function inferArchiveFormat(url: string): ArchiveFormat {
   if (url.endsWith(".tar.gz")) {
@@ -34,9 +34,14 @@ export function sortEntries(a: string, b: string) {
 }
 
 export function tryParseSemver(str: string): semver.SemVer {
-  try {
-    return semver.parse(str);
-  } catch (error) {}
+  const result = semver.parse(str);
+  if (result) {
+    return result;
+  }
   const [, version] = str.split("-");
-  return semver.parse(version);
+  const result2 = semver.parse(version);
+  if (result2) {
+    return result2;
+  }
+  throw new Error("Unable to parse semver");
 }

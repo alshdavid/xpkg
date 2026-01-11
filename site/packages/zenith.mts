@@ -1,4 +1,4 @@
-import * as githubApi from "../utils/github.mts";
+import * as githubApi from "../platform/github.mts";
 import { DownloadManifest } from "../build-packages.mts";
 
 const PROJECT = "zenith";

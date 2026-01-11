@@ -1,4 +1,4 @@
-import { githubReleaseView } from "../utils/github-releases.mts";
+import { githubReleaseView } from "../github-releases.mts";
 
 export async function releaseExists(
   repo: string,

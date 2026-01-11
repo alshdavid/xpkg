@@ -1,6 +1,6 @@
 import * as fs from "node:fs";
 import { Paths } from "./platform/paths.mts";
-import { flattenDirectory } from "./utils/flat_dir.mts";
+import { flattenDirectory } from "./platform/flat_dir.mts";
 
 export async function main() {
   let html = `

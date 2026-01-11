@@ -1,6 +1,6 @@
 import type { DownloadManifest } from "../build-packages.mts";
-import * as githubApi from "../utils/github.mts";
-import type { Arch, Os } from "../utils/types.mts";
+import * as githubApi from "../platform/github.mts";
+import type { Arch, Os } from "../platform/types.mts";
 
 export default async function python(
   manifest: DownloadManifest,

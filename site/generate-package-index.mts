@@ -2,8 +2,16 @@ import * as fs from "node:fs";
 import * as path from "node:path";
 import * as url from "node:url";
 
-import { getReleases, type GithubReleasesResponse } from "./utils/github.mts";
-import type { Arch, ArchiveFormat, Os, ReleaseMeta } from "./utils/types.mts";
+import {
+  getReleases,
+  type GithubReleasesResponse,
+} from "./platform/github.mts";
+import type {
+  Arch,
+  ArchiveFormat,
+  Os,
+  ReleaseMeta,
+} from "./platform/types.mts";
 import {
   sortEntries,
   tryParseSemver,

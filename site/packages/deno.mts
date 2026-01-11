@@ -1,5 +1,5 @@
 import type { DownloadManifest } from "../build-packages.mts";
-import * as githubApi from "../utils/github.mts";
+import * as githubApi from "../platform/github.mts";
 
 export default async function deno(manifest: DownloadManifest): Promise<void> {
   const project = "deno";

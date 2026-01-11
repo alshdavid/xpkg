@@ -5,7 +5,7 @@ import {
   githubReleaseDelete,
   githubReleaseEdit,
   githubReleaseUpload,
-} from "./utils/github-releases.mts";
+} from "./platform/github-releases.mts";
 
 const REPO = "alshdavid/xpkg";
 
@@ -16,10 +16,10 @@ type Manifest = {
 
 export async function main() {
   if (!fs.existsSync(Paths["~/binaries"])) {
-    console.log("Skipping release, no binaries present")
-    return
+    console.log("Skipping release, no binaries present");
+    return;
   }
-  
+
   for (const tagName of fs.readdirSync(Paths["~/binaries"])) {
     try {
       const manifestStr = await fs.promises.readFile(
