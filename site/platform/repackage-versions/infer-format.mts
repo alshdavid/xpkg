@@ -43,5 +43,5 @@ export function tryParseSemver(str: string): semver.SemVer | undefined {
   if (result2) {
     return result2;
   }
-  return undefined
+  return undefined;
 }
