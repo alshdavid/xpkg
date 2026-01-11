@@ -8,21 +8,11 @@ import {
 } from "../platform/repackage-versions/infer-format.mts";
 import * as packages from "../packages/index.mts";
 import { Paths } from "../platform/paths.mts";
-import { Arch, ArchiveFormat, Os } from "../platform/types.mts";
-
-const REPO = "alshdavid/xpkg";
-
-export type DownloadManifestEntry = {
-  project: string;
-  version: string;
-  format?: ArchiveFormat;
-  url: undefined | string | (() => Promise<string | undefined>);
-  os: Os;
-  arch: Arch;
-  stripComponents?: number;
-};
-
-export type DownloadManifest = Record<string, Array<DownloadManifestEntry>>;
+import {
+  DownloadManifest,
+  DownloadManifestEntry,
+} from "../platform/download-manifest.mts";
+import { REPO } from "../platform/repo-name.mts";
 
 export async function main() {
   if (fs.existsSync(Paths["~/tmp"])) {

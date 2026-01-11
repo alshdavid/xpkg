@@ -1,4 +1,4 @@
-import type { DownloadManifest } from "../build-packages.mts";
+import { DownloadManifest } from "../platform/download-manifest.mts";
 import * as githubApi from "../platform/github.mts";
 
 export default async function deno(manifest: DownloadManifest): Promise<void> {

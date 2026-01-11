@@ -12,6 +12,15 @@ export type RenderEjsOptions = {
   outputFile: string;
 };
 
+export type EjsContext = {
+  root: string;
+  filename: string;
+  dirname: string;
+  path: typeof path;
+  fs: typeof fs.promises;
+  ctx: EjsContext;
+};
+
 export async function renderEjs({
   inputFile,
   outputFile,
@@ -21,7 +30,7 @@ export async function renderEjs({
     encoding: "utf-8",
   });
 
-  const ctx = {
+  const ctx: EjsContext = {
     get root() {
       return root;
     },

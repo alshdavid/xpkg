@@ -1,6 +1,6 @@
-import type { DownloadManifest } from "../build-packages.mts";
+import type { DownloadManifest } from "../platform/download-manifest.mts";
 import * as nodejsApi from "../platform/nodejs.mts";
-import { sortEntries } from "../repackage-versions/infer-format.mts";
+import { sortEntries } from "../platform/repackage-versions/infer-format.mts";
 
 export default async function nodejs(
   manifest: DownloadManifest,
@@ -52,7 +52,9 @@ export default async function nodejs(
     allVersionsEntries.pop(),
   ];
 
-  for (const [_, minorVersions] of versions) {
+  for (const entry of versions) {
+    if (!entry) continue;
+    const [_, minorVersions] = entry;
     for (const version of minorVersions) {
       // prettier-ignore
       manifest[`${project}-${version}`] = [

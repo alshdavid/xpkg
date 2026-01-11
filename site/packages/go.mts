@@ -1,9 +1,13 @@
-import type { DownloadManifest } from "../build-packages.mts";
+import type { DownloadManifest } from "../platform/download-manifest.mts";
+
+type GoApiResponse = Array<{
+  version: string;
+}>;
 
 export default async function go(manifest: DownloadManifest): Promise<void> {
   const project = "go";
   const resp = await globalThis.fetch("https://go.dev/dl/?mode=json");
-  const body = await resp.json();
+  const body = (await resp.json()) as GoApiResponse;
   const version = body[0].version.replace("go", "");
 
   // prettier-ignore

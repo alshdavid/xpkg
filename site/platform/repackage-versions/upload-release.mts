@@ -2,7 +2,7 @@ import {
   githubReleaseCreate,
   githubReleaseEdit,
   githubReleaseUpload,
-} from "../platform/github-releases.mts";
+} from "../github-releases.mts";
 
 export async function uploadRelease(
   repo: string,

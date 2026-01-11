@@ -6,8 +6,7 @@ import {
   githubReleaseEdit,
   githubReleaseUpload,
 } from "../platform/github-releases.mts";
-
-const REPO = "alshdavid/xpkg";
+import { REPO } from "../platform/repo-name.mts";
 
 type Manifest = {
   package: string;

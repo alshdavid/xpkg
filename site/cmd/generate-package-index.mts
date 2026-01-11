@@ -66,10 +66,10 @@ function findDownload(
 }
 
 export async function main() {
-  if (fs.existsSync(Paths['~/dist/packages'])) {
-    fs.rmSync(Paths['~/dist/packages'], { recursive: true, force: true });
+  if (fs.existsSync(Paths["~/dist/packages"])) {
+    fs.rmSync(Paths["~/dist/packages"], { recursive: true, force: true });
   }
-  fs.mkdirSync(Paths['~/dist/packages'], { recursive: true });
+  fs.mkdirSync(Paths["~/dist/packages"], { recursive: true });
 
   const index: VersionIndex = {};
 
@@ -121,15 +121,15 @@ export async function main() {
   }
 
   await fs.promises.writeFile(
-    path.join(Paths['~/dist/packages'], "index.json"),
+    path.join(Paths["~/dist/packages"], "index.json"),
     JSON.stringify(sorted, null, 2),
     "utf8",
   );
 
   for (const [packageName, versions] of Object.entries(sorted)) {
-    if (!fs.existsSync(path.join(Paths['~/dist/packages'], packageName))) {
+    if (!fs.existsSync(path.join(Paths["~/dist/packages"], packageName))) {
       await fs.promises.writeFile(
-        path.join(Paths['~/dist/packages'], `${packageName}.json`),
+        path.join(Paths["~/dist/packages"], `${packageName}.json`),
         JSON.stringify(versions, null, 2),
         "utf8",
       );
@@ -143,12 +143,19 @@ export async function main() {
       if (!sv) {
         continue;
       }
-      await fs.promises.mkdir(path.join(Paths['~/dist/packages'], version.package), {
-        recursive: true,
-      });
+      await fs.promises.mkdir(
+        path.join(Paths["~/dist/packages"], version.package),
+        {
+          recursive: true,
+        },
+      );
 
       await fs.promises.writeFile(
-        path.join(Paths['~/dist/packages'], version.package, `${version.version}.json`),
+        path.join(
+          Paths["~/dist/packages"],
+          version.package,
+          `${version.version}.json`,
+        ),
         JSON.stringify(version, null, 2),
         "utf8",
       );
@@ -157,11 +164,19 @@ export async function main() {
 
       if (
         !fs.existsSync(
-          path.join(Paths['~/dist/packages'], version.package, `${sv.major}.json`),
+          path.join(
+            Paths["~/dist/packages"],
+            version.package,
+            `${sv.major}.json`,
+          ),
         )
       ) {
         await fs.promises.writeFile(
-          path.join(Paths['~/dist/packages'], version.package, `${sv.major}.json`),
+          path.join(
+            Paths["~/dist/packages"],
+            version.package,
+            `${sv.major}.json`,
+          ),
           JSON.stringify(version, null, 2),
           "utf8",
         );
@@ -169,10 +184,12 @@ export async function main() {
       }
 
       if (
-        !fs.existsSync(path.join(Paths['~/dist/packages'], version.package, `latest.json`))
+        !fs.existsSync(
+          path.join(Paths["~/dist/packages"], version.package, `latest.json`),
+        )
       ) {
         await fs.promises.writeFile(
-          path.join(Paths['~/dist/packages'], version.package, `latest.json`),
+          path.join(Paths["~/dist/packages"], version.package, `latest.json`),
           JSON.stringify(version, null, 2),
           "utf8",
         );
@@ -191,7 +208,7 @@ export async function main() {
       if (
         !fs.existsSync(
           path.join(
-            Paths['~/dist/packages'],
+            Paths["~/dist/packages"],
             version.package,
             `${sv.major}.${sv.minor}.json`,
           ),
@@ -199,7 +216,7 @@ export async function main() {
       ) {
         await fs.promises.writeFile(
           path.join(
-            Paths['~/dist/packages'],
+            Paths["~/dist/packages"],
             version.package,
             `${sv.major}.${sv.minor}.json`,
           ),
@@ -217,12 +234,19 @@ export async function main() {
       if (tryParseSemver(version.version)) {
         continue;
       }
-      await fs.promises.mkdir(path.join(Paths['~/dist/packages'], version.package), {
-        recursive: true,
-      });
+      await fs.promises.mkdir(
+        path.join(Paths["~/dist/packages"], version.package),
+        {
+          recursive: true,
+        },
+      );
 
       await fs.promises.writeFile(
-        path.join(Paths['~/dist/packages'], version.package, `${version.version}.json`),
+        path.join(
+          Paths["~/dist/packages"],
+          version.package,
+          `${version.version}.json`,
+        ),
         JSON.stringify(version, null, 2),
         "utf8",
       );
@@ -252,7 +276,7 @@ async function createVersionTexts(version: VersionEntry, name?: string) {
     const meta = version[key];
     await fs.promises.writeFile(
       path.join(
-        Paths['~/dist/packages'],
+        Paths["~/dist/packages"],
         version.package,
         `${name || version.version}_${key}`,
       ),
@@ -261,7 +285,7 @@ async function createVersionTexts(version: VersionEntry, name?: string) {
     );
     await fs.promises.writeFile(
       path.join(
-        Paths['~/dist/packages'],
+        Paths["~/dist/packages"],
         version.package,
         `${name || version.version}_${key}.txt`,
       ),

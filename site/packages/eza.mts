@@ -9,7 +9,7 @@ import { untarGz } from "../platform/compression.mts";
 import * as githubApi from "../platform/github.mts";
 import { sh } from "../platform/sh.mts";
 import { wget } from "../platform/wget.mts";
-import { DownloadManifest } from "../build-packages.mts";
+import { DownloadManifest } from "../platform/download-manifest.mts";
 
 const PROJECT = "eza";
 const REPO = "eza-community/eza";

@@ -1,5 +1,5 @@
 import * as githubApi from "../platform/github.mts";
-import { DownloadManifest } from "../build-packages.mts";
+import { DownloadManifest } from "../platform/download-manifest.mts";
 
 const PROJECT = "hyperfine";
 const REPO = "sharkdp/hyperfine";

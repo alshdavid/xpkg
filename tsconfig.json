@@ -6,5 +6,8 @@
     "lib": ["ESNext"],
     "allowImportingTsExtensions": true,
     "strict": true
-  }
+  },
+  "include": [
+    "site"
+  ]
 }
