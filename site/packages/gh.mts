@@ -2,7 +2,7 @@ import * as githubApi from "../utils/github.mts";
 import { DownloadManifest } from "../build-packages.mts";
 
 const PROJECT = "gh";
-const REPO = "cli";
+const REPO = "cli/cli";
 const BASE = `https://github.com/cli/cli/releases/download`;
 
 export default async function gh(
