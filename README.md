@@ -1,4 +1,4 @@
-# Install Scripts
+# Package Mirrors & Install Scripts
 
 [https://sh.davidalsh.com](https://sh.davidalsh.com)
 
