@@ -33,6 +33,7 @@ Binary support depends on the project but most projects have.
 - Linux AMD64
 - Linux ARM64
 - MacOS ARM64
+- Windows AMD64
 
 Some, but not all projects have.
 
