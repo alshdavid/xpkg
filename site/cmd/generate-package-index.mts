@@ -3,6 +3,7 @@ import * as path from "node:path";
 
 import {
   getReleases,
+  getReleasesPage,
   type GithubReleasesResponse,
 } from "../platform/github.mts";
 import type {
@@ -73,9 +74,7 @@ export async function main() {
 
   const index: VersionIndex = {};
 
-  const releases = await getReleases("alshdavid/xpkg");
-
-  for (const release of releases) {
+  for await (const release of getReleases("alshdavid/xpkg")) {
     if (!release.body) {
       continue;
     }
