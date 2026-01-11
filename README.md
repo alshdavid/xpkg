@@ -1,5 +1,7 @@
 # Package Mirrors & Install Scripts
 
+### [https://sh.davidalsh.com](https://sh.davidalsh.com)
+
 This repo contains mirrors for commonly used applications. Applications are repackaged into multiple archive formats with names and package directory structures normalized.
 
 Applications are published as Github releases on this repo, with a normalized naming convention;
@@ -10,7 +12,6 @@ Applications are published as Github releases on this repo, with a normalized na
 
 A Github action runs routinely to scan projects for updates, automatically publishing a [Github release](https://github.com/alshdavid/xpkg/releases) when updates are detected.
 
-[https://sh.davidalsh.com](https://sh.davidalsh.com)
 
 ## Instructions
 
