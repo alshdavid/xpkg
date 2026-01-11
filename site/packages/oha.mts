@@ -1,0 +1,22 @@
+import * as githubApi from "../utils/github.mts";
+import { DownloadManifest } from "../build-packages.mts";
+
+const PROJECT = "oha";
+const REPO = "hatoo/oha";
+const BASE = `https://github.com/hatoo/oha/releases/download`;
+
+export default async function oha(manifest: DownloadManifest): Promise<void> {
+  const resp = await githubApi.getRelease(REPO);
+  const version = resp.tag_name;
+
+  // prettier-ignore
+  manifest[`${PROJECT}-${version}`] = [
+    // { project: PROJECT, version, os: 'linux',    arch:  'amd64',  format: 'bin',    url: `${BASE}/${version}/oha-linux-amd64`   },
+    // { project: PROJECT, version, os: 'linux',    arch:  'arm64',  format: 'bin',    url: `${BASE}/${version}/oha-linux-arm64`   },
+
+    // { project: PROJECT, version, os: 'macos',    arch:  'amd64',  format: 'bin',    url: `${BASE}/${version}/oha-macos-amd64`  },
+    // { project: PROJECT, version, os: 'macos',    arch:  'arm64',  format: 'bin',    url: `${BASE}/${version}/oha-macos-arm64`  },
+    
+    { project: PROJECT, version, os: 'windows',  arch:  'amd64',  format: 'bin',    url: `${BASE}/${version}/oha-windows-amd64.exe` },
+  ]
+}

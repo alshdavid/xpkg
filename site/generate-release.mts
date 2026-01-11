@@ -19,7 +19,7 @@ export async function main() {
     try {
       const manifestStr = await fs.promises.readFile(
         Paths["~/binaries/"](tagName, "meta.json"),
-        "utf8"
+        "utf8",
       );
       const manifest: Manifest = JSON.parse(manifestStr);
 

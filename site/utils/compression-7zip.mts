@@ -8,7 +8,7 @@ export async function tarGz(folder: string, dest: string): Promise<void> {
   const tarFile = dest.replace(/\.gz$/, "");
 
   await sh("7z", ["a", "-ttar", tarFile, "*"], {
-    stdio: 'ignore',
+    stdio: "ignore",
     cwd: folder,
   });
 
@@ -45,12 +45,14 @@ export async function untarGz(
 
     let sourceDir = tempDir;
     for (let i = 0; i < stripComponents; i++) {
-      const entries = fs.readdirSync(sourceDir).filter(entry => {
-        return !entry.endsWith('.paxheader') && 
-               entry !== 'pax_global_header' &&
-               !entry.endsWith('.data');
+      const entries = fs.readdirSync(sourceDir).filter((entry) => {
+        return (
+          !entry.endsWith(".paxheader") &&
+          entry !== "pax_global_header" &&
+          !entry.endsWith(".data")
+        );
       });
-      
+
       if (
         entries.length === 1 &&
         fs.statSync(path.join(sourceDir, entries[0])).isDirectory()
@@ -61,12 +63,14 @@ export async function untarGz(
       }
     }
 
-    const entries = fs.readdirSync(sourceDir).filter(entry => {
-      return !entry.endsWith('.paxheader') && 
-             entry !== 'pax_global_header' &&
-             !entry.endsWith('.data');
+    const entries = fs.readdirSync(sourceDir).filter((entry) => {
+      return (
+        !entry.endsWith(".paxheader") &&
+        entry !== "pax_global_header" &&
+        !entry.endsWith(".data")
+      );
     });
-    
+
     for (const entry of entries) {
       fs.renameSync(path.join(sourceDir, entry), path.join(dest, entry));
     }
@@ -133,13 +137,15 @@ export async function untarXz(
     // Navigate down stripComponents levels and move contents
     let sourceDir = tempDir;
     for (let i = 0; i < stripComponents; i++) {
-      const entries = fs.readdirSync(sourceDir).filter(entry => {
+      const entries = fs.readdirSync(sourceDir).filter((entry) => {
         // Filter out pax headers and metadata files
-        return !entry.endsWith('.paxheader') && 
-               entry !== 'pax_global_header' &&
-               !entry.endsWith('.data');
+        return (
+          !entry.endsWith(".paxheader") &&
+          entry !== "pax_global_header" &&
+          !entry.endsWith(".data")
+        );
       });
-      
+
       if (
         entries.length === 1 &&
         fs.statSync(path.join(sourceDir, entries[0])).isDirectory()
@@ -151,13 +157,15 @@ export async function untarXz(
     }
 
     // Move contents from sourceDir to dest
-    const entries = fs.readdirSync(sourceDir).filter(entry => {
+    const entries = fs.readdirSync(sourceDir).filter((entry) => {
       // Filter out pax headers and metadata files when moving
-      return !entry.endsWith('.paxheader') && 
-             entry !== 'pax_global_header' &&
-             !entry.endsWith('.data');
+      return (
+        !entry.endsWith(".paxheader") &&
+        entry !== "pax_global_header" &&
+        !entry.endsWith(".data")
+      );
     });
-    
+
     for (const entry of entries) {
       fs.renameSync(path.join(sourceDir, entry), path.join(dest, entry));
     }
@@ -205,13 +213,15 @@ export async function unzip(
     // Navigate down stripComponents levels and move contents
     let sourceDir = tempDir;
     for (let i = 0; i < stripComponents; i++) {
-      const entries = (await fs.promises.readdir(sourceDir)).filter(entry => {
+      const entries = (await fs.promises.readdir(sourceDir)).filter((entry) => {
         // Filter out pax headers and metadata files
-        return !entry.endsWith('.paxheader') && 
-               entry !== 'pax_global_header' &&
-               !entry.endsWith('.data');
+        return (
+          !entry.endsWith(".paxheader") &&
+          entry !== "pax_global_header" &&
+          !entry.endsWith(".data")
+        );
       });
-      
+
       if (entries.length === 1) {
         const entryPath = path.join(sourceDir, entries[0]);
         const stat = await fs.promises.stat(entryPath);
@@ -226,13 +236,15 @@ export async function unzip(
     }
 
     // Move contents from sourceDir to dest
-    const entries = (await fs.promises.readdir(sourceDir)).filter(entry => {
+    const entries = (await fs.promises.readdir(sourceDir)).filter((entry) => {
       // Filter out pax headers and metadata files when moving
-      return !entry.endsWith('.paxheader') && 
-             entry !== 'pax_global_header' &&
-             !entry.endsWith('.data');
+      return (
+        !entry.endsWith(".paxheader") &&
+        entry !== "pax_global_header" &&
+        !entry.endsWith(".data")
+      );
     });
-    
+
     for (const entry of entries) {
       await fs.promises.rename(
         path.join(sourceDir, entry),

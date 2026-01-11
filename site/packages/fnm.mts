@@ -11,10 +11,12 @@ export default async function fnm(manifest: DownloadManifest): Promise<void> {
 
   // prettier-ignore
   manifest[`${PROJECT}-${version}`] = [
-    { project: PROJECT, version, os: 'linux',    arch:  'amd64',    format: 'zip',    url: `${BASE}/v${version}/fnm-linux.zip`   },
-    { project: PROJECT, version, os: 'linux',    arch:  'arm64',    format: 'zip',    url: `${BASE}/v${version}/fnm-arm64.zip`   },
-    { project: PROJECT, version, os: 'windows',  arch:  'amd64',    format: 'zip',    url: `${BASE}/v${version}/fnm-windows.zip` },
-    { project: PROJECT, version, os: 'macos',    arch:  'arm64',    format: 'bin',    url: `${BASE}/v${version}/fnm-macos.zip`  },
-    { project: PROJECT, version, os: 'macos',    arch:  'amd64',    format: 'bin',    url: `${BASE}/v${version}/fnm-macos.zip`  },
+    { project: PROJECT, version, os: 'linux',    arch:  'amd64',  url: `${BASE}/v${version}/fnm-linux.zip`   },
+    { project: PROJECT, version, os: 'linux',    arch:  'arm64',  url: `${BASE}/v${version}/fnm-arm64.zip`   },
+
+    { project: PROJECT, version, os: 'macos',    arch:  'amd64',  url: `${BASE}/v${version}/fnm-macos.zip`  },
+    { project: PROJECT, version, os: 'macos',    arch:  'arm64',  url: `${BASE}/v${version}/fnm-macos.zip`  },
+
+    { project: PROJECT, version, os: 'windows',  arch:  'amd64',  url: `${BASE}/v${version}/fnm-windows.zip` },
   ]
 }

@@ -37,15 +37,15 @@ function buildMacOsArm64(version: string) {
     try {
       await wget(
         `https://github.com/eza-community/eza/archive/refs/tags/v${version}.tar.gz`,
-        Paths["~/tmp/downloads/"]("eza-source", "source.tar.gz")
+        Paths["~/tmp/downloads/"]("eza-source", "source.tar.gz"),
       );
       await untarGz(
         Paths["~/tmp/downloads/"]("eza-source", "source.tar.gz"),
         Paths["~/tmp/downloads/"]("eza-source"),
-        1
+        1,
       );
       await fs.promises.rm(
-        Paths["~/tmp/downloads/"]("eza-source", "rust-toolchain.toml")
+        Paths["~/tmp/downloads/"]("eza-source", "rust-toolchain.toml"),
       );
       await sh("cargo", ["build", "--release"], {
         cwd: Paths["~/tmp/downloads/"]("eza-source"),
@@ -53,7 +53,7 @@ function buildMacOsArm64(version: string) {
       });
       await fs.promises.rename(
         Paths["~/tmp/downloads/"]("eza-source", "target", "release", "eza"),
-        Paths["~/build/"]("eza")
+        Paths["~/build/"]("eza"),
       );
       await fs.promises.rm(Paths["~/tmp/downloads/"]("eza-source"), {
         recursive: true,
@@ -75,22 +75,22 @@ function buildLinuxAmd64(version: string) {
     try {
       await wget(
         `https://github.com/eza-community/eza/archive/refs/tags/v${version}.tar.gz`,
-        Paths["~/tmp/downloads/"]("eza-source", "source.tar.gz")
+        Paths["~/tmp/downloads/"]("eza-source", "source.tar.gz"),
       );
       await untarGz(
         Paths["~/tmp/downloads/"]("eza-source", "source.tar.gz"),
         Paths["~/tmp/downloads/"]("eza-source"),
-        1
+        1,
       );
       await fs.promises.rm(
-        Paths["~/tmp/downloads/"]("eza-source", "rust-toolchain.toml")
+        Paths["~/tmp/downloads/"]("eza-source", "rust-toolchain.toml"),
       );
       await sh("cargo", ["build"], {
         cwd: Paths["~/tmp/downloads/"]("eza-source"),
       });
       await fs.promises.rename(
         Paths["~/tmp/downloads/"]("eza-source", "target", "debug", "eza"),
-        Paths["~/build/"]("eza")
+        Paths["~/build/"]("eza"),
       );
       await fs.promises.rm(Paths["~/tmp/downloads/"]("eza-source"), {
         recursive: true,

@@ -9,15 +9,15 @@ export async function main() {
         display: block;
       }
     </style>
-  `
-  for (const [linkPath, linkType] of await flattenDirectory(Paths['~/dist'])) {
-    if (linkType !== 'file') continue
+  `;
+  for (const [linkPath, linkType] of await flattenDirectory(Paths["~/dist"])) {
+    if (linkType !== "file") continue;
     html += `
       <a href="${linkPath}">${linkPath}</a>
-    `
+    `;
   }
 
-  fs.writeFileSync(Paths["~/dist/"]('index.html'), html, 'utf8')
+  fs.writeFileSync(Paths["~/dist/"]("index.html"), html, "utf8");
 }
 
 if (process.argv.includes("--run")) {

@@ -98,10 +98,17 @@ export async function recompress(
       await fs.promises.mkdir(path.join(tmpDownloads, inputName), {
         recursive: true,
       });
-      await fs.promises.cp(
-        path.join(tmpDownloads, inputArchive),
-        path.join(tmpDownloads, inputName, project),
-      );
+      if (os_arch.includes("windows")) {
+        await fs.promises.cp(
+          path.join(tmpDownloads, inputArchive),
+          path.join(tmpDownloads, inputName, `${project}.exe`),
+        );
+      } else {
+        await fs.promises.cp(
+          path.join(tmpDownloads, inputArchive),
+          path.join(tmpDownloads, inputName, project),
+        );
+      }
       break;
     default:
       throw new Error(`ArchiveFormat not supported: ${format}`);

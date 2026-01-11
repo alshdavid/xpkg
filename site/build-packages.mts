@@ -43,38 +43,40 @@ export async function main() {
     Object.values(packages).map((mod) => mod.default(downloadManifest)),
   );
 
-  for (const [packageName, _entries] of Object.entries(downloadManifest)) {
-    downloadManifest[packageName] = downloadManifest[packageName].filter(
-      ({ os, arch }) => {
-        if (process.platform === "win32" && os === "windows") {
-          return true;
-        }
+  if (!process.argv.includes("--force")) {
+    for (const [packageName, _entries] of Object.entries(downloadManifest)) {
+      downloadManifest[packageName] = downloadManifest[packageName].filter(
+        ({ os, arch }) => {
+          if (process.platform === "win32" && os === "windows") {
+            return true;
+          }
 
-        if (
-          process.platform === "linux" &&
-          process.arch === "x64" &&
-          os === "linux" &&
-          arch === "amd64"
-        ) {
-          return true;
-        }
+          if (
+            process.platform === "linux" &&
+            process.arch === "x64" &&
+            os === "linux" &&
+            arch === "amd64"
+          ) {
+            return true;
+          }
 
-        if (
-          process.platform === "linux" &&
-          process.arch === "arm64" &&
-          os === "linux" &&
-          arch === "arm64"
-        ) {
-          return true;
-        }
+          if (
+            process.platform === "linux" &&
+            process.arch === "arm64" &&
+            os === "linux" &&
+            arch === "arm64"
+          ) {
+            return true;
+          }
 
-        if (process.platform === "darwin" && os === "macos") {
-          return true;
-        }
+          if (process.platform === "darwin" && os === "macos") {
+            return true;
+          }
 
-        return false;
-      },
-    );
+          return false;
+        },
+      );
+    }
   }
 
   const downloadManifestEntries: Array<[string, Array<DownloadManifestEntry>]> =
@@ -91,14 +93,16 @@ export async function main() {
     }
 
     console.log(`[${releaseName}] Checking Release Exists`);
-    const releaseDoesExist = await releaseExists(REPO, releaseName)
+    const releaseDoesExist = await releaseExists(REPO, releaseName);
     if (releaseDoesExist) {
       console.log(`[${releaseName}] SKIP: Release Exists`);
       continue;
     }
 
     if (!fs.existsSync(Paths["~/binaries/"](releaseName))) {
-      await fs.promises.mkdir(Paths["~/binaries/"](releaseName), { recursive: true });
+      await fs.promises.mkdir(Paths["~/binaries/"](releaseName), {
+        recursive: true,
+      });
     }
 
     await fs.promises.writeFile(
