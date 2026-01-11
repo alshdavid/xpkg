@@ -53,7 +53,7 @@ https://sh.davidalsh.com/packages/gh/latest_windows_arm64_tar_xz.txt
 
 ### Archive Formats
 
-To maximize compatibility, applications are repackaged as:
+To maximize compatibility, applications are repackaged and the contents flattened (if required) as:
 
 - `.zip`
   - Maximum compatibility
