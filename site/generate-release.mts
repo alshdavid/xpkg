@@ -15,6 +15,11 @@ type Manifest = {
 };
 
 export async function main() {
+  if (!fs.existsSync(Paths["~/binaries"])) {
+    console.log("Skipping release, no binaries present")
+    return
+  }
+  
   for (const tagName of fs.readdirSync(Paths["~/binaries"])) {
     try {
       const manifestStr = await fs.promises.readFile(
