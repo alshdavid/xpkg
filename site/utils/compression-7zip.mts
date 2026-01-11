@@ -8,12 +8,12 @@ export async function tarGz(folder: string, dest: string): Promise<void> {
   const tarFile = dest.replace(/\.gz$/, "");
 
   await sh("7z", ["a", "-ttar", tarFile, "*"], {
-    stdio: "inherit",
+    stdio: 'ignore',
     cwd: folder,
   });
 
   await sh("7z", ["a", "-tgzip", dest, tarFile], {
-    stdio: "inherit",
+    stdio: "ignore",
   });
 
   fs.rmSync(tarFile, { force: true });
@@ -32,7 +32,7 @@ export async function untarGz(
 
   const tarFile = archive.replace(/\.gz$/, "");
   await sh("7z", ["x", archive, `-o${path.dirname(tarFile)}`, "-y"], {
-    stdio: "inherit",
+    stdio: "ignore",
   });
 
   if (stripComponents) {
@@ -40,7 +40,7 @@ export async function untarGz(
     fs.mkdirSync(tempDir, { recursive: true });
 
     await sh("7z", ["x", tarFile, `-o${tempDir}`, "-y"], {
-      stdio: "inherit",
+      stdio: "ignore",
     });
 
     let sourceDir = tempDir;
@@ -75,7 +75,7 @@ export async function untarGz(
     fs.rmSync(tarFile, { force: true });
   } else {
     await sh("7z", ["x", tarFile, `-o${dest}`, "-y"], {
-      stdio: "inherit",
+      stdio: "ignore",
     });
     fs.rmSync(tarFile, { force: true });
   }
@@ -89,13 +89,13 @@ export async function tarXz(folder: string, dest: string): Promise<void> {
 
   // Create .tar archive
   await sh("7z", ["a", "-ttar", tarFile, "*"], {
-    stdio: "inherit",
+    stdio: "ignore",
     cwd: folder,
   });
 
   // Compress .tar to .tar.xz
   await sh("7z", ["a", "-txz", dest, tarFile], {
-    stdio: "inherit",
+    stdio: "ignore",
   });
 
   // Clean up intermediate .tar file
@@ -117,7 +117,7 @@ export async function untarXz(
   // First extract the .xz to get the .tar
   const tarFile = archive.replace(/\.xz$/, "");
   await sh("7z", ["x", archive, `-o${path.dirname(tarFile)}`, "-y"], {
-    stdio: "inherit",
+    stdio: "ignore",
   });
 
   // Then extract the .tar with strip components handling
@@ -127,7 +127,7 @@ export async function untarXz(
     fs.mkdirSync(tempDir, { recursive: true });
 
     await sh("7z", ["x", tarFile, `-o${tempDir}`, "-y"], {
-      stdio: "inherit",
+      stdio: "ignore",
     });
 
     // Navigate down stripComponents levels and move contents
@@ -167,7 +167,7 @@ export async function untarXz(
     fs.rmSync(tarFile, { force: true });
   } else {
     await sh("7z", ["x", tarFile, `-o${dest}`, "-y"], {
-      stdio: "inherit",
+      stdio: "ignore",
     });
     // Clean up intermediate tar file
     fs.rmSync(tarFile, { force: true });
@@ -177,7 +177,7 @@ export async function untarXz(
 export async function zip(folder: string, dest: string): Promise<void> {
   console.log(`[compress:zip] ${dest}`);
   await sh("7z", ["a", "-tzip", dest, "*"], {
-    stdio: "inherit",
+    stdio: "ignore",
     cwd: folder,
   });
 }
@@ -199,7 +199,7 @@ export async function unzip(
     fs.mkdirSync(tempDir, { recursive: true });
 
     await sh("7z", ["x", archive, `-o${tempDir}`, "-y"], {
-      stdio: "inherit",
+      stdio: "ignore",
     });
 
     // Navigate down stripComponents levels and move contents
@@ -244,7 +244,7 @@ export async function unzip(
     await fs.promises.rm(tempDir, { recursive: true });
   } else {
     await sh("7z", ["x", archive, `-o${dest}`, "-y"], {
-      stdio: "inherit",
+      stdio: "ignore",
     });
   }
 }
