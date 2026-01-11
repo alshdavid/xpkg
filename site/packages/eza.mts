@@ -39,6 +39,8 @@ function buildMacOsArm64(version:string) {
     try {
       await wget(`https://github.com/eza-community/eza/archive/refs/tags/v${version}.tar.gz`, Paths["~/tmp/downloads/"]('eza-source', 'source.tar.gz'))
       await untarGz(Paths["~/tmp/downloads/"]('eza-source', 'source.tar.gz'), Paths["~/tmp/downloads/"]('eza-source'), 1)
+      await sh('ls', ['-la'], { cwd: Paths["~/tmp/downloads/"]()})
+      await sh('ls', ['-la'], { cwd: Paths["~/tmp/downloads/"]('eza-source')})
       await fs.promises.rm(Paths["~/tmp/downloads/"]('eza-source', 'rust-toolchain.toml'))
       await sh('cargo', ['build', '--release'], { cwd: Paths["~/tmp/downloads/"]('eza-source') })
       await fs.promises.rename(Paths["~/tmp/downloads/"]('eza-source', 'target', 'release', 'eza'), Paths["~/build/"]('eza'))
