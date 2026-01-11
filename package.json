@@ -2,6 +2,10 @@
   "name": "install-scripts",
   "version": "1.0.0",
   "type": "module",
+  "scripts": {
+    "check": "npx tsc --noEmit",
+    "format": "npx prettier -w ./site"
+  },
   "dependencies": {
     "@types/ejs": "*",
     "@types/node": "*",
