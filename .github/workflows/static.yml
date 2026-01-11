@@ -51,6 +51,7 @@ jobs:
       - run: mkdir /usr/local/gh
       - run: tar -xzf /tmp/deno.tar.gz -C /usr/local/gh
       - run: echo "/usr/local/gh/bin" >> $GITHUB_PATH
+      - run: export PATH="/usr/local/gh/bin:$PATH"
       - run: gh --version
       # Do the thing
       - run: deno install
@@ -89,6 +90,7 @@ jobs:
       - run: mkdir /usr/local/gh
       - run: tar -xzf /tmp/deno.tar.gz -C /usr/local/gh
       - run: echo "/usr/local/gh/bin" >> $GITHUB_PATH
+      - run: export PATH="/usr/local/gh/bin:$PATH"
       - run: gh --version
       # Do the thing
       - run: deno install
