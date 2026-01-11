@@ -1,8 +1,6 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 import * as url from "node:url";
-import * as ejs from "ejs";
-import * as prettier from "prettier";
 
 const filename = url.fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);

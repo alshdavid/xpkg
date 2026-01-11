@@ -186,6 +186,7 @@ jobs:
       # Generate pages
       - run: deno install
       - run: deno -A ./site/generate-package-index.mts --run
+      - run: deno -A ./site/copy-files.mts --run
       - uses: actions/upload-pages-artifact@v3
         with: { path: 'dist' }
       - name: Deploy to GitHub Pages
