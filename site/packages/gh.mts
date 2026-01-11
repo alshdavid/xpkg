@@ -13,11 +13,11 @@ export default async function gh(
 
   // prettier-ignore
   manifest[`${PROJECT}-${version}`] = [
-    { project: PROJECT, version, os: 'linux',    arch:  'amd64',    url: `${BASE}/v${version}/gh_${version}_linux_amd64.tar.gz`   },
-    { project: PROJECT, version, os: 'linux',    arch:  'arm64',    url: `${BASE}/v${version}/gh_${version}_linux_arm64.tar.gz`   },
-    { project: PROJECT, version, os: 'macos',    arch:  'amd64',    url: `${BASE}/v${version}/gh_${version}_macOS_amd64.zip`  },
-    { project: PROJECT, version, os: 'macos',    arch:  'arm64',    url: `${BASE}/v${version}/gh_${version}_macOS_arm64.zip`  },
-    { project: PROJECT, version, os: 'windows',  arch:  'amd64',    url: `${BASE}/v${version}/gh_${version}_windows_amd64.zip` },
-    { project: PROJECT, version, os: 'windows',  arch:  'arm64',    url: `${BASE}/v${version}/gh_${version}_windows_arm64.zip` },
+    { project: PROJECT, version, os: 'linux',    arch:  'amd64',  stripComponents: 1,  url: `${BASE}/v${version}/gh_${version}_linux_amd64.tar.gz`   },
+    { project: PROJECT, version, os: 'linux',    arch:  'arm64',  stripComponents: 1,  url: `${BASE}/v${version}/gh_${version}_linux_arm64.tar.gz`   },
+    { project: PROJECT, version, os: 'macos',    arch:  'amd64',  stripComponents: 1,  url: `${BASE}/v${version}/gh_${version}_macOS_amd64.zip`  },
+    { project: PROJECT, version, os: 'macos',    arch:  'arm64',  stripComponents: 1,  url: `${BASE}/v${version}/gh_${version}_macOS_arm64.zip`  },
+    { project: PROJECT, version, os: 'windows',  arch:  'amd64',  stripComponents: 1,  url: `${BASE}/v${version}/gh_${version}_windows_amd64.zip` },
+    { project: PROJECT, version, os: 'windows',  arch:  'arm64',  stripComponents: 1,  url: `${BASE}/v${version}/gh_${version}_windows_arm64.zip` },
   ]
 }
