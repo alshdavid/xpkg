@@ -87,7 +87,6 @@
         "npm:@napi-rs/lzma@^1.4.5",
         "npm:@types/adm-zip@~0.5.7",
         "npm:@types/ejs@*",
-        "npm:@types/lzma-native@^4.0.4",
         "npm:@types/node@*",
         "npm:@types/semver@*",
         "npm:@types/tar-stream@^3.1.4",
