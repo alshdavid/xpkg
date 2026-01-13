@@ -38,7 +38,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v6
-      - run: apt-get update -y && apt-get install -y curl wget build-essential
+      - run: apt-get update -y && apt-get install -y curl wget build-essential unzip
       # Install Rust
       - run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
       # Install Deno
@@ -75,7 +75,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v6
-      - run: apt-get update -y && apt-get install -y curl wget build-essential
+      - run: apt-get update -y && apt-get install -y curl wget build-essential unzip
       # Install Rust
       - run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
       # Install Deno
