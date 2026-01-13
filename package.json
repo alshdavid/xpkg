@@ -10,7 +10,6 @@
     "@napi-rs/lzma": "^1.4.5",
     "@types/adm-zip": "^0.5.7",
     "@types/ejs": "*",
-    "@types/lzma-native": "^4.0.4",
     "@types/node": "*",
     "@types/semver": "*",
     "@types/tar-stream": "^3.1.4",

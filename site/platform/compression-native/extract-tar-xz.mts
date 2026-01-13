@@ -3,7 +3,7 @@ import { Readable } from "node:stream";
 import { createWriteStream } from "node:fs";
 import { dirname, join } from "node:path";
 import { extract } from "tar-stream";
-import lzma from "lzma-native";
+import { lzma } from "@napi-rs/lzma";
 
 export async function extractTarXz(
   buffer: ArrayBuffer,
@@ -11,8 +11,12 @@ export async function extractTarXz(
   stripComponents?: number,
 ): Promise<void> {
   const nodeBuffer = Buffer.from(buffer);
-  const bufferStream = Readable.from(nodeBuffer);
-  const decompressor = lzma.createDecompressor();
+
+  // Decompress xz to get tar data
+  const tarBuffer = await lzma.decompress(nodeBuffer);
+
+  // Create tar extract stream from decompressed data
+  const bufferStream = Readable.from(tarBuffer);
   const tarExtract = extract();
 
   tarExtract.on("entry", async (header, stream, next) => {
@@ -71,6 +75,6 @@ export async function extractTarXz(
     tarExtract.on("finish", resolve);
     tarExtract.on("error", reject);
 
-    bufferStream.pipe(decompressor).pipe(tarExtract);
+    bufferStream.pipe(tarExtract);
   });
 }
