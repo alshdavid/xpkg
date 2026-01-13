@@ -2,8 +2,8 @@ import { createReadStream, createWriteStream } from "node:fs";
 import { readdir, stat } from "node:fs/promises";
 import { join } from "node:path";
 import { pack } from "tar-stream";
-import { pipeline } from "node:stream/promises";
-import lzma from "lzma-native";
+import { Readable } from "node:stream";
+import lzma from "@napi-rs/lzma";
 
 export async function compressTarXz(
   cwd: string,
@@ -11,12 +11,39 @@ export async function compressTarXz(
   destination: string,
 ): Promise<void> {
   const tarPack = pack();
-  const compressor = lzma.createCompressor();
-  const output = createWriteStream(destination);
-  const pipelinePromise = pipeline(tarPack, compressor, output);
+  
+  // Collect tar data in memory
+  const chunks: Buffer[] = [];
+  tarPack.on('data', (chunk) => chunks.push(chunk));
+  
+  const tarComplete = new Promise<void>((resolve, reject) => {
+    tarPack.on('end', resolve);
+    tarPack.on('error', reject);
+  });
+  
+  // Add files to tar
   await addToTar(tarPack, cwd, target);
   tarPack.finalize();
-  await pipelinePromise;
+  
+  // Wait for tar to finish
+  await tarComplete;
+  
+  // Concatenate all chunks
+  const tarBuffer = Buffer.concat(chunks);
+  
+  // Compress with xz
+  const compressedBuffer = await lzma.lzma.compress(tarBuffer);
+  
+  // Write to file
+  await new Promise<void>((resolve, reject) => {
+    const output = createWriteStream(destination);
+    const stream = Readable.from(compressedBuffer);
+    
+    stream.pipe(output);
+    
+    output.on('finish', resolve);
+    output.on('error', reject);
+  });
 }
 
 async function addToTar(

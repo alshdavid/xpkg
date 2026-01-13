@@ -7,6 +7,7 @@
     "format": "npx prettier -w ./site"
   },
   "dependencies": {
+    "@napi-rs/lzma": "^1.4.5",
     "@types/adm-zip": "^0.5.7",
     "@types/ejs": "*",
     "@types/lzma-native": "^4.0.4",
@@ -15,7 +16,6 @@
     "@types/tar-stream": "^3.1.4",
     "adm-zip": "^0.5.16",
     "ejs": "*",
-    "lzma-native": "^8.0.6",
     "prettier": "*",
     "semver": "*",
     "tar-stream": "^3.1.7",

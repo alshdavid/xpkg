@@ -84,6 +84,7 @@
   "workspace": {
     "packageJson": {
       "dependencies": [
+        "npm:@napi-rs/lzma@^1.4.5",
         "npm:@types/adm-zip@~0.5.7",
         "npm:@types/ejs@*",
         "npm:@types/lzma-native@^4.0.4",
@@ -92,7 +93,6 @@
         "npm:@types/tar-stream@^3.1.4",
         "npm:adm-zip@~0.5.16",
         "npm:ejs@*",
-        "npm:lzma-native@^8.0.6",
         "npm:prettier@*",
         "npm:semver@*",
         "npm:tar-stream@^3.1.7",
