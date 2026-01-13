@@ -5,11 +5,11 @@
 
 import * as fs from "node:fs";
 import { Paths } from "../platform/paths.mts";
-import { untarGz } from "../platform/compression.mts";
 import * as githubApi from "../platform/github.mts";
 import { sh } from "../platform/sh.mts";
 import { wget } from "../platform/wget.mts";
 import { DownloadManifest } from "../platform/download-manifest.mts";
+import { extractTarGz } from "../platform/compression-native/extract-tar-gz.mts";
 
 export const PROJECT = "eza";
 const REPO = "eza-community/eza";
@@ -35,15 +35,10 @@ function buildMacOsArm64(version: string) {
       return;
     }
     try {
-      await wget(
+      const ab = await wget(
         `https://github.com/eza-community/eza/archive/refs/tags/v${version}.tar.gz`,
-        Paths["~/tmp/downloads/"]("eza-source", "source.tar.gz"),
       );
-      await untarGz(
-        Paths["~/tmp/downloads/"]("eza-source", "source.tar.gz"),
-        Paths["~/tmp/downloads/"]("eza-source"),
-        1,
-      );
+      await extractTarGz(ab, Paths["~/tmp/downloads/"]("eza-source"), 1);
       await fs.promises.rm(
         Paths["~/tmp/downloads/"]("eza-source", "rust-toolchain.toml"),
       );
@@ -73,15 +68,10 @@ function buildLinuxAmd64(version: string) {
       return;
     }
     try {
-      await wget(
+      const ab = await wget(
         `https://github.com/eza-community/eza/archive/refs/tags/v${version}.tar.gz`,
-        Paths["~/tmp/downloads/"]("eza-source", "source.tar.gz"),
       );
-      await untarGz(
-        Paths["~/tmp/downloads/"]("eza-source", "source.tar.gz"),
-        Paths["~/tmp/downloads/"]("eza-source"),
-        1,
-      );
+      await extractTarGz(ab, Paths["~/tmp/downloads/"]("eza-source"), 1);
       await fs.promises.rm(
         Paths["~/tmp/downloads/"]("eza-source", "rust-toolchain.toml"),
       );

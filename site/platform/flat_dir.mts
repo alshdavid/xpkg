@@ -37,39 +37,39 @@ export async function flattenDirectory(
 
 function sortDirectoryStructure(entries: FsEntry[]): FsEntry[] {
   const grouped = new Map<string, FsEntry[]>();
-  
+
   for (const entry of entries) {
     const [path] = entry;
-    const lastSlash = path.lastIndexOf('/');
-    const parentPath = lastSlash > 0 ? path.substring(0, lastSlash) : '';
-    
+    const lastSlash = path.lastIndexOf("/");
+    const parentPath = lastSlash > 0 ? path.substring(0, lastSlash) : "";
+
     if (!grouped.has(parentPath)) {
       grouped.set(parentPath, []);
     }
     grouped.get(parentPath)!.push(entry);
   }
-  
+
   function processLevel(parentPath: string): FsEntry[] {
     const children = grouped.get(parentPath);
     if (!children) return [];
-    
+
     const levelResult: FsEntry[] = [];
-    
-    const files = children.filter(([_, type]) => type === 'file');
-    const directories = children.filter(([_, type]) => type === 'directory');
-    
+
+    const files = children.filter(([_, type]) => type === "file");
+    const directories = children.filter(([_, type]) => type === "directory");
+
     files.sort((a, b) => a[0].localeCompare(b[0]));
     levelResult.push(...files);
-    
+
     directories.sort((a, b) => a[0].localeCompare(b[0]));
-    
+
     for (const dir of directories) {
       levelResult.push(dir);
       levelResult.push(...processLevel(dir[0]));
     }
-    
+
     return levelResult;
   }
-  
-  return processLevel('');
+
+  return processLevel("");
 }

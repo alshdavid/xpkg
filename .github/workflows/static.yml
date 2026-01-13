@@ -38,8 +38,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v6
-      - run: apt-get update -y && apt-get install -y curl build-essential wget unzip zip p7zip-full
-      - run: 7z --help
+      - run: apt-get update -y && apt-get install -y curl wget build-essential
       # Install Rust
       - run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
       # Install Deno
@@ -76,9 +75,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v6
-      - run: apt-get update -y && apt-get install -y curl build-essential
-      - run: apt-get update -y && apt-get install -y curl build-essential wget unzip zip p7zip-full
-      - run: 7z --help
+      - run: apt-get update -y && apt-get install -y curl wget build-essential
       # Install Rust
       - run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
       # Install Deno
@@ -107,8 +104,6 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v6
-      - run: brew install p7zip
-      - run: 7z --help
       # Install Rust
       - run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
       # Install Deno
@@ -130,8 +125,6 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v6
-      - run: choco install -y wget unzip zip 7zip
-      - run: 7z --help
       # Install Rust
       - run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
       - run: cargo --version

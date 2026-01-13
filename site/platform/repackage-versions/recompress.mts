@@ -1,8 +1,13 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { wget } from "../wget.mts";
-import { tarGz, tarXz, untarGz, untarXz, unzip, zip } from "../compression.mts";
 import type { ArchiveFormat, OsArch } from "../types.mts";
+import { extractTarGz } from "../compression-native/extract-tar-gz.mts";
+import { extractTarXz } from "../compression-native/extract-tar-xz.mts";
+import { extractZip } from "../compression-native/extract-zip.mts";
+import { compressTarGz } from "../compression-native/compress-tar-gz.mts";
+import { compressTarXz } from "../compression-native/compress-tar-xz.mts";
+import { compressZip } from "../compression-native/compress-zip.mts";
 
 export async function recompress(
   tmpRoot: string,
@@ -44,16 +49,14 @@ export async function recompress(
   }
 
   let url = url_original;
+  let ab: ArrayBuffer | undefined;
+
   if (url.startsWith("file://")) {
     const local_path = url.replace("file://", "");
     if (!fs.existsSync(local_path)) {
       return false;
     }
 
-    console.log({ local_path });
-    console.log({
-      local_path: path.join(tmpDownloads, path.basename(local_path)),
-    });
     await fs.promises.rename(local_path, path.join(tmpDownloads, inputArchive));
     url = local_path;
     console.log({ url });
@@ -62,30 +65,29 @@ export async function recompress(
       return false;
     }
 
-    await wget(url, path.join(tmpDownloads, inputArchive));
+    ab = await wget(url);
   }
 
   switch (format) {
     case "tar.gz":
-      await untarGz(
-        path.join(tmpDownloads, inputArchive),
+      if (!ab) throw new Error("No Archive");
+      await extractTarGz(
+        ab,
         path.join(tmpDownloads, inputName),
         stripComponents,
       );
       break;
     case "tar.xz":
-      await untarXz(
-        path.join(tmpDownloads, inputArchive),
+      if (!ab) throw new Error("No Archive");
+      await extractTarXz(
+        ab,
         path.join(tmpDownloads, inputName),
         stripComponents,
       );
       break;
     case "zip":
-      await unzip(
-        path.join(tmpDownloads, inputArchive),
-        path.join(tmpDownloads, inputName),
-        stripComponents,
-      );
+      if (!ab) throw new Error("No Archive");
+      await extractZip(ab, path.join(tmpDownloads, inputName), stripComponents);
       break;
     case "bin":
       await fs.promises.mkdir(path.join(tmpDownloads, inputName), {
@@ -107,30 +109,23 @@ export async function recompress(
       throw new Error(`ArchiveFormat not supported: ${format}`);
   }
 
-  await tarXz(
+  await compressTarGz(
     path.join(tmpDownloads, inputName),
+    ".",
     path.join(outDir, `${inputName}.tar.xz`),
   );
 
-  await tarGz(
+  await compressTarXz(
     path.join(tmpDownloads, inputName),
+    ".",
     path.join(outDir, `${inputName}.tar.gz`),
   );
 
-  await zip(
+  await compressZip(
     path.join(tmpDownloads, inputName),
+    ".",
     path.join(outDir, `${inputName}.zip`),
   );
-
-  // await fs.promises.rm(
-  //   path.join(tmpDownloads, inputName),
-  //   { recursive: true, force: true }
-  // )
-
-  // await fs.promises.rm(
-  //   path.join(tmpDownloads, inputArchive),
-  //   { recursive: true, force: true }
-  // )
 
   return true;
 }
