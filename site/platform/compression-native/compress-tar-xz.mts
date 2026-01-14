@@ -3,7 +3,7 @@ import { readdir, stat } from "node:fs/promises";
 import { join } from "node:path";
 import { pack } from "tar-stream";
 import { Readable } from "node:stream";
-import { lzma } from "@napi-rs/lzma";
+import { xz } from "@napi-rs/lzma";
 
 export async function compressTarXz(
   cwd: string,
@@ -32,8 +32,9 @@ export async function compressTarXz(
   const tarBuffer = Buffer.concat(chunks);
   console.log(`Tar buffer size: ${tarBuffer.length} bytes`);
 
-  // Compress with xz
-  const compressedBuffer = await lzma.compress(tarBuffer);
+  // Compress with XZ (LZMA2 format)
+  const compressedBuffer = await xz.compress(tarBuffer);
+  
   console.log(`Compressed buffer size: ${compressedBuffer.length} bytes`);
   console.log(`First 10 bytes (hex): ${compressedBuffer.slice(0, 10).toString('hex')}`);
   
@@ -94,13 +95,11 @@ async function addToTar(
         },
         (error) => {
           if (error) reject(error);
-          // Don't resolve here - wait for pipe to finish
         },
       );
 
       fileStream.pipe(entry);
-
-      // Wait for the entry to finish writing
+      
       entry.on("finish", resolve);
       entry.on("error", reject);
       fileStream.on("error", reject);
