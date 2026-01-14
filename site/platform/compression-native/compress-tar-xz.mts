@@ -43,6 +43,7 @@ export async function compressTarXz(
 
     output.on("finish", resolve);
     output.on("error", reject);
+    stream.on("error", reject);
   });
 }
 
@@ -80,11 +81,16 @@ async function addToTar(
         },
         (error) => {
           if (error) reject(error);
-          else resolve();
+          // Don't resolve here - wait for pipe to finish
         },
       );
 
       fileStream.pipe(entry);
+
+      // Wait for the entry to finish writing
+      entry.on("finish", resolve);
+      entry.on("error", reject);
+      fileStream.on("error", reject);
     });
   }
 }

@@ -14,10 +14,16 @@ export async function compressTarGz(
   const gzip = createGzip();
   const output = createWriteStream(destination);
 
+  // Start pipeline but don't await yet
   const pipelinePromise = pipeline(tarPack, gzip, output);
+
+  // Add all entries and wait for them to complete
   await addToTar(tarPack, cwd, target);
+
+  // Now finalize the pack
   tarPack.finalize();
 
+  // Wait for the pipeline to complete
   await pipelinePromise;
 }
 
@@ -60,6 +66,9 @@ async function addToTar(
       );
 
       fileStream.pipe(entry);
+
+      // Also handle file stream errors
+      fileStream.on("error", reject);
     });
   }
 }
