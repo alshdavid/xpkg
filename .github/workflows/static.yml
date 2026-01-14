@@ -42,13 +42,9 @@ jobs:
       # Install 8zip
       - run: curl -L https://github.com/alshdavid/xpkg/releases/download/8zip-0.0.1/8zip-0.0.1-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
       # Install Rust
-      - run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-      - run: echo "$HOME/.cargo/bin" >> $GITHUB_PATH
-      - run: export PATH="$HOME/.cargo/bin:$PATH"
+      - run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && echo "$HOME/.cargo/bin" >> $GITHUB_PATH
       # Install Deno
-      - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip -O /tmp/deno.zip
-      - run: unzip /tmp/deno.zip -d /tmp
-      - run: mv /tmp/deno /usr/local/bin/deno
+      - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip -O /tmp/deno.zip && unzip /tmp/deno.zip -d /tmp && mv /tmp/deno /usr/local/bin/deno
       # Install GH CLI
       - run: wget https://github.com/cli/cli/releases/download/v2.83.2/gh_2.83.2_linux_amd64.tar.gz -O /tmp/deno.tar.gz
       - run: mkdir /usr/local/gh
