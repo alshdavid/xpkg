@@ -9,11 +9,11 @@ export default async function deno(manifest: DownloadManifest): Promise<void> {
 
   // prettier-ignore
   manifest[`${PROJECT}-${version}`] = [
-    { project: PROJECT, version, os: 'linux',    arch:  'amd64',   url: `https://github.com/alshdavid/8zip/releases/download/${version}/linux-amd64.tar.xz`    },
-    { project: PROJECT, version, os: 'linux',    arch:  'arm64',   url: `https://github.com/alshdavid/8zip/releases/download/${version}/linux-arm64.tar.xz`    },
-    { project: PROJECT, version, os: 'macos',    arch:  'amd64',   url: `https://github.com/alshdavid/8zip/releases/download/${version}/macos-amd64.tar.xz`    },
-    { project: PROJECT, version, os: 'macos',    arch:  'arm64',   url: `https://github.com/alshdavid/8zip/releases/download/${version}/macos-arm64.tar.xz`    },
-    { project: PROJECT, version, os: 'windows',  arch:  'amd64',   url: `https://github.com/alshdavid/8zip/releases/download/${version}/windows-amd64.tar.xz`  },
-    { project: PROJECT, version, os: 'windows',  arch:  'arm64',   url: `https://github.com/alshdavid/8zip/releases/download/${version}/windows-arm64.tar.xz`  },
+    { project: PROJECT, version, os: 'linux',    arch:  'amd64',   url: `https://github.com/alshdavid/8zip/releases/download/${version}/8zip-linux-amd64.tar.xz`    },
+    { project: PROJECT, version, os: 'linux',    arch:  'arm64',   url: `https://github.com/alshdavid/8zip/releases/download/${version}/8zip-linux-arm64.tar.xz`    },
+    { project: PROJECT, version, os: 'macos',    arch:  'amd64',   url: `https://github.com/alshdavid/8zip/releases/download/${version}/8zip-macos-amd64.tar.xz`    },
+    { project: PROJECT, version, os: 'macos',    arch:  'arm64',   url: `https://github.com/alshdavid/8zip/releases/download/${version}/8zip-macos-arm64.tar.xz`    },
+    { project: PROJECT, version, os: 'windows',  arch:  'amd64',   url: `https://github.com/alshdavid/8zip/releases/download/${version}/8zip-windows-amd64.tar.xz`  },
+    { project: PROJECT, version, os: 'windows',  arch:  'arm64',   url: `https://github.com/alshdavid/8zip/releases/download/${version}/8zip-windows-arm64.tar.xz`  },
   ]
 }
