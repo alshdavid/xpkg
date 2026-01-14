@@ -42,9 +42,9 @@ jobs:
       # Install Rust
       - run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && echo "$HOME/.cargo/bin" >> $GITHUB_PATH
       # Install Deno
-      - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip -O /tmp/deno.zip && unzip /tmp/deno.zip -d /tmp && mv /tmp/deno /usr/local/bin/deno
+      - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip -O /tmp/deno.zip && unzip /tmp/deno.zip -d /usr/local/bin
       # Install GH CLI
-      - run: curl -L https://github.com/cli/cli/releases/download/v2.83.2/gh_2.83.2_linux_amd64.tar.gz | tar -xzf - --strip-components=1 bin/gh -C /usr/local/bin
+      - run: curl -L https://github.com/cli/cli/releases/download/v2.83.2/gh_2.83.2_linux_amd64.tar.gz | tar -xzf - --strip-components=2 "*/bin/gh" -C /usr/local/bin
       - run: gh --version
       # Do the thing
       - run: deno install
