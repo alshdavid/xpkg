@@ -113,7 +113,7 @@ jobs:
       # Install Rust
       - run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y  && echo "$HOME/.cargo/bin" >> $GITHUB_PATH
       # Install Deno
-      - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-pc-windows-msvc.zip -O /tmp/deno.zip && unzip /tmp/deno.zip -d /usr/local/bin
+      - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-pc-windows-msvc.zip -O /tmp/deno.zip && unzip /tmp/deno.zip -d /usr/bin
       # Do the thing
       - run: deno install
       - run: deno -A ./site/cmd/build-packages.mts --run
