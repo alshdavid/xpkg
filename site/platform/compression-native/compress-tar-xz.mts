@@ -27,22 +27,9 @@ export async function compressTarXz(
 
   // Concatenate all chunks
   const tarBuffer = Buffer.concat(chunks);
-  console.log(`Tar buffer size: ${tarBuffer.length} bytes`);
 
   // Compress with XZ (LZMA2 format)
   const compressedBuffer = await compress(tarBuffer);
-
-  console.log(`Compressed buffer size: ${compressedBuffer.length} bytes`);
-  console.log(
-    `First 10 bytes (hex): ${compressedBuffer.slice(0, 10).toString("hex")}`,
-  );
-
-  // XZ files should start with: FD 37 7A 58 5A 00
-  if (compressedBuffer[0] === 0xfd && compressedBuffer[1] === 0x37) {
-    console.log("✓ File appears to be XZ compressed");
-  } else {
-    console.log("✗ File does NOT appear to be XZ compressed");
-  }
 
   // Write to file
   await new Promise<void>((resolve, reject) => {
