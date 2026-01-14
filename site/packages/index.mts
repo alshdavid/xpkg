@@ -15,3 +15,4 @@ export * as zenith from "./zenith.mts";
 export * as oha from "./oha.mts";
 export * as hyperfine from "./hyperfine.mts";
 export * as gh from "./gh.mts";
+export * as eightZip from "./8zip.mts";
