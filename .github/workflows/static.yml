@@ -44,7 +44,7 @@ jobs:
       # Install Deno
       - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip -O /tmp/deno.zip && unzip /tmp/deno.zip -d /usr/local/bin
       # Install GH CLI
-      - run: curl -L https://github.com/cli/cli/releases/download/v2.83.2/gh_2.83.2_linux_amd64.tar.gz | tar -xzf - --strip-components=2 gh_2.83.2_linux_amd64/bin/gh -C /usr/local/bin
+      - run: mkdir /usr/local/gh; curl -L https://github.com/cli/cli/releases/download/v2.83.2/gh_2.83.2_linux_amd64.tar.gz | tar -xzf - --strip-components=1 -C /usr/local/gh && echo "/usr/local/gh/bin" >> $GITHUB_PATH
       - run: gh --version
       # Do the thing
       - run: deno install
