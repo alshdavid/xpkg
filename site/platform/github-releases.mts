@@ -138,9 +138,6 @@ export async function githubReleaseView({
   if (result.code === 0) {
     return JSON.parse(result.stdout);
   } else {
-    console.error(`ERROR`)
-    console.error(result.stdout)
-    console.error(result.stderr)
-    throw new Error("Command failed");
+    throw new Error("Command failed" + result.stdout + result.stderr);
   }
 }
