@@ -72,8 +72,6 @@ export async function main() {
   const downloadManifestEntries: Array<[string, Array<DownloadManifestEntry>]> =
   Object.entries(downloadManifest);
   downloadManifestEntries.sort((a, b) => sortEntries(a[0], b[0]));
-  console.log(downloadManifest)
-  console.log(downloadManifestEntries)
 
   for (const [releaseName, downloads] of downloadManifestEntries) {
     await fs.promises.rm(Paths["~/tmp"], { recursive: true, force: true });
@@ -138,6 +136,7 @@ export async function main() {
         continue;
       }
 
+      console.log('COMPRESSING' + project)
       const success = await recompress(
         Paths["~/binaries"],
         Paths["~/tmp/downloads"],
