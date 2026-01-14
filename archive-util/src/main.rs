@@ -4,11 +4,14 @@ mod compress_zip;
 mod decompress_tar_gz;
 mod decompress_tar_xz;
 mod decompress_zip;
+mod input_target;
 mod platform;
 
 use std::path::PathBuf;
 
 use clap::{Parser, Subcommand};
+
+use crate::input_target::InputTarget;
 
 #[derive(Debug, Parser)]
 struct Command {
@@ -40,21 +43,21 @@ enum CommandType {
         output: PathBuf,
     },
     DecompressTarGz {
-        target: PathBuf,
+        target: Option<PathBuf>,
         #[arg(long = "strip-components")]
         strip_components: Option<usize>,
         #[arg(long="output", value_parser = platform::cmd_utils::resolve_path)]
         output: PathBuf,
     },
     DecompressTarXz {
-        target: PathBuf,
+        target: Option<PathBuf>,
         #[arg(long = "strip-components")]
         strip_components: Option<usize>,
         #[arg(long="output", value_parser = platform::cmd_utils::resolve_path)]
         output: PathBuf,
     },
     DecompressZip {
-        target: PathBuf,
+        target: Option<PathBuf>,
         #[arg(long = "strip-components")]
         strip_components: Option<usize>,
         #[arg(long="output", value_parser = platform::cmd_utils::resolve_path)]
@@ -86,16 +89,26 @@ fn main() -> anyhow::Result<()> {
             target,
             strip_components,
             output,
-        } => decompress_tar_gz::decompress_tar_gz(&target, &output, strip_components),
+        } => decompress_tar_gz::decompress_tar_gz(
+            InputTarget::detect(target)?,
+            &output,
+            strip_components,
+        ),
         CommandType::DecompressTarXz {
             target,
             strip_components,
             output,
-        } => decompress_tar_xz::decompress_tar_xz(&target, &output, strip_components),
+        } => decompress_tar_xz::decompress_tar_xz(
+            InputTarget::detect(target)?,
+            &output,
+            strip_components,
+        ),
         CommandType::DecompressZip {
             target,
             strip_components,
             output,
-        } => decompress_zip::decompress_zip(&target, &output, strip_components),
+        } => {
+            decompress_zip::decompress_zip(InputTarget::detect(target)?, &output, strip_components)
+        }
     }
 }
