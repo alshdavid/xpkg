@@ -157,49 +157,49 @@ jobs:
           if-no-files-found: warn
           retention-days: 1
 
-  # publish-github-release:
-  #   name: "🔄 Publish Github Release"
-  #   runs-on: ubuntu-24.04
-  #   needs:
-  #     - build_macos_arm64
-  #     - build_linux_amd64
-  #     - build_linux_arm64
-  #     - build_windows_amd64
-  #   steps:
-  #     - uses: actions/checkout@v6
-  #     - uses: actions/download-artifact@v7
-  #       with: 
-  #         path: binaries
-  #         merge-multiple: true
-  #     # Install Deno
-  #     - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip -O /tmp/deno.zip
-  #     - run: unzip /tmp/deno.zip -d /tmp
-  #     - run: mv /tmp/deno /usr/local/bin/deno
-  #     # Generate release
-  #     - run: deno install
-  #     - run: deno -A ./site/cmd/generate-release.mts --run
+  publish-github-release:
+    name: "🔄 Publish Github Release"
+    runs-on: ubuntu-24.04
+    needs:
+      - build_macos_arm64
+      - build_linux_amd64
+      - build_linux_arm64
+      - build_windows_amd64
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/download-artifact@v7
+        with: 
+          path: binaries
+          merge-multiple: true
+      # Install Deno
+      - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip -O /tmp/deno.zip
+      - run: unzip /tmp/deno.zip -d /tmp
+      - run: mv /tmp/deno /usr/local/bin/deno
+      # Generate release
+      - run: deno install
+      - run: deno -A ./site/cmd/generate-release.mts --run
 
-  # publish-pages:
-  #   name: "📃 Publish Pages"
-  #   runs-on: ubuntu-24.04
-  #   needs:
-  #     - publish-github-release
-  #   steps:
-  #     - uses: actions/checkout@v6
-  #     - uses: actions/configure-pages@v5
-  #     # Install Deno
-  #     - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip -O /tmp/deno.zip
-  #     - run: unzip /tmp/deno.zip -d /tmp
-  #     - run: mv /tmp/deno /usr/local/bin/deno
-  #     # Generate pages
-  #     - run: deno install
-  #     - run: deno -A ./site/cmd/generate-package-index.mts --run
-  #     - run: deno -A ./site/cmd/copy-files.mts --run
-  #     - run: deno -A ./site/cmd/build-shell-scripts.mts --run
-  #     - run: deno -A ./site/cmd/build-page.mts --run
-  #     - uses: actions/upload-pages-artifact@v3
-  #       with: { path: 'dist' }
-  #     - name: Deploy to GitHub Pages
-  #       id: deployment
-  #       uses: actions/deploy-pages@v4
+  publish-pages:
+    name: "📃 Publish Pages"
+    runs-on: ubuntu-24.04
+    needs:
+      - publish-github-release
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/configure-pages@v5
+      # Install Deno
+      - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip -O /tmp/deno.zip
+      - run: unzip /tmp/deno.zip -d /tmp
+      - run: mv /tmp/deno /usr/local/bin/deno
+      # Generate pages
+      - run: deno install
+      - run: deno -A ./site/cmd/generate-package-index.mts --run
+      - run: deno -A ./site/cmd/copy-files.mts --run
+      - run: deno -A ./site/cmd/build-shell-scripts.mts --run
+      - run: deno -A ./site/cmd/build-page.mts --run
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: 'dist' }
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
   
