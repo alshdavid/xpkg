@@ -82,9 +82,8 @@ export async function main() {
       continue;
     }
 
-    const projectName = downloads[0].project;
-
-    const releaseDoesExist = await releaseExists(REPO, projectName);
+    console.log(`[${releaseName}] Checking Release Exists`);
+    const releaseDoesExist = await releaseExists(REPO, releaseName);
     if (releaseDoesExist) {
       console.log(`[${releaseName}] SKIP: Release Exists`);
       continue;

@@ -4,8 +4,12 @@ export async function releaseExists(
   repo: string,
   tag: string,
 ): Promise<boolean> {
-  return !!(await githubReleaseView({
-    repo,
-    tag,
-  }));
+  try {
+    return !!(await githubReleaseView({
+      repo,
+      tag,
+    }));    
+  } catch (error) {
+    return false
+  }
 }
