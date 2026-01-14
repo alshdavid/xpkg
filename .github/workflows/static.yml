@@ -39,6 +39,8 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - run: apt-get update -y && apt-get install -y curl wget build-essential unzip
+      # Install 8zip
+      - run: curl -L https://github.com/alshdavid/xpkg/releases/download/8zip-0.0.1/8zip-0.0.1-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
       # Install Rust
       - run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
       - run: echo "$HOME/.cargo/bin" >> $GITHUB_PATH
@@ -54,8 +56,6 @@ jobs:
       - run: echo "/usr/local/gh/bin" >> $GITHUB_PATH
       - run: export PATH="/usr/local/gh/bin:$PATH"
       - run: gh --version
-      # Setup archive-util
-      - run: cargo build --release
       # Do the thing
       - run: deno install
       - run: deno -A ./site/cmd/build-packages.mts --run

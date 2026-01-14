@@ -122,22 +122,18 @@ export async function githubReleaseView({
       tagName: string;
     }>
 > {
-  try {
-    const result = await sh(
-      "gh",
-      [
-        "release",
-        "view",
-        tag,
-        ...["--repo", repo],
-        ...["--json", "id"],
-        ...["--json", "name"],
-        ...["--json", "tagName"],
-      ],
-      { stdio: "pipe" },
-    );
-    return JSON.parse(result.stdout);
-  } catch (error) {
-    return undefined;
-  }
+  const result = await sh(
+    "gh",
+    [
+      "release",
+      "view",
+      tag,
+      ...["--repo", repo],
+      ...["--json", "id"],
+      ...["--json", "name"],
+      ...["--json", "tagName"],
+    ],
+    { stdio: "pipe" },
+  );
+  return JSON.parse(result.stdout);
 }
