@@ -70,8 +70,10 @@ export async function main() {
   }
 
   const downloadManifestEntries: Array<[string, Array<DownloadManifestEntry>]> =
-    Object.entries(downloadManifest);
+  Object.entries(downloadManifest);
   downloadManifestEntries.sort((a, b) => sortEntries(a[0], b[0]));
+  console.log(downloadManifest)
+  console.log(downloadManifestEntries)
 
   for (const [releaseName, downloads] of downloadManifestEntries) {
     await fs.promises.rm(Paths["~/tmp"], { recursive: true, force: true });
@@ -82,7 +84,6 @@ export async function main() {
       continue;
     }
 
-    console.log(`[${releaseName}] Checking Release Exists`);
     const releaseDoesExist = await releaseExists(REPO, releaseName);
     if (releaseDoesExist) {
       console.log(`[${releaseName}] SKIP: Release Exists`);
