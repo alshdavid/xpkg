@@ -9,7 +9,7 @@ export * as http_server_rs from "./http_server_rs.mts";
 export * as rrm from "./rrm.mts";
 export * as flatDir from "./flatDir.mts";
 export * as mpm from "./mpm.mts";
-export * as eza from "./eza.mts";
+// export * as eza from "./eza.mts";
 export * as fnm from "./fnm.mts";
 export * as zenith from "./zenith.mts";
 // export * as oha from "./oha.mts";

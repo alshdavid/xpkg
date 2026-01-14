@@ -1,43 +1,53 @@
-import fs from "node:fs";
-import path from "node:path";
-import { createAutoCleanupTempDir } from "../temp-dir.mts";
-import { archiveUtil } from "./archive-util.mts";
+import { join } from "node:path";
+import AdmZip from "adm-zip";
 
 export async function extractZip(
-  buffer: ArrayBuffer | string,
+  buffer: ArrayBuffer,
   destination: string,
   stripComponents?: number,
 ): Promise<void> {
-  if (typeof buffer === "string") {
-    await archiveUtil(
-      "decompress-zip",
-      "--output",
-      destination,
-      ...(stripComponents ? ["--strip-components", `${stripComponents}`] : []),
-      buffer,
-    );
-    return;
-  }
-  const tempDir = createAutoCleanupTempDir();
-  try {
-    const target = path.join(tempDir, "archive.zip");
-    fs.promises.writeFile(target, Buffer.from(buffer));
+  const nodeBuffer = Buffer.from(buffer);
+  const zip = new AdmZip(nodeBuffer);
 
-    await archiveUtil(
-      "decompress-zip",
-      "--output",
-      destination,
-      ...(stripComponents ? ["--strip-components", `${stripComponents}`] : []),
-      target,
-    );
-  } catch (error) {
-    if (fs.existsSync(tempDir)) {
-      fs.rmSync(tempDir, { force: true, recursive: true });
+  await new Promise<void>((resolve, reject) => {
+    try {
+      const entries = zip.getEntries();
+
+      for (const entry of entries) {
+        // Strip components from the path
+        let entryPath = entry.entryName;
+
+        if (stripComponents && stripComponents > 0) {
+          const parts = entryPath.split("/");
+
+          // If stripping more components than available, skip this entry
+          if (parts.length <= stripComponents) {
+            continue;
+          }
+
+          // Remove the first N components
+          entryPath = parts.slice(stripComponents).join("/");
+
+          // Skip if the result is empty
+          if (!entryPath) {
+            continue;
+          }
+        }
+
+        const outputPath = join(destination, entryPath);
+
+        if (entry.isDirectory) {
+          // Create directory
+          zip.extractEntryTo(entry, destination, false, true, false, entryPath);
+        } else {
+          // Extract file
+          zip.extractEntryTo(entry, destination, false, true, false, entryPath);
+        }
+      }
+
+      resolve();
+    } catch (error) {
+      reject(error);
     }
-    throw error;
-  }
-
-  if (fs.existsSync(tempDir)) {
-    fs.rmSync(tempDir, { force: true, recursive: true });
-  }
+  });
 }
