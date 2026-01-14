@@ -112,13 +112,13 @@ export async function recompress(
   await compressTarGz(
     path.join(tmpDownloads, inputName),
     ".",
-    path.join(outDir, `${inputName}.tar.xz`),
+    path.join(outDir, `${inputName}.tar.gz`),
   );
 
   await compressTarXz(
     path.join(tmpDownloads, inputName),
     ".",
-    path.join(outDir, `${inputName}.tar.gz`),
+    path.join(outDir, `${inputName}.tar.xz`),
   );
 
   await compressZip(
