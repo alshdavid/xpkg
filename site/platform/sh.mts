@@ -32,6 +32,8 @@ export function sh(
           stderr,
         });
       } else {
+        console.error(`[ERROR]: Command "${command} ${args.join(" ")}" failed with exit code ${code}`)
+        console.error(stderr)
         reject(
           new Error(
             `Command "${command} ${args.join(" ")}" failed with exit code ${code}`,
