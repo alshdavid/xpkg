@@ -62,130 +62,130 @@ jobs:
           if-no-files-found: warn
           retention-days: 1
 
-  build_linux_arm64:
-    name: 🐥 Linux ARM64
-    runs-on: ubuntu-24.04-arm
-    defaults:
-      run:
-        working-directory: ${{ github.workspace }}
-    container:
-      image: debian:12
-      env:
-        DEBIAN_FRONTEND: noninteractive
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    steps:
-      - uses: actions/checkout@v6
-      - run: apt-get update -y && apt-get install -y curl wget build-essential unzip
-      # Install Rust
-      - run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-      # Install Deno
-      - run: wget https://github.com/denoland/deno/releases/latest/download/deno-aarch64-unknown-linux-gnu.zip -O /tmp/deno.zip
-      - run: unzip /tmp/deno.zip -d /tmp
-      - run: mv /tmp/deno /usr/local/bin/deno
-      # Install GH CLI
-      - run: wget https://github.com/cli/cli/releases/download/v2.83.2/gh_2.83.2_linux_arm64.tar.gz -O /tmp/deno.tar.gz
-      - run: mkdir /usr/local/gh
-      - run: tar -xzf /tmp/deno.tar.gz -C /usr/local/gh --strip-components=1
-      - run: echo "/usr/local/gh/bin" >> $GITHUB_PATH
-      - run: export PATH="/usr/local/gh/bin:$PATH"
-      - run: gh --version
-      # Do the thing
-      - run: deno install
-      - run: deno -A ./site/cmd/build-packages.mts --run
-      - uses: actions/upload-artifact@v6
-        with:
-          name: packages-linux-arm64
-          path: ${{ github.workspace }}/binaries/**/*
-          if-no-files-found: warn
-          retention-days: 1
+  # build_linux_arm64:
+  #   name: 🐥 Linux ARM64
+  #   runs-on: ubuntu-24.04-arm
+  #   defaults:
+  #     run:
+  #       working-directory: ${{ github.workspace }}
+  #   container:
+  #     image: debian:12
+  #     env:
+  #       DEBIAN_FRONTEND: noninteractive
+  #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #   steps:
+  #     - uses: actions/checkout@v6
+  #     - run: apt-get update -y && apt-get install -y curl wget build-essential unzip
+  #     # Install Rust
+  #     - run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+  #     # Install Deno
+  #     - run: wget https://github.com/denoland/deno/releases/latest/download/deno-aarch64-unknown-linux-gnu.zip -O /tmp/deno.zip
+  #     - run: unzip /tmp/deno.zip -d /tmp
+  #     - run: mv /tmp/deno /usr/local/bin/deno
+  #     # Install GH CLI
+  #     - run: wget https://github.com/cli/cli/releases/download/v2.83.2/gh_2.83.2_linux_arm64.tar.gz -O /tmp/deno.tar.gz
+  #     - run: mkdir /usr/local/gh
+  #     - run: tar -xzf /tmp/deno.tar.gz -C /usr/local/gh --strip-components=1
+  #     - run: echo "/usr/local/gh/bin" >> $GITHUB_PATH
+  #     - run: export PATH="/usr/local/gh/bin:$PATH"
+  #     - run: gh --version
+  #     # Do the thing
+  #     - run: deno install
+  #     - run: deno -A ./site/cmd/build-packages.mts --run
+  #     - uses: actions/upload-artifact@v6
+  #       with:
+  #         name: packages-linux-arm64
+  #         path: ${{ github.workspace }}/binaries/**/*
+  #         if-no-files-found: warn
+  #         retention-days: 1
 
-  build_macos_arm64:
-    name: 🍎 MacOS ARM64
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v6
-      # Install Rust
-      - run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-      # Install Deno
-      - run: wget https://github.com/denoland/deno/releases/latest/download/deno-aarch64-apple-darwin.zip -O /tmp/deno.zip
-      - run: unzip /tmp/deno.zip -d /tmp
-      - run: mv /tmp/deno /usr/local/bin/deno
-      # Do the thing
-      - run: deno install
-      - run: deno -A ./site/cmd/build-packages.mts --run
-      - uses: actions/upload-artifact@v6
-        with:
-          name: packages-macos-arm64
-          path: ${{ github.workspace }}/binaries/**/*
-          if-no-files-found: warn
-          retention-days: 1
+  # build_macos_arm64:
+  #   name: 🍎 MacOS ARM64
+  #   runs-on: macos-latest
+  #   steps:
+  #     - uses: actions/checkout@v6
+  #     # Install Rust
+  #     - run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+  #     # Install Deno
+  #     - run: wget https://github.com/denoland/deno/releases/latest/download/deno-aarch64-apple-darwin.zip -O /tmp/deno.zip
+  #     - run: unzip /tmp/deno.zip -d /tmp
+  #     - run: mv /tmp/deno /usr/local/bin/deno
+  #     # Do the thing
+  #     - run: deno install
+  #     - run: deno -A ./site/cmd/build-packages.mts --run
+  #     - uses: actions/upload-artifact@v6
+  #       with:
+  #         name: packages-macos-arm64
+  #         path: ${{ github.workspace }}/binaries/**/*
+  #         if-no-files-found: warn
+  #         retention-days: 1
 
-  build_windows_amd64:
-    name: 🟦 Windows amd64
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v6
-      - run: choco install -y wget unzip
-      # Install Rust
-      - run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-      - run: cargo --version
-      # Install Deno
-      - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-pc-windows-msvc.zip -O /tmp/deno.zip
-      - run: unzip /tmp/deno.zip -d /tmp
-      - run: mv /tmp/deno.exe /usr/bin/deno.exe
-      # Do the thing
-      - run: deno install
-      - run: deno -A ./site/cmd/build-packages.mts --run
-      - uses: actions/upload-artifact@v6
-        with:
-          name: packages-windows-amd64
-          path: ${{ github.workspace }}/binaries/**/*
-          if-no-files-found: warn
-          retention-days: 1
+  # build_windows_amd64:
+  #   name: 🟦 Windows amd64
+  #   runs-on: windows-latest
+  #   steps:
+  #     - uses: actions/checkout@v6
+  #     - run: choco install -y wget unzip
+  #     # Install Rust
+  #     - run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+  #     - run: cargo --version
+  #     # Install Deno
+  #     - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-pc-windows-msvc.zip -O /tmp/deno.zip
+  #     - run: unzip /tmp/deno.zip -d /tmp
+  #     - run: mv /tmp/deno.exe /usr/bin/deno.exe
+  #     # Do the thing
+  #     - run: deno install
+  #     - run: deno -A ./site/cmd/build-packages.mts --run
+  #     - uses: actions/upload-artifact@v6
+  #       with:
+  #         name: packages-windows-amd64
+  #         path: ${{ github.workspace }}/binaries/**/*
+  #         if-no-files-found: warn
+  #         retention-days: 1
 
-  publish-github-release:
-    name: "🔄 Publish Github Release"
-    runs-on: ubuntu-24.04
-    needs:
-      - build_macos_arm64
-      - build_linux_amd64
-      - build_linux_arm64
-      - build_windows_amd64
-    steps:
-      - uses: actions/checkout@v6
-      - uses: actions/download-artifact@v7
-        with: 
-          path: binaries
-          merge-multiple: true
-      # Install Deno
-      - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip -O /tmp/deno.zip
-      - run: unzip /tmp/deno.zip -d /tmp
-      - run: mv /tmp/deno /usr/local/bin/deno
-      # Generate release
-      - run: deno install
-      - run: deno -A ./site/cmd/generate-release.mts --run
+  # publish-github-release:
+  #   name: "🔄 Publish Github Release"
+  #   runs-on: ubuntu-24.04
+  #   needs:
+  #     - build_macos_arm64
+  #     - build_linux_amd64
+  #     - build_linux_arm64
+  #     - build_windows_amd64
+  #   steps:
+  #     - uses: actions/checkout@v6
+  #     - uses: actions/download-artifact@v7
+  #       with: 
+  #         path: binaries
+  #         merge-multiple: true
+  #     # Install Deno
+  #     - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip -O /tmp/deno.zip
+  #     - run: unzip /tmp/deno.zip -d /tmp
+  #     - run: mv /tmp/deno /usr/local/bin/deno
+  #     # Generate release
+  #     - run: deno install
+  #     - run: deno -A ./site/cmd/generate-release.mts --run
 
-  publish-pages:
-    name: "📃 Publish Pages"
-    runs-on: ubuntu-24.04
-    needs:
-      - publish-github-release
-    steps:
-      - uses: actions/checkout@v6
-      - uses: actions/configure-pages@v5
-      # Install Deno
-      - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip -O /tmp/deno.zip
-      - run: unzip /tmp/deno.zip -d /tmp
-      - run: mv /tmp/deno /usr/local/bin/deno
-      # Generate pages
-      - run: deno install
-      - run: deno -A ./site/cmd/generate-package-index.mts --run
-      - run: deno -A ./site/cmd/copy-files.mts --run
-      - run: deno -A ./site/cmd/build-shell-scripts.mts --run
-      - run: deno -A ./site/cmd/build-page.mts --run
-      - uses: actions/upload-pages-artifact@v3
-        with: { path: 'dist' }
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+  # publish-pages:
+  #   name: "📃 Publish Pages"
+  #   runs-on: ubuntu-24.04
+  #   needs:
+  #     - publish-github-release
+  #   steps:
+  #     - uses: actions/checkout@v6
+  #     - uses: actions/configure-pages@v5
+  #     # Install Deno
+  #     - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip -O /tmp/deno.zip
+  #     - run: unzip /tmp/deno.zip -d /tmp
+  #     - run: mv /tmp/deno /usr/local/bin/deno
+  #     # Generate pages
+  #     - run: deno install
+  #     - run: deno -A ./site/cmd/generate-package-index.mts --run
+  #     - run: deno -A ./site/cmd/copy-files.mts --run
+  #     - run: deno -A ./site/cmd/build-shell-scripts.mts --run
+  #     - run: deno -A ./site/cmd/build-page.mts --run
+  #     - uses: actions/upload-pages-artifact@v3
+  #       with: { path: 'dist' }
+  #     - name: Deploy to GitHub Pages
+  #       id: deployment
+  #       uses: actions/deploy-pages@v4
   
