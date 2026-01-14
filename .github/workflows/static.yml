@@ -52,6 +52,8 @@ jobs:
       - run: echo "/usr/local/gh/bin" >> $GITHUB_PATH
       - run: export PATH="/usr/local/gh/bin:$PATH"
       - run: gh --version
+      # Setup archive-util
+      - run: cargo build --release
       # Do the thing
       - run: deno install
       - run: deno -A ./site/cmd/build-packages.mts --run

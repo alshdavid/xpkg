@@ -4,6 +4,8 @@ import { wget } from "../platform/wget.mts";
 import { compressTarGz } from "../platform/compression-native/compress-tar-gz.mts";
 import { compressZip } from "../platform/compression-native/compress-zip.mts";
 import { compressTarXz } from "../platform/compression-native/compress-tar-xz.mts";
+import { extractTarXz } from "../platform/compression-native/extract-tar-xz.mts";
+import { extractZip } from "../platform/compression-native/extract-zip.mts";
 
 export async function main() {
   if (fs.existsSync("/tmp/nodejs")) {
@@ -39,7 +41,17 @@ export async function main() {
   );
 
   console.log("Compress all");
-  await compressZip("/tmp/nodejs/compressed", ".", "/tmp/nodejs/nodejs.zip");
+  await compressZip(
+    "/tmp/nodejs/compressed",
+    ".",
+    "/tmp/nodejs/compressed.zip",
+  );
+
+  await extractTarGz("/tmp/nodejs/compressed/nodejs.tar.gz", "/tmp/nodejs/gz");
+
+  await extractTarXz("/tmp/nodejs/compressed/nodejs.tar.xz", "/tmp/nodejs/xz");
+
+  await extractZip("/tmp/nodejs/compressed/nodejs.zip", "/tmp/nodejs/zip");
 }
 
 if (process.argv.includes("--run")) {

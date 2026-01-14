@@ -3,7 +3,7 @@ import * as child_process from "node:child_process";
 export function sh(
   command: string,
   args: Array<string> = [],
-  options: child_process.SpawnOptions = {},
+  options: child_process.SpawnOptions & any = {},
 ): Promise<{ code: number; stdout: string; stderr: string }> {
   const child = child_process.spawn(command, args, {
     shell: false,
