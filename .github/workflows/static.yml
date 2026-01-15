@@ -1,9 +1,11 @@
-name: Alternative
+name: Deploy static content to Pages
 
 on:
   push:
     branches: ["main"]
   workflow_dispatch:
+  schedule:
+    - cron: '0 * * * *'
 
 defaults:
   run:
@@ -142,6 +144,32 @@ jobs:
         with: 
           path: binaries
           merge-multiple: true
-      - run: ls -la binaries
+      # Install Deno
+      - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip -O /tmp/deno.zip && unzip /tmp/deno.zip -d /usr/local/bin
+      # Generate release
+      - run: deno install
+      - run: deno -A ./site/cmd/generate-release.mts --run
 
+  publish-pages:
+    name: "📃 Publish Pages"
+    runs-on: ubuntu-24.04
+    needs:
+      - publish-github-release
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/configure-pages@v5
+      # Install Deno
+      - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip -O /tmp/deno.zip && unzip /tmp/deno.zip -d /usr/local/bin
+      # Generate pages
+      - run: deno install
+      - run: deno -A ./site/cmd/generate-package-index.mts --run
+      - run: deno -A ./site/cmd/copy-files.mts --run
+      - run: deno -A ./site/cmd/build-shell-scripts.mts --run
+      - run: deno -A ./site/cmd/build-page.mts --run
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: 'dist' }
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+  
 
