@@ -96,4 +96,21 @@ jobs:
           if-no-files-found: warn
           retention-days: 1
 
+  publish-github-release:
+    name: "🔄 Publish Github Release"
+    runs-on: ubuntu-24.04
+    needs:
+      - pkg_gh
+      - pkg_deno
+      - pkg_8zip
+      - pkg_fnm
+      - pkg_node
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/download-artifact@v7
+        with: 
+          path: binaries
+          merge-multiple: true
+      - run: ls -la binaries
+
 
