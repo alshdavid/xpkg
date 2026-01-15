@@ -1,5 +1,3 @@
-#!/usr/bin/env -S deno -A
-
 import semver from "npm:semver";
 
 void async function main() {

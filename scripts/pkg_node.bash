@@ -6,7 +6,7 @@ PATH="$SCRIPT_DIR/platform:$PATH"
 
 PACKAGE="nodejs"
 
-declare -a nodejs_versions=($(get-nodejs-versions))
+declare -a nodejs_versions=($(deno -A $SCRIPT_DIR/platform/get-nodejs-versions.mts))
 
 for VERSION in "${nodejs_versions[@]}"; do
   echo "CHECKING: $VERSION"
