@@ -12,10 +12,10 @@ rm -rf $TMP_DIR/extracted
 rm -rf $TMP_DIR/binaries
 rm -rf $ROOT_DIR/binaries/$PACKAGE-$VERSION
 
-# if [ $(gh-release-exists alshdavid/xpkg "${PACKAGE}-${VERSION}") = "true" ]; then
-#   echo Already Up To Date
-#   exit 0
-# fi
+if [ $(gh-release-exists alshdavid/xpkg "${PACKAGE}-${VERSION}") = "true" ]; then
+  echo Already Up To Date
+  exit 0
+fi
 
 mkdir -p $TMP_DIR/download          
 wget -q -P $TMP_DIR/download https://github.com/cli/cli/releases/download/v${VERSION}/gh_${VERSION}_linux_amd64.tar.gz    

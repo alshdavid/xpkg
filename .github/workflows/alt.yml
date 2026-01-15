@@ -30,56 +30,52 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
-      - run: bash ./scripts/pkg_gh.bash
+      - run: bash ./scripts/pkg_${{ github.job.name }}.bash
       - uses: actions/upload-artifact@v6
         with:
-          name: binaries_gh
+          name: binaries_${{ github.job.name }}
           path: ${{ github.workspace }}/binaries/**/*
           if-no-files-found: warn
           retention-days: 1
-
   pkg_deno:
     name: deno
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
       - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
-      - run: bash ./scripts/pkg_deno.bash
+      - run: bash ./scripts/pkg_${{ github.job.name }}.bash
       - uses: actions/upload-artifact@v6
         with:
-          name: binaries_deno
+          name: binaries_${{ github.job.name }}
           path: ${{ github.workspace }}/binaries/**/*
           if-no-files-found: warn
           retention-days: 1
-
   pkg_8zip:
     name: 8zip
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
       - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
-      - run: bash ./scripts/pkg_8zip.bash
+      - run: bash ./scripts/pkg_${{ github.job.name }}.bash
       - uses: actions/upload-artifact@v6
         with:
-          name: binaries_8zip
+          name: binaries_${{ github.job.name }}
           path: ${{ github.workspace }}/binaries/**/*
           if-no-files-found: warn
           retention-days: 1
-
   pkg_fnm:
     name: fnm
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
       - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
-      - run: bash ./scripts/pkg_fnm.bash
+      - run: bash ./scripts/pkg_${{ github.job.name }}.bash
       - uses: actions/upload-artifact@v6
         with:
-          name: binaries_fnm
+          name: binaries_${{ github.job.name }}
           path: ${{ github.workspace }}/binaries/**/*
           if-no-files-found: warn
           retention-days: 1
-
   pkg_node:
     name: node
     runs-on: ubuntu-24.04
@@ -88,10 +84,23 @@ jobs:
       - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
       - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip -O /tmp/deno.zip && unzip /tmp/deno.zip -d /usr/local/bin
       - run: deno install
-      - run: bash ./scripts/pkg_node.bash
+      - run: bash ./scripts/pkg_${{ github.job.name }}.bash
       - uses: actions/upload-artifact@v6
         with:
-          name: binaries_node
+          name: binaries_${{ github.job.name }}
+          path: ${{ github.workspace }}/binaries/**/*
+          if-no-files-found: warn
+          retention-days: 1
+  pkg_hyperfine:
+    name: hyperfine
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
+      - run: bash ./scripts/pkg_${{ github.job.name }}.bash
+      - uses: actions/upload-artifact@v6
+        with:
+          name: binaries_${{ github.job.name }}
           path: ${{ github.workspace }}/binaries/**/*
           if-no-files-found: warn
           retention-days: 1
@@ -105,6 +114,7 @@ jobs:
       - pkg_8zip
       - pkg_fnm
       - pkg_node
+      - pkg_hyperfine
     steps:
       - uses: actions/checkout@v6
       - uses: actions/download-artifact@v7

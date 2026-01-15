@@ -7,7 +7,7 @@ void async function main() {
 
   for (const release of resp) {
     const version = release.version.replace("v", "");
-    const [major, minor] = version.split(".");
+    const [major, _minor] = version.split(".");
     const key = `${major}`;
     allVersions[key] = allVersions[key] || [];
     if (allVersions[key].length >= 1) {
@@ -26,7 +26,7 @@ void async function main() {
     versions.push(result)
   }
 
-  let output: string[] = []
+  const output: string[] = []
 
   for (const [, version] of versions) {
     for (const innerVersion of version) {
