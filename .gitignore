@@ -6,3 +6,6 @@ tmp
 target
 binaries
 build
+scripts/binaries
+scripts/download
+scripts/extracted
