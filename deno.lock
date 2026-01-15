@@ -1,51 +1,266 @@
 {
   "version": "5",
   "specifiers": {
+    "npm:@napi-rs/lzma@^1.4.5": "1.4.5",
+    "npm:@types/adm-zip@~0.5.7": "0.5.7",
     "npm:@types/ejs@*": "3.1.5",
     "npm:@types/node@*": "25.0.6",
     "npm:@types/semver@*": "7.7.1",
+    "npm:@types/tar-stream@^3.1.4": "3.1.4",
+    "npm:adm-zip@~0.5.16": "0.5.16",
     "npm:ejs@*": "3.1.10",
     "npm:prettier@*": "3.7.4",
     "npm:semver@*": "7.7.3",
+    "npm:tar-stream@^3.1.7": "3.1.7",
     "npm:typescript@*": "5.9.3"
   },
   "npm": {
+    "@emnapi/core@1.8.1": {
+      "integrity": "sha512-AvT9QFpxK0Zd8J0jopedNm+w/2fIzvtPKPjqyw9jwvBaReTTqPBk9Hixaz7KbjimP+QNz605/XnjFcDAL2pqBg==",
+      "dependencies": [
+        "@emnapi/wasi-threads",
+        "tslib"
+      ],
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/@emnapi/core/-/core-1.8.1.tgz"
+    },
+    "@emnapi/runtime@1.8.1": {
+      "integrity": "sha512-mehfKSMWjjNol8659Z8KxEMrdSJDDot5SXMq00dM8BN4o+CLNXQ0xH2V7EchNHV4RmbZLmmPdEaXZc5H2FXmDg==",
+      "dependencies": [
+        "tslib"
+      ],
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/@emnapi/runtime/-/runtime-1.8.1.tgz"
+    },
+    "@emnapi/wasi-threads@1.1.0": {
+      "integrity": "sha512-WI0DdZ8xFSbgMjR1sFsKABJ/C5OnRrjT06JXbZKexJGrDuPTzZdDYfFlsgcCXCyf+suG5QU2e/y1Wo2V/OapLQ==",
+      "dependencies": [
+        "tslib"
+      ],
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/@emnapi/wasi-threads/-/wasi-threads-1.1.0.tgz"
+    },
+    "@napi-rs/lzma-android-arm-eabi@1.4.5": {
+      "integrity": "sha512-Up4gpyw2SacmyKWWEib06GhiDdF+H+CCU0LAV8pnM4aJIDqKKd5LHSlBht83Jut6frkB0vwEPmAkv4NjQ5u//Q==",
+      "os": ["android"],
+      "cpu": ["arm"],
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/@napi-rs/lzma-android-arm-eabi/-/lzma-android-arm-eabi-1.4.5.tgz"
+    },
+    "@napi-rs/lzma-android-arm64@1.4.5": {
+      "integrity": "sha512-uwa8sLlWEzkAM0MWyoZJg0JTD3BkPknvejAFG2acUA1raXM8jLrqujWCdOStisXhqQjZ2nDMp3FV6cs//zjfuQ==",
+      "os": ["android"],
+      "cpu": ["arm64"],
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/@napi-rs/lzma-android-arm64/-/lzma-android-arm64-1.4.5.tgz"
+    },
+    "@napi-rs/lzma-darwin-arm64@1.4.5": {
+      "integrity": "sha512-0Y0TQLQ2xAjVabrMDem1NhIssOZzF/y/dqetc6OT8mD3xMTDtF8u5BqZoX3MyPc9FzpsZw4ksol+w7DsxHrpMA==",
+      "os": ["darwin"],
+      "cpu": ["arm64"],
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/@napi-rs/lzma-darwin-arm64/-/lzma-darwin-arm64-1.4.5.tgz"
+    },
+    "@napi-rs/lzma-darwin-x64@1.4.5": {
+      "integrity": "sha512-vR2IUyJY3En+V1wJkwmbGWcYiT8pHloTAWdW4pG24+51GIq+intst6Uf6D/r46citObGZrlX0QvMarOkQeHWpw==",
+      "os": ["darwin"],
+      "cpu": ["x64"],
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/@napi-rs/lzma-darwin-x64/-/lzma-darwin-x64-1.4.5.tgz"
+    },
+    "@napi-rs/lzma-freebsd-x64@1.4.5": {
+      "integrity": "sha512-XpnYQC5SVovO35tF0xGkbHYjsS6kqyNCjuaLQ2dbEblFRr5cAZVvsJ/9h7zj/5FluJPJRDojVNxGyRhTp4z2lw==",
+      "os": ["freebsd"],
+      "cpu": ["x64"],
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/@napi-rs/lzma-freebsd-x64/-/lzma-freebsd-x64-1.4.5.tgz"
+    },
+    "@napi-rs/lzma-linux-arm-gnueabihf@1.4.5": {
+      "integrity": "sha512-ic1ZZMoRfRMwtSwxkyw4zIlbDZGC6davC9r+2oX6x9QiF247BRqqT94qGeL5ZP4Vtz0Hyy7TEViWhx5j6Bpzvw==",
+      "os": ["linux"],
+      "cpu": ["arm"],
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/@napi-rs/lzma-linux-arm-gnueabihf/-/lzma-linux-arm-gnueabihf-1.4.5.tgz"
+    },
+    "@napi-rs/lzma-linux-arm64-gnu@1.4.5": {
+      "integrity": "sha512-asEp7FPd7C1Yi6DQb45a3KPHKOFBSfGuJWXcAd4/bL2Fjetb2n/KK2z14yfW8YC/Fv6x3rBM0VAZKmJuz4tysg==",
+      "os": ["linux"],
+      "cpu": ["arm64"],
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/@napi-rs/lzma-linux-arm64-gnu/-/lzma-linux-arm64-gnu-1.4.5.tgz"
+    },
+    "@napi-rs/lzma-linux-arm64-musl@1.4.5": {
+      "integrity": "sha512-yWjcPDgJ2nIL3KNvi4536dlT/CcCWO0DUyEOlBs/SacG7BeD6IjGh6yYzd3/X1Y3JItCbZoDoLUH8iB1lTXo3w==",
+      "os": ["linux"],
+      "cpu": ["arm64"],
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/@napi-rs/lzma-linux-arm64-musl/-/lzma-linux-arm64-musl-1.4.5.tgz"
+    },
+    "@napi-rs/lzma-linux-ppc64-gnu@1.4.5": {
+      "integrity": "sha512-0XRhKuIU/9ZjT4WDIG/qnX7Xz7mSQHYZo9Gb3MP2gcvBgr6BA4zywQ9k3gmQaPn9ECE+CZg2V7DV7kT+x2pUMQ==",
+      "os": ["linux"],
+      "cpu": ["ppc64"],
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/@napi-rs/lzma-linux-ppc64-gnu/-/lzma-linux-ppc64-gnu-1.4.5.tgz"
+    },
+    "@napi-rs/lzma-linux-riscv64-gnu@1.4.5": {
+      "integrity": "sha512-QrqDIPEUUB23GCpyQj/QFyMlr8SGxxyExeZz9OWFnHfb70kXdTLWrHS/hEI1Ru+lSbQ/6xRqeoGyQ4Aqdg+/RA==",
+      "os": ["linux"],
+      "cpu": ["riscv64"],
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/@napi-rs/lzma-linux-riscv64-gnu/-/lzma-linux-riscv64-gnu-1.4.5.tgz"
+    },
+    "@napi-rs/lzma-linux-s390x-gnu@1.4.5": {
+      "integrity": "sha512-k8RVM5aMhW86E9H0QXdquwojew4H3SwPxbRVbl49/COJQWCUjGi79X6mYruMnMPEznZinUiT1jgKbFo2A00NdA==",
+      "os": ["linux"],
+      "cpu": ["s390x"],
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/@napi-rs/lzma-linux-s390x-gnu/-/lzma-linux-s390x-gnu-1.4.5.tgz"
+    },
+    "@napi-rs/lzma-linux-x64-gnu@1.4.5": {
+      "integrity": "sha512-6rMtBgnIq2Wcl1rQdZsnM+rtCcVCbws1nF8S2NzaUsVaZv8bjrPiAa0lwg4Eqnn1d9lgwqT+cZgm5m+//K08Kw==",
+      "os": ["linux"],
+      "cpu": ["x64"],
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/@napi-rs/lzma-linux-x64-gnu/-/lzma-linux-x64-gnu-1.4.5.tgz"
+    },
+    "@napi-rs/lzma-linux-x64-musl@1.4.5": {
+      "integrity": "sha512-eiadGBKi7Vd0bCArBUOO/qqRYPHt/VQVvGyYvDFt6C2ZSIjlD+HuOl+2oS1sjf4CFjK4eDIog6EdXnL0NE6iyQ==",
+      "os": ["linux"],
+      "cpu": ["x64"],
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/@napi-rs/lzma-linux-x64-musl/-/lzma-linux-x64-musl-1.4.5.tgz"
+    },
+    "@napi-rs/lzma-wasm32-wasi@1.4.5": {
+      "integrity": "sha512-+VyHHlr68dvey6fXc2hehw9gHVFIW3TtGF1XkcbAu65qVXsA9D/T+uuoRVqhE+JCyFHFrO0ixRbZDRK1XJt1sA==",
+      "dependencies": [
+        "@napi-rs/wasm-runtime"
+      ],
+      "cpu": ["wasm32"],
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/@napi-rs/lzma-wasm32-wasi/-/lzma-wasm32-wasi-1.4.5.tgz"
+    },
+    "@napi-rs/lzma-win32-arm64-msvc@1.4.5": {
+      "integrity": "sha512-eewnqvIyyhHi3KaZtBOJXohLvwwN27gfS2G/YDWdfHlbz1jrmfeHAmzMsP5qv8vGB+T80TMHNkro4kYjeh6Deg==",
+      "os": ["win32"],
+      "cpu": ["arm64"],
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/@napi-rs/lzma-win32-arm64-msvc/-/lzma-win32-arm64-msvc-1.4.5.tgz"
+    },
+    "@napi-rs/lzma-win32-ia32-msvc@1.4.5": {
+      "integrity": "sha512-OeacFVRCJOKNU/a0ephUfYZ2Yt+NvaHze/4TgOwJ0J0P4P7X1mHzN+ig9Iyd74aQDXYqc7kaCXA2dpAOcH87Cg==",
+      "os": ["win32"],
+      "cpu": ["ia32"],
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/@napi-rs/lzma-win32-ia32-msvc/-/lzma-win32-ia32-msvc-1.4.5.tgz"
+    },
+    "@napi-rs/lzma-win32-x64-msvc@1.4.5": {
+      "integrity": "sha512-T4I1SamdSmtyZgDXGAGP+y5LEK5vxHUFwe8mz6D4R7Sa5/WCxTcCIgPJ9BD7RkpO17lzhlaM2vmVvMy96Lvk9Q==",
+      "os": ["win32"],
+      "cpu": ["x64"],
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/@napi-rs/lzma-win32-x64-msvc/-/lzma-win32-x64-msvc-1.4.5.tgz"
+    },
+    "@napi-rs/lzma@1.4.5": {
+      "integrity": "sha512-zS5LuN1OBPAyZpda2ZZgYOEDC+xecUdAGnrvbYzjnLXkrq/OBC3B9qcRvlxbDR3k5H/gVfvef1/jyUqPknqjbg==",
+      "optionalDependencies": [
+        "@napi-rs/lzma-android-arm-eabi",
+        "@napi-rs/lzma-android-arm64",
+        "@napi-rs/lzma-darwin-arm64",
+        "@napi-rs/lzma-darwin-x64",
+        "@napi-rs/lzma-freebsd-x64",
+        "@napi-rs/lzma-linux-arm-gnueabihf",
+        "@napi-rs/lzma-linux-arm64-gnu",
+        "@napi-rs/lzma-linux-arm64-musl",
+        "@napi-rs/lzma-linux-ppc64-gnu",
+        "@napi-rs/lzma-linux-riscv64-gnu",
+        "@napi-rs/lzma-linux-s390x-gnu",
+        "@napi-rs/lzma-linux-x64-gnu",
+        "@napi-rs/lzma-linux-x64-musl",
+        "@napi-rs/lzma-wasm32-wasi",
+        "@napi-rs/lzma-win32-arm64-msvc",
+        "@napi-rs/lzma-win32-ia32-msvc",
+        "@napi-rs/lzma-win32-x64-msvc"
+      ],
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/@napi-rs/lzma/-/lzma-1.4.5.tgz"
+    },
+    "@napi-rs/wasm-runtime@1.1.1": {
+      "integrity": "sha512-p64ah1M1ld8xjWv3qbvFwHiFVWrq1yFvV4f7w+mzaqiR4IlSgkqhcRdHwsGgomwzBH51sRY4NEowLxnaBjcW/A==",
+      "dependencies": [
+        "@emnapi/core",
+        "@emnapi/runtime",
+        "@tybys/wasm-util"
+      ],
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/@napi-rs/wasm-runtime/-/wasm-runtime-1.1.1.tgz"
+    },
+    "@tybys/wasm-util@0.10.1": {
+      "integrity": "sha512-9tTaPJLSiejZKx+Bmog4uSubteqTvFrVrURwkmHixBo0G4seD0zUxp98E1DzUBJxLQ3NPwXrGKDiVjwx/DpPsg==",
+      "dependencies": [
+        "tslib"
+      ],
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/@tybys/wasm-util/-/wasm-util-0.10.1.tgz"
+    },
+    "@types/adm-zip@0.5.7": {
+      "integrity": "sha512-DNEs/QvmyRLurdQPChqq0Md4zGvPwHerAJYWk9l2jCbD1VPpnzRJorOdiq4zsw09NFbYnhfsoEhWtxIzXpn2yw==",
+      "dependencies": [
+        "@types/node"
+      ],
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/@types/adm-zip/-/adm-zip-0.5.7.tgz"
+    },
     "@types/ejs@3.1.5": {
-      "integrity": "sha512-nv+GSx77ZtXiJzwKdsASqi+YQ5Z7vwHsTP0JY2SiQgjGckkBRKZnk8nIM+7oUZ1VCtuTz0+By4qVR7fqzp/Dfg=="
+      "integrity": "sha512-nv+GSx77ZtXiJzwKdsASqi+YQ5Z7vwHsTP0JY2SiQgjGckkBRKZnk8nIM+7oUZ1VCtuTz0+By4qVR7fqzp/Dfg==",
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/@types/ejs/-/ejs-3.1.5.tgz"
     },
     "@types/node@25.0.6": {
       "integrity": "sha512-NNu0sjyNxpoiW3YuVFfNz7mxSQ+S4X2G28uqg2s+CzoqoQjLPsWSbsFFyztIAqt2vb8kfEAsJNepMGPTxFDx3Q==",
       "dependencies": [
         "undici-types"
-      ]
+      ],
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/@types/node/-/node-25.0.6.tgz"
     },
     "@types/semver@7.7.1": {
-      "integrity": "sha512-FmgJfu+MOcQ370SD0ev7EI8TlCAfKYU+B4m5T3yXc1CiRN94g/SZPtsCkk506aUDtlMnFZvasDwHHUcZUEaYuA=="
+      "integrity": "sha512-FmgJfu+MOcQ370SD0ev7EI8TlCAfKYU+B4m5T3yXc1CiRN94g/SZPtsCkk506aUDtlMnFZvasDwHHUcZUEaYuA==",
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/@types/semver/-/semver-7.7.1.tgz"
+    },
+    "@types/tar-stream@3.1.4": {
+      "integrity": "sha512-921gW0+g29mCJX0fRvqeHzBlE/XclDaAG0Ousy1LCghsOhvaKacDeRGEVzQP9IPfKn8Vysy7FEXAIxycpc/CMg==",
+      "dependencies": [
+        "@types/node"
+      ],
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/@types/tar-stream/-/tar-stream-3.1.4.tgz"
+    },
+    "adm-zip@0.5.16": {
+      "integrity": "sha512-TGw5yVi4saajsSEgz25grObGHEUaDrniwvA2qwSC060KfqGPdglhvPMA2lPIoxs3PQIItj2iag35fONcQqgUaQ==",
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/adm-zip/-/adm-zip-0.5.16.tgz"
     },
     "async@3.2.6": {
-      "integrity": "sha512-htCUDlxyyCLMgaM3xXg0C0LW2xqfuQ6p05pCEIsXuyQ+a1koYKTuBMzRNwmybfLgvJDMd0r1LTn4+E0Ti6C2AA=="
+      "integrity": "sha512-htCUDlxyyCLMgaM3xXg0C0LW2xqfuQ6p05pCEIsXuyQ+a1koYKTuBMzRNwmybfLgvJDMd0r1LTn4+E0Ti6C2AA==",
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/async/-/async-3.2.6.tgz"
+    },
+    "b4a@1.7.3": {
+      "integrity": "sha512-5Q2mfq2WfGuFp3uS//0s6baOJLMoVduPYVeNmDYxu5OUA1/cBfvr2RIS7vi62LdNj/urk1hfmj867I3qt6uZ7Q==",
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/b4a/-/b4a-1.7.3.tgz"
     },
     "balanced-match@1.0.2": {
-      "integrity": "sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw=="
+      "integrity": "sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==",
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/balanced-match/-/balanced-match-1.0.2.tgz"
+    },
+    "bare-events@2.8.2": {
+      "integrity": "sha512-riJjyv1/mHLIPX4RwiK+oW9/4c3TEUeORHKefKAKnZ5kyslbN+HXowtbaVEqt4IMUB7OXlfixcs6gsFeo/jhiQ==",
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/bare-events/-/bare-events-2.8.2.tgz"
     },
     "brace-expansion@2.0.2": {
       "integrity": "sha512-Jt0vHyM+jmUBqojB7E1NIYadt0vI0Qxjxd2TErW94wDz+E2LAm5vKMXXwg6ZZBTHPuUlDgQHKXvjGBdfcF1ZDQ==",
       "dependencies": [
         "balanced-match"
-      ]
+      ],
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/brace-expansion/-/brace-expansion-2.0.2.tgz"
     },
     "ejs@3.1.10": {
       "integrity": "sha512-UeJmFfOrAQS8OJWPZ4qtgHyWExa088/MtK5UEyoJGFH67cDEXkZSviOiKRCZ4Xij0zxI3JECgYs3oKx+AizQBA==",
       "dependencies": [
         "jake"
       ],
-      "bin": true
+      "bin": true,
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/ejs/-/ejs-3.1.10.tgz"
+    },
+    "events-universal@1.0.1": {
+      "integrity": "sha512-LUd5euvbMLpwOF8m6ivPCbhQeSiYVNb8Vs0fQ8QjXo0JTkEHpz8pxdQf0gStltaPpw0Cca8b39KxvK9cfKRiAw==",
+      "dependencies": [
+        "bare-events"
+      ],
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/events-universal/-/events-universal-1.0.1.tgz"
+    },
+    "fast-fifo@1.3.2": {
+      "integrity": "sha512-/d9sfos4yxzpwkDkuN7k2SqFKtYNmCTzgfEpz82x34IM9/zc8KGxQoXg1liNC/izpRM/MBdt44Nmx41ZWqk+FQ==",
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/fast-fifo/-/fast-fifo-1.3.2.tgz"
     },
     "filelist@1.0.4": {
       "integrity": "sha512-w1cEuf3S+DrLCQL7ET6kz+gmlJdbq9J7yXCSjK/OZCPA+qEN1WyF4ZAf0YYJa4/shHJra2t/d/r8SV4Ji+x+8Q==",
       "dependencies": [
         "minimatch"
-      ]
+      ],
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/filelist/-/filelist-1.0.4.tgz"
     },
     "jake@10.9.4": {
       "integrity": "sha512-wpHYzhxiVQL+IV05BLE2Xn34zW1S223hvjtqk0+gsPrwd/8JNLXJgZZM/iPFsYc1xyphF+6M6EvdE5E9MBGkDA==",
@@ -54,31 +269,67 @@
         "filelist",
         "picocolors"
       ],
-      "bin": true
+      "bin": true,
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/jake/-/jake-10.9.4.tgz"
     },
     "minimatch@5.1.6": {
       "integrity": "sha512-lKwV/1brpG6mBUFHtb7NUmtABCb2WZZmm2wNiOA5hAb8VdCS4B3dtMWyvcoViccwAW/COERjXLt0zP1zXUN26g==",
       "dependencies": [
         "brace-expansion"
-      ]
+      ],
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/minimatch/-/minimatch-5.1.6.tgz"
     },
     "picocolors@1.1.1": {
-      "integrity": "sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA=="
+      "integrity": "sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==",
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/picocolors/-/picocolors-1.1.1.tgz"
     },
     "prettier@3.7.4": {
       "integrity": "sha512-v6UNi1+3hSlVvv8fSaoUbggEM5VErKmmpGA7Pl3HF8V6uKY7rvClBOJlH6yNwQtfTueNkGVpOv/mtWL9L4bgRA==",
-      "bin": true
+      "bin": true,
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/prettier/-/prettier-3.7.4.tgz"
     },
     "semver@7.7.3": {
       "integrity": "sha512-SdsKMrI9TdgjdweUSR9MweHA4EJ8YxHn8DFaDisvhVlUOe4BF1tLD7GAj0lIqWVl+dPb/rExr0Btby5loQm20Q==",
-      "bin": true
+      "bin": true,
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/semver/-/semver-7.7.3.tgz"
+    },
+    "streamx@2.23.0": {
+      "integrity": "sha512-kn+e44esVfn2Fa/O0CPFcex27fjIL6MkVae0Mm6q+E6f0hWv578YCERbv+4m02cjxvDsPKLnmxral/rR6lBMAg==",
+      "dependencies": [
+        "events-universal",
+        "fast-fifo",
+        "text-decoder"
+      ],
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/streamx/-/streamx-2.23.0.tgz"
+    },
+    "tar-stream@3.1.7": {
+      "integrity": "sha512-qJj60CXt7IU1Ffyc3NJMjh6EkuCFej46zUqJ4J7pqYlThyd9bO0XBTmcOIhSzZJVWfsLks0+nle/j538YAW9RQ==",
+      "dependencies": [
+        "b4a",
+        "fast-fifo",
+        "streamx"
+      ],
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/tar-stream/-/tar-stream-3.1.7.tgz"
+    },
+    "text-decoder@1.2.3": {
+      "integrity": "sha512-3/o9z3X0X0fTupwsYvR03pJ/DjWuqqrfwBgTQzdWDiQSm9KitAyz/9WqsT2JQW7KV2m+bC2ol/zqpW37NHxLaA==",
+      "dependencies": [
+        "b4a"
+      ],
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/text-decoder/-/text-decoder-1.2.3.tgz"
+    },
+    "tslib@2.8.1": {
+      "integrity": "sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==",
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/tslib/-/tslib-2.8.1.tgz"
     },
     "typescript@5.9.3": {
       "integrity": "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==",
-      "bin": true
+      "bin": true,
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/typescript/-/typescript-5.9.3.tgz"
     },
     "undici-types@7.16.0": {
-      "integrity": "sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw=="
+      "integrity": "sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==",
+      "tarball": "https://packages.atlassian.com/api/npm/npm-remote/undici-types/-/undici-types-7.16.0.tgz"
     }
   },
   "workspace": {
