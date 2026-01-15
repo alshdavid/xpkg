@@ -18,12 +18,12 @@ rm -rf $ROOT_DIR/binaries/$PACKAGE-$VERSION
 # fi
 
 mkdir -p $TMP_DIR/download          
-wget -P $TMP_DIR/download https://github.com/cli/cli/releases/download/v${VERSION}/gh_${VERSION}_linux_amd64.tar.gz    
-wget -P $TMP_DIR/download https://github.com/cli/cli/releases/download/v${VERSION}/gh_${VERSION}_linux_arm64.tar.gz    
-wget -P $TMP_DIR/download https://github.com/cli/cli/releases/download/v${VERSION}/gh_${VERSION}_macOS_amd64.zip
-wget -P $TMP_DIR/download https://github.com/cli/cli/releases/download/v${VERSION}/gh_${VERSION}_macOS_arm64.zip
-wget -P $TMP_DIR/download https://github.com/cli/cli/releases/download/v${VERSION}/gh_${VERSION}_windows_amd64.zip
-wget -P $TMP_DIR/download https://github.com/cli/cli/releases/download/v${VERSION}/gh_${VERSION}_windows_arm64.zip
+wget -q -P $TMP_DIR/download https://github.com/cli/cli/releases/download/v${VERSION}/gh_${VERSION}_linux_amd64.tar.gz    
+wget -q -P $TMP_DIR/download https://github.com/cli/cli/releases/download/v${VERSION}/gh_${VERSION}_linux_arm64.tar.gz    
+wget -q -P $TMP_DIR/download https://github.com/cli/cli/releases/download/v${VERSION}/gh_${VERSION}_macOS_amd64.zip
+wget -q -P $TMP_DIR/download https://github.com/cli/cli/releases/download/v${VERSION}/gh_${VERSION}_macOS_arm64.zip
+wget -q -P $TMP_DIR/download https://github.com/cli/cli/releases/download/v${VERSION}/gh_${VERSION}_windows_amd64.zip
+wget -q -P $TMP_DIR/download https://github.com/cli/cli/releases/download/v${VERSION}/gh_${VERSION}_windows_arm64.zip
 
 mkdir $TMP_DIR/binaries        
 8zip extract --strip-components 2 --output $TMP_DIR/binaries/gh-${VERSION}-linux-amd64   --path gh      $TMP_DIR/download/gh_${VERSION}_linux_amd64.tar.gz

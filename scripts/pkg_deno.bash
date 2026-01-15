@@ -18,11 +18,11 @@ rm -rf $ROOT_DIR/binaries/$PACKAGE-$VERSION
 # fi
 
 mkdir -p $TMP_DIR/download          
-wget -P $TMP_DIR/download https://github.com/denoland/deno/releases/download/v${VERSION}/deno-x86_64-unknown-linux-gnu.zip
-wget -P $TMP_DIR/download https://github.com/denoland/deno/releases/download/v${VERSION}/deno-aarch64-unknown-linux-gnu.zip
-wget -P $TMP_DIR/download https://github.com/denoland/deno/releases/download/v${VERSION}/deno-x86_64-apple-darwin.zip
-wget -P $TMP_DIR/download https://github.com/denoland/deno/releases/download/v${VERSION}/deno-aarch64-apple-darwin.zip
-wget -P $TMP_DIR/download https://github.com/denoland/deno/releases/download/v${VERSION}/deno-x86_64-pc-windows-msvc.zip
+wget -q -P $TMP_DIR/download https://github.com/denoland/deno/releases/download/v${VERSION}/deno-x86_64-unknown-linux-gnu.zip
+wget -q -P $TMP_DIR/download https://github.com/denoland/deno/releases/download/v${VERSION}/deno-aarch64-unknown-linux-gnu.zip
+wget -q -P $TMP_DIR/download https://github.com/denoland/deno/releases/download/v${VERSION}/deno-x86_64-apple-darwin.zip
+wget -q -P $TMP_DIR/download https://github.com/denoland/deno/releases/download/v${VERSION}/deno-aarch64-apple-darwin.zip
+wget -q -P $TMP_DIR/download https://github.com/denoland/deno/releases/download/v${VERSION}/deno-x86_64-pc-windows-msvc.zip
 # wget -P $TMP_DIR/download https://github.com/denoland/deno/releases/download/v${VERSION}/deno-aarch64-pc-windows-msvc.zip
 
 mkdir $TMP_DIR/binaries        
