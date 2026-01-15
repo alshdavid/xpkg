@@ -17,7 +17,7 @@ rm -rf $ROOT_DIR/binaries/$PACKAGE-$VERSION
 #   exit 0
 # fi
 
-mkdir $TMP_DIR/download          
+mkdir -p $TMP_DIR/download          
 wget -P $TMP_DIR/download https://github.com/denoland/deno/releases/download/v${VERSION}/deno-x86_64-unknown-linux-gnu.zip
 wget -P $TMP_DIR/download https://github.com/denoland/deno/releases/download/v${VERSION}/deno-aarch64-unknown-linux-gnu.zip
 wget -P $TMP_DIR/download https://github.com/denoland/deno/releases/download/v${VERSION}/deno-x86_64-apple-darwin.zip
