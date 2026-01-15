@@ -31,6 +31,12 @@ jobs:
       - uses: actions/checkout@v6
       - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
       - run: bash ./scripts/pkg_github_cli.bash
+      - uses: actions/upload-artifact@v6
+        with:
+          name: binaries_github_cli
+          path: ${{ github.workspace }}/binaries/**/*
+          if-no-files-found: warn
+          retention-days: 1
 
   pkg_deno_cli:
     name: Deno
@@ -39,5 +45,11 @@ jobs:
       - uses: actions/checkout@v6
       - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
       - run: bash ./scripts/pkg_deno.bash
+      - uses: actions/upload-artifact@v6
+        with:
+          name: binaries_deno
+          path: ${{ github.workspace }}/binaries/**/*
+          if-no-files-found: warn
+          retention-days: 1
 
 
