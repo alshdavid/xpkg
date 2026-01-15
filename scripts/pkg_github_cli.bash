@@ -1,4 +1,4 @@
-set -e
+set -ex
 SCRIPT_DIR="$(dirname $(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}"))"
 ROOT_DIR="$(dirname $SCRIPT_DIR)"
 TMP_DIR="$ROOT_DIR/tmp"
