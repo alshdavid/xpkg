@@ -21,7 +21,7 @@ concurrency:
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   GH_TOKEN: ${{ github.token }}
-  8ZIP_VERSION: https://github.com/alshdavid/xpkg/releases/download/8zip-0.0.1/8zip-0.0.1-linux-amd64.tar.gz
+  EZIP_VERSION: 0.0.2
 
 jobs:
   pkg_github_cli:
@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
-      - run: curl -L $8ZIP_VERSION | tar -xzf - -C /usr/local/bin
+      - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
       - run: bash ./scripts/pkg_github_cli.bash
 
   pkg_deno_cli:
@@ -37,7 +37,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
-      - run: curl -L $8ZIP_VERSION | tar -xzf - -C /usr/local/bin
+      - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
       - run: bash ./scripts/pkg_deno.bash
 
 
