@@ -25,82 +25,76 @@ env:
 
 jobs:
   pkg_gh:
-    name: gh
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
       - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
-      - run: bash ./scripts/pkg_${{ github.job.name }}.bash
+      - run: bash ./scripts/${{ github.job }}.bash
       - uses: actions/upload-artifact@v6
         with:
-          name: binaries_${{ github.job.name }}
+          name: binaries_${{ github.job }}
           path: ${{ github.workspace }}/binaries/**/*
           if-no-files-found: warn
           retention-days: 1
   pkg_deno:
-    name: deno
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
       - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
-      - run: bash ./scripts/pkg_${{ github.job.name }}.bash
+      - run: bash ./scripts/${{ github.job }}.bash
       - uses: actions/upload-artifact@v6
         with:
-          name: binaries_${{ github.job.name }}
+          name: binaries_${{ github.job }}
           path: ${{ github.workspace }}/binaries/**/*
           if-no-files-found: warn
           retention-days: 1
   pkg_8zip:
-    name: 8zip
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
       - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
-      - run: bash ./scripts/pkg_${{ github.job.name }}.bash
+      - run: bash ./scripts/${{ github.job }}.bash
       - uses: actions/upload-artifact@v6
         with:
-          name: binaries_${{ github.job.name }}
+          name: binaries_${{ github.job }}
           path: ${{ github.workspace }}/binaries/**/*
           if-no-files-found: warn
           retention-days: 1
   pkg_fnm:
-    name: fnm
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
       - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
-      - run: bash ./scripts/pkg_${{ github.job.name }}.bash
+      - run: bash ./scripts/${{ github.job }}.bash
       - uses: actions/upload-artifact@v6
         with:
-          name: binaries_${{ github.job.name }}
+          name: binaries_${{ github.job }}
+          path: ${{ github.workspace }}/binaries/**/*
+          if-no-files-found: warn
+          retention-days: 1
+  pkg_hyperfine:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
+      - run: bash ./scripts/${{ github.job }}.bash
+      - uses: actions/upload-artifact@v6
+        with:
+          name: binaries_${{ github.job }}
           path: ${{ github.workspace }}/binaries/**/*
           if-no-files-found: warn
           retention-days: 1
   pkg_node:
-    name: node
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
       - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
       - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip -O /tmp/deno.zip && unzip /tmp/deno.zip -d /usr/local/bin
       - run: deno install
-      - run: bash ./scripts/pkg_${{ github.job.name }}.bash
+      - run: bash ./scripts/${{ github.job }}.bash
       - uses: actions/upload-artifact@v6
         with:
-          name: binaries_${{ github.job.name }}
-          path: ${{ github.workspace }}/binaries/**/*
-          if-no-files-found: warn
-          retention-days: 1
-  pkg_hyperfine:
-    name: hyperfine
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v6
-      - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
-      - run: bash ./scripts/pkg_${{ github.job.name }}.bash
-      - uses: actions/upload-artifact@v6
-        with:
-          name: binaries_${{ github.job.name }}
+          name: binaries_${{ github.job }}
           path: ${{ github.workspace }}/binaries/**/*
           if-no-files-found: warn
           retention-days: 1
