@@ -19,18 +19,18 @@ if [ $(gh-release-exists alshdavid/xpkg "${PACKAGE}-${VERSION}") = "true" ]; the
 fi
 
 echo "FETCHING"
-mkdir $TMP_DIR/binaries        
-mkdir $TMP_DIR/binaries/$PACKAGE-$VERSION-linux-amd64
-mkdir $TMP_DIR/binaries/$PACKAGE-$VERSION-linux-arm64
-mkdir $TMP_DIR/binaries/$PACKAGE-$VERSION-macos-amd64
-mkdir $TMP_DIR/binaries/$PACKAGE-$VERSION-macos-arm64
-mkdir $TMP_DIR/binaries/$PACKAGE-$VERSION-windows-amd64
+mkdir -p $TMP_DIR/binaries        
+mkdir -p $TMP_DIR/binaries/$PACKAGE-$VERSION/$PACKAGE-$VERSION-linux-amd64
+mkdir -p $TMP_DIR/binaries/$PACKAGE-$VERSION/$PACKAGE-$VERSION-linux-arm64
+mkdir -p $TMP_DIR/binaries/$PACKAGE-$VERSION/$PACKAGE-$VERSION-macos-amd64
+mkdir -p $TMP_DIR/binaries/$PACKAGE-$VERSION/$PACKAGE-$VERSION-macos-arm64
+mkdir -p $TMP_DIR/binaries/$PACKAGE-$VERSION/$PACKAGE-$VERSION-windows-amd64
 
-wget -q -O $TMP_DIR/binaries/$PACKAGE-$VERSION-linux-amd64/oha        https://github.com/$REPO/releases/download/$VERSION/oha-linux-amd64
-wget -q -O $TMP_DIR/binaries/$PACKAGE-$VERSION-linux-arm64/oha        https://github.com/$REPO/releases/download/$VERSION/oha-linux-arm64
-wget -q -O $TMP_DIR/binaries/$PACKAGE-$VERSION-macos-amd64/oha        https://github.com/$REPO/releases/download/$VERSION/oha-macos-amd64
-wget -q -O $TMP_DIR/binaries/$PACKAGE-$VERSION-macos-arm64/oha        https://github.com/$REPO/releases/download/$VERSION/oha-macos-arm64
-wget -q -O $TMP_DIR/binaries/$PACKAGE-$VERSION-windows-amd64/oha.exe  https://github.com/$REPO/releases/download/$VERSION/oha-windows-amd64.exe
+wget -q -O $TMP_DIR/binaries/$PACKAGE-$VERSION/$PACKAGE-$VERSION-linux-amd64/oha        https://github.com/$REPO/releases/download/$VERSION/oha-linux-amd64
+wget -q -O $TMP_DIR/binaries/$PACKAGE-$VERSION/$PACKAGE-$VERSION-linux-arm64/oha        https://github.com/$REPO/releases/download/$VERSION/oha-linux-arm64
+wget -q -O $TMP_DIR/binaries/$PACKAGE-$VERSION/$PACKAGE-$VERSION-macos-amd64/oha        https://github.com/$REPO/releases/download/$VERSION/oha-macos-amd64
+wget -q -O $TMP_DIR/binaries/$PACKAGE-$VERSION/$PACKAGE-$VERSION-macos-arm64/oha        https://github.com/$REPO/releases/download/$VERSION/oha-macos-arm64
+wget -q -O $TMP_DIR/binaries/$PACKAGE-$VERSION/$PACKAGE-$VERSION-windows-amd64/oha.exe  https://github.com/$REPO/releases/download/$VERSION/oha-windows-amd64.exe
 
 echo "REPACKING"
 mkdir -p "$ROOT_DIR/binaries/$PACKAGE-$VERSION"
