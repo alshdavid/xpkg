@@ -13,10 +13,10 @@ rm -rf $TMP_DIR/extracted
 rm -rf $TMP_DIR/binaries
 rm -rf $ROOT_DIR/binaries/$PACKAGE-$VERSION
 
-# if [ $(gh-release-exists alshdavid/xpkg "${PACKAGE}-${VERSION}") = "true" ]; then
-#   echo Already Up To Date
-#   exit 0
-# fi
+if [ $(gh-release-exists alshdavid/xpkg "${PACKAGE}-${VERSION}") = "true" ]; then
+  echo Already Up To Date
+  exit 0
+fi
 
 echo "FETCHING"
 mkdir -p $TMP_DIR/download          
