@@ -173,6 +173,30 @@ jobs:
           path: ${{ github.workspace }}/binaries/**/*
           if-no-files-found: warn
           retention-days: 1
+  pkg_flatdir:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
+      - run: bash ./scripts/${{ github.job }}.bash
+      - uses: actions/upload-artifact@v6
+        with:
+          name: binaries_${{ github.job }}
+          path: ${{ github.workspace }}/binaries/**/*
+          if-no-files-found: warn
+          retention-days: 1
+  pkg_rrm:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
+      - run: bash ./scripts/${{ github.job }}.bash
+      - uses: actions/upload-artifact@v6
+        with:
+          name: binaries_${{ github.job }}
+          path: ${{ github.workspace }}/binaries/**/*
+          if-no-files-found: warn
+          retention-days: 1
 
   publish-github-release:
     name: "🔄 Publish Github Release"
@@ -190,6 +214,8 @@ jobs:
       - pkg_terraform
       - pkg_vultr
       - pkg_zenith
+      - pkg_flatdir
+      - pkg_rrm
     steps:
       - uses: actions/checkout@v6
       - uses: actions/download-artifact@v7
