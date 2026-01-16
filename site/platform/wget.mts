@@ -26,7 +26,7 @@ import { extract } from "tar-stream";
 //   ]);
 // }
 
-export async function wget(url: string): Promise<ArrayBuffer> {
+export async function wget(url: string, dest?: string): Promise<ArrayBuffer> {
   console.log("Downloading:", url);
   const response = await fetch(url, {
     headers: {
@@ -40,7 +40,10 @@ export async function wget(url: string): Promise<ArrayBuffer> {
     );
   }
 
-  return response.arrayBuffer();
-  // const arrayBuffer = await response.arrayBuffer();
-  // await fs.promises.writeFile(output, Buffer.from(arrayBuffer));
+  const arrayBuffer = await response.arrayBuffer();
+  if (dest) {
+    await fs.promises.writeFile(dest, Buffer.from(arrayBuffer));
+  }
+  return arrayBuffer;
 }
+

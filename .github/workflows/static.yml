@@ -289,5 +289,18 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+  release-latest:
+    name: "📃 Publish Pages"
+    runs-on: ubuntu-24.04
+    needs:
+      - publish-github-release
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/configure-pages@v5
+      # Install Deno
+      - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip -O /tmp/deno.zip && unzip /tmp/deno.zip -d /usr/local/bin
+      # Generate pages
+      - run: deno install
+      - run: deno -A ./site/cmd/republish-latest.mts --run
   
 

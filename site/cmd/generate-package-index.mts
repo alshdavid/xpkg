@@ -3,7 +3,6 @@ import * as path from "node:path";
 
 import {
   getReleases,
-  getReleasesPage,
   type GithubReleasesResponse,
 } from "../platform/github.mts";
 import type {
