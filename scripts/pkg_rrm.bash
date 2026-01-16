@@ -6,7 +6,7 @@ PATH="$SCRIPT_DIR/platform:$PATH"
 
 PACKAGE="rrm"
 REPO="alshdavid/rrm"
-VERSION=$(gh release view --json tagName --repo $REPO | jq -r '.tagName')
+VERSION=$(gh release view --json tagName --repo $REPO | jq -r '.tagName | ltrimstr("v")')
 
 rm -rf $TMP_DIR/download
 rm -rf $TMP_DIR/extracted

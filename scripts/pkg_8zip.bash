@@ -6,7 +6,7 @@ PATH="$SCRIPT_DIR/platform:$PATH"
 
 PACKAGE="8zip"
 REPO="alshdavid/8zip"
-VERSION=$(gh release view --json tagName --repo $REPO | jq -r '.tagName')
+VERSION=$(gh release view --json tagName --repo $REPO | jq -r '.tagName | ltrimstr("v")')
 
 rm -rf $TMP_DIR/download
 rm -rf $TMP_DIR/extracted

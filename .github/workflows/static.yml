@@ -209,6 +209,31 @@ jobs:
           path: ${{ github.workspace }}/binaries/**/*
           if-no-files-found: warn
           retention-days: 1
+  pkg_eza:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
+      - run: bash ./scripts/${{ github.job }}.bash
+      - uses: actions/upload-artifact@v6
+        with:
+          name: binaries_${{ github.job }}
+          path: ${{ github.workspace }}/binaries/**/*
+          if-no-files-found: warn
+          retention-days: 1
+  pkg_eza_build_macos:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
+      - run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+      - run: bash ./scripts/${{ github.job }}.bash
+      - uses: actions/upload-artifact@v6
+        with:
+          name: binaries_${{ github.job }}
+          path: ${{ github.workspace }}/binaries/**/*
+          if-no-files-found: warn
+          retention-days: 1
 
   publish-github-release:
     name: "🔄 Publish Github Release"
@@ -229,38 +254,43 @@ jobs:
       - pkg_flatdir
       - pkg_rrm
       - pkg_oha
+      - pkg_eza
+      - pkg_eza_build_macos
     steps:
       - uses: actions/checkout@v6
       - uses: actions/download-artifact@v7
         with: 
           path: binaries
           merge-multiple: true
-      # Install Deno
-      - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip -O /tmp/deno.zip && unzip /tmp/deno.zip -d /usr/local/bin
-      # Generate release
-      - run: deno install
-      - run: deno -A ./site/cmd/generate-release.mts --run
+      - run: ls -la
+      - run: ls -la binaries
+      - run: ls -la binaries/eza-0.23.4
+      # # Install Deno
+      # - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip -O /tmp/deno.zip && unzip /tmp/deno.zip -d /usr/local/bin
+      # # Generate release
+      # - run: deno install
+      # - run: deno -A ./site/cmd/generate-release.mts --run
 
-  publish-pages:
-    name: "📃 Publish Pages"
-    runs-on: ubuntu-24.04
-    needs:
-      - publish-github-release
-    steps:
-      - uses: actions/checkout@v6
-      - uses: actions/configure-pages@v5
-      # Install Deno
-      - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip -O /tmp/deno.zip && unzip /tmp/deno.zip -d /usr/local/bin
-      # Generate pages
-      - run: deno install
-      - run: deno -A ./site/cmd/generate-package-index.mts --run
-      - run: deno -A ./site/cmd/copy-files.mts --run
-      - run: deno -A ./site/cmd/build-shell-scripts.mts --run
-      - run: deno -A ./site/cmd/build-page.mts --run
-      - uses: actions/upload-pages-artifact@v3
-        with: { path: 'dist' }
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+  # publish-pages:
+  #   name: "📃 Publish Pages"
+  #   runs-on: ubuntu-24.04
+  #   needs:
+  #     - publish-github-release
+  #   steps:
+  #     - uses: actions/checkout@v6
+  #     - uses: actions/configure-pages@v5
+  #     # Install Deno
+  #     - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip -O /tmp/deno.zip && unzip /tmp/deno.zip -d /usr/local/bin
+  #     # Generate pages
+  #     - run: deno install
+  #     - run: deno -A ./site/cmd/generate-package-index.mts --run
+  #     - run: deno -A ./site/cmd/copy-files.mts --run
+  #     - run: deno -A ./site/cmd/build-shell-scripts.mts --run
+  #     - run: deno -A ./site/cmd/build-page.mts --run
+  #     - uses: actions/upload-pages-artifact@v3
+  #       with: { path: 'dist' }
+  #     - name: Deploy to GitHub Pages
+  #       id: deployment
+  #       uses: actions/deploy-pages@v4
   
 
