@@ -262,7 +262,8 @@ jobs:
         with: 
           path: binaries
           merge-multiple: true
-      - run: mkdir -p binaries && cd binaries && for item in *; do echo "$item"; [ -d "$item" ] && for subitem in "$item"/*; do [ -e "$subitem" ] && echo "  $subitem"; done; done
+      - run: mkdir -p binaries
+      - run: cd binaries && for item in *; do echo "$item"; [ -d "$item" ] && for subitem in "$item"/*; do [ -e "$subitem" ] && echo "  $subitem"; done; done
       # Install Deno
       - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip -O /tmp/deno.zip && unzip /tmp/deno.zip -d /usr/local/bin
       # Generate release
