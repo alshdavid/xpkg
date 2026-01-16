@@ -1,17 +1,5 @@
 import * as fs from "node:fs";
-import * as path from "node:path";
-import { releaseExists } from "../platform/repackage-versions/release-exists.mts";
-import { recompress } from "../platform/repackage-versions/recompress.mts";
-import {
-  inferArchiveFormat,
-  sortEntries,
-} from "../platform/repackage-versions/infer-format.mts";
 import { Paths } from "../platform/paths.mts";
-import {
-  DownloadManifest,
-  DownloadManifestEntry,
-} from "../platform/download-manifest.mts";
-import { REPO } from "../platform/repo-name.mts";
 import { renderEjs } from "../platform/render-ejs.mts";
 
 type Mod = {

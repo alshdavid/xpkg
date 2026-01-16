@@ -47,7 +47,7 @@ export async function main() {
 
     const release = await getRelease(REPO, `${entry}-${manifest.version}`)
     for (const asset of release.assets) {
-      await wget(asset.browser_download_url, Paths['~/tmp/'](asset.name))
+      await wget(asset.browser_download_url, Paths['~/tmp/'](asset.name.replace(`-${manifest.version}-`, '-')))
     }
     if (!fs.existsSync(Paths['~/tmp/']('meta.json'))) {
       fs.writeFileSync(JSON.stringify({"package": entry, "version": manifest.version }), Paths['~/tmp/']('meta.json'), 'utf8')
