@@ -22,7 +22,7 @@ const latest: Array<string> = [
   "http-server-rs",
   "hyperfine",
   "just",
-  "node",
+  "nodejs", // mismatched names
   "oha",
   "rrm",
   "terraform",
