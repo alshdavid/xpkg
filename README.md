@@ -8,6 +8,7 @@ Applications are published as Github releases on this repo, with a normalized na
 
 ```
 {package-name}-{semver}
+{package-name}-latest
 ```
 
 A Github action runs routinely to scan projects for updates, automatically publishing a [Github release](https://github.com/alshdavid/xpkg/releases) when updates are detected.
@@ -19,22 +20,11 @@ A Github action runs routinely to scan projects for updates, automatically publi
 
 ```bash
 # Download the latest GH Cli to the current directory
-curl -L $(curl https://sh.davidalsh.com/packages/gh/latest_linux_amd64_tar_xz) | tar -xJf - -C .
+curl -L https://github.com/alshdavid/xpkg/releases/download/gh-latest/gh-linux-amd64.tar.gz | tar -xzf - -C .
+./gh --version
 
-export PATH="$PWD:$PATH"
-gh --version
-```
-
-### Install a Binary (Verbose)
-
-```bash
-# Download the latest Zenith to the current directory (broken down)
-ZENITH_LATEST_VERSION="$(curl https://sh.davidalsh.com/packages/zenith/latest_linux_amd64_tar_xz)"
-wget $ZENITH_LATEST_VERSION -o ./zenith.tar.xz
-tar -xJf ./zenith.tar.xz -C .
-
-export PATH="$PWD:$PATH"
-zenith --version
+curl -L https://github.com/alshdavid/xpkg/releases/download/nodejs-latest/nodejs-linux-amd64.tar.gz | tar -xzf - -C .
+./bin/node --version
 ```
 
 ### Supported Platforms
@@ -54,12 +44,12 @@ Some, but not all projects have.
 Where possible, projects are recompiled to add support for these targets.
 
 ```
-https://sh.davidalsh.com/packages/gh/latest_linux_amd64_tar_xz.txt
-https://sh.davidalsh.com/packages/gh/latest_linux_arm64_tar_xz.txt
-https://sh.davidalsh.com/packages/gh/latest_macos_amd64_tar_xz.txt
-https://sh.davidalsh.com/packages/gh/latest_macos_arm64_tar_xz.txt
-https://sh.davidalsh.com/packages/gh/latest_windows_amd64_tar_xz.txt
-https://sh.davidalsh.com/packages/gh/latest_windows_arm64_tar_xz.txt
+https://github.com/alshdavid/xpkg/releases/download/nodejs-latest/nodejs-linux-amd64.tar.gz
+https://github.com/alshdavid/xpkg/releases/download/nodejs-latest/nodejs-linux-amd64.tar.gz
+https://github.com/alshdavid/xpkg/releases/download/nodejs-latest/nodejs-macos-amd64.tar.gz
+https://github.com/alshdavid/xpkg/releases/download/nodejs-latest/nodejs-macos-amd64.tar.gz
+https://github.com/alshdavid/xpkg/releases/download/nodejs-latest/nodejs-windows-amd64.tar.gz
+https://github.com/alshdavid/xpkg/releases/download/nodejs-latest/nodejs-windows-amd64.tar.gz
 ```
 
 ### Archive Formats
@@ -80,11 +70,7 @@ To maximize compatibility, applications are repackaged and the contents flattene
   - Supports streamed decompression (one line download/extract)
 
 ```
-https://sh.davidalsh.com/packages/gh/latest_linux_amd64_zip.txt
-https://sh.davidalsh.com/packages/gh/latest_linux_amd64_tar_gz.txt
-https://sh.davidalsh.com/packages/gh/latest_linux_amd64_tar_xz.txt
+https://github.com/alshdavid/xpkg/releases/download/nodejs-latest/nodejs-linux-amd64.tar.gz
+https://github.com/alshdavid/xpkg/releases/download/nodejs-latest/nodejs-linux-amd64.tar.xz
+https://github.com/alshdavid/xpkg/releases/download/nodejs-latest/nodejs-linux-amd64.zip
 ```
-
-## Adding a Package
-
-If you'd like to add a package under [`/site/packages`](https://github.com/alshdavid/xpkg/blob/main/site/packages/index.mts).
