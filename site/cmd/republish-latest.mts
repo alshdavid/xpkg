@@ -11,7 +11,24 @@ import {
 } from "../platform/github-releases.mts";
 import { wget } from "../platform/wget.mts";
 
-const latest: Array<string> = ["8zip"];
+const latest: Array<string> = [
+  "8zip",
+  "deno",
+  "eza",
+  "flatdir",
+  "fnm",
+  "gh",
+  "go",
+  "http-server-rs",
+  "hyperfine",
+  "just",
+  "node",
+  "oha",
+  "rrm",
+  "terraform",
+  "vultr-cli",
+  "zenith",
+];
 
 export async function main() {
   await generateIndex.main()

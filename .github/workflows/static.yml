@@ -149,7 +149,7 @@ jobs:
           path: ${{ github.workspace }}/binaries/**/*
           if-no-files-found: warn
           retention-days: 1
-  pkg_vultr:
+  pkg_vultr-cli:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
