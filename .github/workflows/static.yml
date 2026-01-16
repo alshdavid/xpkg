@@ -249,7 +249,7 @@ jobs:
       - pkg_python
       - pkg_go
       - pkg_terraform
-      - pkg_vultr
+      - pkg_vultr-cli
       - pkg_zenith
       - pkg_flatdir
       - pkg_rrm
