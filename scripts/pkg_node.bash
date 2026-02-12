@@ -22,21 +22,21 @@ for VERSION in "${nodejs_versions[@]}"; do
 
   echo "FETCHING"
   mkdir -p $TMP_DIR/download          
-  wget -q -O $TMP_DIR/download/$PACKAGE-$VERSION.tar.gz https://nodejs.org/download/release/v$VERSION/node-v$VERSION-linux-x64.tar.gz
-  wget -q -O $TMP_DIR/download/$PACKAGE-$VERSION.tar.gz https://nodejs.org/download/release/v$VERSION/node-v$VERSION-linux-arm64.tar.gz
-  wget -q -O $TMP_DIR/download/$PACKAGE-$VERSION.tar.gz https://nodejs.org/download/release/v$VERSION/node-v$VERSION-darwin-x64.tar.gz
-  wget -q -O $TMP_DIR/download/$PACKAGE-$VERSION.tar.gz https://nodejs.org/download/release/v$VERSION/node-v$VERSION-darwin-arm64.tar.gz
-  wget -q -O $TMP_DIR/download/$PACKAGE-$VERSION.zip    https://nodejs.org/download/release/v$VERSION/node-v$VERSION-win-x64.zip
-  wget -q -O $TMP_DIR/download/$PACKAGE-$VERSION.zip    https://nodejs.org/download/release/v$VERSION/node-v$VERSION-win-arm64.zip
+  wget -q -O $TMP_DIR/download/$PACKAGE-$VERSION-linux-amd64.tar.gz https://nodejs.org/download/release/v$VERSION/node-v$VERSION-linux-x64.tar.gz
+  wget -q -O $TMP_DIR/download/$PACKAGE-$VERSION-linux-arm64.tar.gz https://nodejs.org/download/release/v$VERSION/node-v$VERSION-linux-arm64.tar.gz
+  wget -q -O $TMP_DIR/download/$PACKAGE-$VERSION-macos-amd64.tar.gz https://nodejs.org/download/release/v$VERSION/node-v$VERSION-darwin-x64.tar.gz
+  wget -q -O $TMP_DIR/download/$PACKAGE-$VERSION-macos-arm64.tar.gz https://nodejs.org/download/release/v$VERSION/node-v$VERSION-darwin-arm64.tar.gz
+  wget -q -O $TMP_DIR/download/$PACKAGE-$VERSION-windows-amd64.zip  https://nodejs.org/download/release/v$VERSION/node-v$VERSION-win-x64.zip
+  wget -q -O $TMP_DIR/download/$PACKAGE-$VERSION-windows-arm64.zip  https://nodejs.org/download/release/v$VERSION/node-v$VERSION-win-arm64.zip
 
   echo "EXTRACTING"
   mkdir $TMP_DIR/binaries        
-  8zip extract --output $TMP_DIR/binaries/$PACKAGE-$VERSION-linux-amd64   $TMP_DIR/download/$PACKAGE-$VERSION.tar.gz
-  8zip extract --output $TMP_DIR/binaries/$PACKAGE-$VERSION-linux-arm64   $TMP_DIR/download/$PACKAGE-$VERSION.tar.gz
-  8zip extract --output $TMP_DIR/binaries/$PACKAGE-$VERSION-macos-amd64   $TMP_DIR/download/$PACKAGE-$VERSION.tar.gz
-  8zip extract --output $TMP_DIR/binaries/$PACKAGE-$VERSION-macos-arm64   $TMP_DIR/download/$PACKAGE-$VERSION.tar.gz
-  8zip extract --output $TMP_DIR/binaries/$PACKAGE-$VERSION-windows-amd64 $TMP_DIR/download/$PACKAGE-$VERSION.zip
-  8zip extract --output $TMP_DIR/binaries/$PACKAGE-$VERSION-windows-arm64 $TMP_DIR/download/$PACKAGE-$VERSION.zip
+  8zip extract --output $TMP_DIR/binaries/$PACKAGE-$VERSION-linux-amd64   $TMP_DIR/download/$PACKAGE-$VERSION-linux-amd64.tar.gz
+  8zip extract --output $TMP_DIR/binaries/$PACKAGE-$VERSION-linux-arm64   $TMP_DIR/download/$PACKAGE-$VERSION-linux-arm64.tar.gz
+  8zip extract --output $TMP_DIR/binaries/$PACKAGE-$VERSION-macos-amd64   $TMP_DIR/download/$PACKAGE-$VERSION-macos-amd64.tar.gz
+  8zip extract --output $TMP_DIR/binaries/$PACKAGE-$VERSION-macos-arm64   $TMP_DIR/download/$PACKAGE-$VERSION-macos-arm64.tar.gz
+  8zip extract --output $TMP_DIR/binaries/$PACKAGE-$VERSION-windows-amd64 $TMP_DIR/download/$PACKAGE-$VERSION-windows-amd64.zip
+  8zip extract --output $TMP_DIR/binaries/$PACKAGE-$VERSION-windows-arm64 $TMP_DIR/download/$PACKAGE-$VERSION-windows-arm64.zip
 
   echo "REPACKING"
   mkdir -p "$ROOT_DIR/binaries/$PACKAGE-$VERSION"
