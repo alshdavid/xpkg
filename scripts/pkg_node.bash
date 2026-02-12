@@ -31,12 +31,12 @@ for VERSION in "${nodejs_versions[@]}"; do
 
   echo "EXTRACTING"
   mkdir $TMP_DIR/binaries        
-  8zip extract --output $TMP_DIR/binaries/$PACKAGE-$VERSION-linux-amd64   $TMP_DIR/download/$PACKAGE-$VERSION-linux-amd64.tar.gz
-  8zip extract --output $TMP_DIR/binaries/$PACKAGE-$VERSION-linux-arm64   $TMP_DIR/download/$PACKAGE-$VERSION-linux-arm64.tar.gz
-  8zip extract --output $TMP_DIR/binaries/$PACKAGE-$VERSION-macos-amd64   $TMP_DIR/download/$PACKAGE-$VERSION-macos-amd64.tar.gz
-  8zip extract --output $TMP_DIR/binaries/$PACKAGE-$VERSION-macos-arm64   $TMP_DIR/download/$PACKAGE-$VERSION-macos-arm64.tar.gz
-  8zip extract --output $TMP_DIR/binaries/$PACKAGE-$VERSION-windows-amd64 $TMP_DIR/download/$PACKAGE-$VERSION-windows-amd64.zip
-  8zip extract --output $TMP_DIR/binaries/$PACKAGE-$VERSION-windows-arm64 $TMP_DIR/download/$PACKAGE-$VERSION-windows-arm64.zip
+  8zip extract --strip-components 1 --output $TMP_DIR/binaries/$PACKAGE-$VERSION-linux-amd64   $TMP_DIR/download/$PACKAGE-$VERSION-linux-amd64.tar.gz
+  8zip extract --strip-components 1 --output $TMP_DIR/binaries/$PACKAGE-$VERSION-linux-arm64   $TMP_DIR/download/$PACKAGE-$VERSION-linux-arm64.tar.gz
+  8zip extract --strip-components 1 --output $TMP_DIR/binaries/$PACKAGE-$VERSION-macos-amd64   $TMP_DIR/download/$PACKAGE-$VERSION-macos-amd64.tar.gz
+  8zip extract --strip-components 1 --output $TMP_DIR/binaries/$PACKAGE-$VERSION-macos-arm64   $TMP_DIR/download/$PACKAGE-$VERSION-macos-arm64.tar.gz
+  8zip extract --strip-components 1 --output $TMP_DIR/binaries/$PACKAGE-$VERSION-windows-amd64 $TMP_DIR/download/$PACKAGE-$VERSION-windows-amd64.zip
+  8zip extract --strip-components 1 --output $TMP_DIR/binaries/$PACKAGE-$VERSION-windows-arm64 $TMP_DIR/download/$PACKAGE-$VERSION-windows-arm64.zip
 
   echo "REPACKING"
   mkdir -p "$ROOT_DIR/binaries/$PACKAGE-$VERSION"
