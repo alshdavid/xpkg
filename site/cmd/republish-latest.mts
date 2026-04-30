@@ -1,7 +1,7 @@
 import * as fs from "node:fs";
 import * as generateIndex from "./generate-package-index.mts";
 import { Paths } from "../platform/paths.mts";
-import { getRelease } from "../platform/github.mts";
+import { getRelease, type GithubReleaseResponse } from "../platform/github.mts";
 import { REPO } from "../platform/repo-name.mts";
 import {
   githubReleaseCreate,
@@ -10,6 +10,7 @@ import {
   githubReleaseUpload,
 } from "../platform/github-releases.mts";
 import { wget } from "../platform/wget.mts";
+import { getLatestNodejsLTS } from "../platform/nodejs.mts";
 
 const latest: Array<string> = [
   "8zip",
@@ -85,6 +86,88 @@ export async function main() {
       notes: JSON.stringify({
         package: manifest.package,
         version: manifest.version,
+      }),
+    })
+
+    for (const fileName of fs.readdirSync(Paths["~/tmp"])) {
+      await githubReleaseUpload({
+        repo: REPO,
+        tag: tagName,
+        file: Paths["~/tmp/"](fileName),
+      });
+    }
+
+    console.log(`[${tagName}] PUBLISH_RELEASE`);
+    await githubReleaseEdit({
+      repo: REPO,
+      tag: tagName,
+      draft: false,
+    });
+  }
+
+
+  /// Custom LTS handling
+  const ltsMainfest: Array<[string, string]> = [
+    ["nodejs", await getLatestNodejsLTS()]
+  ];
+
+  console.log(ltsMainfest)
+
+  for (const [entry, version] of ltsMainfest) {
+    const tagName = `${entry}-lts`
+
+    let releaseExists = false
+    try {
+      const ltsRelease = await getRelease(REPO, `${entry}-lts`)
+      const metaJsonPath = ltsRelease.assets.find(asset => asset.name === 'meta.json')?.browser_download_url
+      if (metaJsonPath) {
+        const metaJson = await fetch(metaJsonPath).then(res => res.json()) as { version: string };
+        if (metaJson?.version === version) {
+          console.log(`Skipping, LTS already current ${entry}-${version}`);
+          continue
+        }
+      }
+      releaseExists = true
+    } catch {
+      // Doesn't matter if it doesn't exist, we'll create it
+    }
+
+    console.log(entry, version)
+    let release: GithubReleaseResponse
+    try {
+      release = await getRelease(REPO, `${entry}-${version}`)
+    } catch {
+      console.log(`ERROR, ${entry} ${version} release not found, skipping`)
+      continue
+    }
+
+    if (fs.existsSync(Paths["~/tmp"])) {
+      fs.rmSync(Paths["~/tmp"], { recursive: true, force: true })
+    }
+    fs.mkdirSync(Paths["~/tmp"], { recursive: true })
+
+    for (const asset of release.assets) {
+      await wget(asset.browser_download_url, Paths['~/tmp/'](asset.name.replace(`-${version}-`, '-')))
+    }
+    if (!fs.existsSync(Paths['~/tmp/']('meta.json'))) {
+      fs.writeFileSync(JSON.stringify({"package": entry, "version": version }), Paths['~/tmp/']('meta.json'), 'utf8')
+    }
+
+    if (releaseExists) {
+      await githubReleaseDelete({
+        repo: REPO,
+        tag: tagName
+      })
+    }
+
+    await githubReleaseCreate({
+      repo: REPO,
+      title: tagName,
+      tag: tagName,
+      draft: true,
+      notes: JSON.stringify({
+        package: entry,
+        version: version,
       }),
     })
 

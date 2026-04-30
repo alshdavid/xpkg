@@ -22,3 +22,17 @@ export async function getReleases(): Promise<NodejsReleasesResponse> {
   const body = await resp.json();
   return body as NodejsReleasesResponse;
 }
+
+export async function getLatestNodejsLTS(): Promise<string> {
+  const response = await fetch("https://nodejs.org/dist/index.json");
+  const releases = (await response.json()) as Array<{
+    lts?: boolean;
+    version: string;
+  }>;
+
+  const latestLTS = releases.find((release) => release.lts !== false);
+  if (!latestLTS) {
+    throw new Error("No LTS release found");
+  }
+  return latestLTS.version.replace("v", "");
+}
