@@ -23,7 +23,7 @@ concurrency:
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   GH_TOKEN: ${{ github.token }}
-  EZIP_VERSION: 0.0.2
+  EZIP_VERSION: 0.0.4
 
 jobs:
   pkg_gh:
