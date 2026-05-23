@@ -21,7 +21,3 @@ export async function main() {
 
   fs.writeFileSync(Paths["~/dist/"]("index.html"), html, "utf8");
 }
-
-if (process.argv.includes("--run")) {
-  main();
-}

@@ -14,7 +14,3 @@ export async function main() {
     recursive: true,
   });
 }
-
-if (process.argv.includes("--run")) {
-  main();
-}

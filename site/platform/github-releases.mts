@@ -111,17 +111,17 @@ export type GithubReleaseViewOptions = {
   tag: string;
 };
 
-export async function githubReleaseView({
+export async function githubReleaseView<T = unknown>({
   repo,
   tag,
 }: GithubReleaseViewOptions): Promise<
-  | undefined
-  | Array<{
+  {
       id: string;
       name: string;
       tagName: string;
-    }>
-> {
+      body: T;
+    }
+  > {
   const result = await sh(
     "gh",
     [
@@ -132,11 +132,14 @@ export async function githubReleaseView({
       ...["--json", "id"],
       ...["--json", "name"],
       ...["--json", "tagName"],
+      ...["--json", "body"],
     ],
     { stdio: "pipe" },
   );
   if (result.code === 0) {
-    return JSON.parse(result.stdout);
+    const parsed = JSON.parse(result.stdout)
+    parsed.body = JSON.parse(parsed.body)
+    return parsed;
   } else {
     throw new Error("Command failed" + result.stdout + result.stderr);
   }

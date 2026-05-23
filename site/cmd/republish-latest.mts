@@ -8,6 +8,7 @@ import {
   githubReleaseDelete,
   githubReleaseEdit,
   githubReleaseUpload,
+  githubReleaseView,
 } from "../platform/github-releases.mts";
 import { wget } from "../platform/wget.mts";
 import { getLatestNodejsLTS } from "../platform/nodejs.mts";
@@ -45,9 +46,10 @@ export async function main() {
       )
     );
     try {
-      const current: { version: string } = JSON.parse(
-        (await getRelease(REPO, tagName)).body || "{}"
-      );
+      const { body: current} = await githubReleaseView<{ version: string }>({
+        repo: REPO,
+        tag: tagName
+      })
       if (manifest.version === current.version) {
         console.log(`Skipping ${entry}`);
         continue;
@@ -71,9 +73,8 @@ export async function main() {
       fs.writeFileSync(JSON.stringify({"package": entry, "version": manifest.version }), Paths['~/tmp/']('meta.json'), 'utf8')
     }
 
-    console.log(`[${tagName}] RELEASE EXISTS`)
     if (releaseExists) {
-      console.log(`[${tagName}] DELETING EXISTING LATEST`)
+      console.log(`[${tagName}] RELEASE EXISTS, DELETING`)
       await githubReleaseDelete({
         repo: REPO,
         tag: tagName
@@ -110,33 +111,33 @@ export async function main() {
   }
 
 
+  console.log(`LTS Packages`);
+
   /// Custom LTS handling
   const ltsMainfest: Array<[string, string]> = [
     ["nodejs", await getLatestNodejsLTS()]
   ];
 
-  console.log(ltsMainfest)
+  console.table(ltsMainfest)
 
   for (const [entry, version] of ltsMainfest) {
     const tagName = `${entry}-lts`
 
     let releaseExists = false
     try {
-      const ltsRelease = await getRelease(REPO, `${entry}-lts`)
-      const metaJsonPath = ltsRelease.assets.find(asset => asset.name === 'meta.json')?.browser_download_url
-      if (metaJsonPath) {
-        const metaJson = await fetch(metaJsonPath).then(res => res.json()) as { version: string };
-        if (metaJson?.version === version) {
-          console.log(`Skipping, LTS already current ${entry}-${version}`);
-          continue
-        }
+      const { body: ltsRelease } = await githubReleaseView<{ version: string }>({
+        repo: REPO,
+        tag: tagName
+      })
+      if (ltsRelease?.version === version) {
+        console.log(`Skipping, LTS already current ${entry}-${version}`);
+        continue
       }
       releaseExists = true
     } catch {
       // Doesn't matter if it doesn't exist, we'll create it
     }
 
-    console.log(entry, version)
     let release: GithubReleaseResponse
     try {
       release = await getRelease(REPO, `${entry}-${version}`)
@@ -158,12 +159,14 @@ export async function main() {
     }
 
     if (releaseExists) {
+      console.log(`[${tagName}] RELEASE EXISTS, DELETING`)
       await githubReleaseDelete({
         repo: REPO,
         tag: tagName
       })
     }
 
+    console.log(`[${tagName}] CREATING LATEST`)
     await githubReleaseCreate({
       repo: REPO,
       title: tagName,
@@ -176,6 +179,7 @@ export async function main() {
     })
 
     for (const fileName of fs.readdirSync(Paths["~/tmp"])) {
+      console.log(`[${tagName}] UPLOADING: ${fileName}`)
       await githubReleaseUpload({
         repo: REPO,
         tag: tagName,
@@ -190,10 +194,6 @@ export async function main() {
       draft: false,
     });
   }
-}
-
-if (process.argv.includes("--run")) {
-  main();
 }
 
 type FileManifest = {
