@@ -71,13 +71,16 @@ export async function main() {
       fs.writeFileSync(JSON.stringify({"package": entry, "version": manifest.version }), Paths['~/tmp/']('meta.json'), 'utf8')
     }
 
+    console.log(`[${tagName}] RELEASE EXISTS`)
     if (releaseExists) {
+      console.log(`[${tagName}] DELETING EXISTING LATEST`)
       await githubReleaseDelete({
         repo: REPO,
         tag: tagName
       })
     }
 
+    console.log(`[${tagName}] CREATING LATEST`)
     await githubReleaseCreate({
       repo: REPO,
       title: tagName,
@@ -90,7 +93,7 @@ export async function main() {
     })
 
     for (const fileName of fs.readdirSync(Paths["~/tmp"])) {
-      console.log(`UPLOADING: ${fileName}`)
+      console.log(`[${tagName}] UPLOADING: ${fileName}`)
       await githubReleaseUpload({
         repo: REPO,
         tag: tagName,
