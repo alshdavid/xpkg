@@ -32,8 +32,11 @@ jobs:
       - uses: actions/checkout@v6
       - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
 
-      - run: mkdir -p $HOME/.local/nodejs && VERSION=$(curl -sL https://nodejs.org/dist/index.tab | awk 'NR > 1 && $10 != "-" {print $1; exit}') && curl -L https://nodejs.org/download/release/$VERSION/node-$VERSION-linux-x64.tar.gz | tar --strip-components=1 -xzf - -C $HOME/.local/nodejs && echo "$HOME/.local/nodejs/bin" >> $GITHUB_PATH
-      - run: which node && node --version
+      # - run: mkdir -p $HOME/.local/nodejs && VERSION=$(curl -sL https://nodejs.org/dist/index.tab | awk 'NR > 1 && $10 != "-" {print $1; exit}') && curl -L https://nodejs.org/download/release/$VERSION/node-$VERSION-linux-x64.tar.gz | tar --strip-components=1 -xzf - -C $HOME/.local/nodejs && echo "$HOME/.local/nodejs/bin" >> $GITHUB_PATH
+      # - run: which node && node --version
+
+      - run: mkdir -p $HOME/.local/bin && wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip && unzip deno-x86_64-unknown-linux-gnu.zip -d $HOME/.local/bin && rm deno-x86_64-unknown-linux-gnu.zip && echo "$HOME/.local/bin" >> $GITHUB_PATH
+      - run: which deno && deno --version
 
       - name: pkg_8zip
         run: bash ./scripts/pkg_8zip.bash
