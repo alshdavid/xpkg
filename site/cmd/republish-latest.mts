@@ -90,6 +90,7 @@ export async function main() {
     })
 
     for (const fileName of fs.readdirSync(Paths["~/tmp"])) {
+      console.log(`UPLOADING: ${fileName}`)
       await githubReleaseUpload({
         repo: REPO,
         tag: tagName,
