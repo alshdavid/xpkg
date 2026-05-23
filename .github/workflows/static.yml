@@ -26,201 +26,74 @@ env:
   EZIP_VERSION: 0.0.5
 
 jobs:
-  pkg_gh:
+  repackage:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
       - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
-      - run: bash ./scripts/${{ github.job }}.bash
+
+      - run: mkdir -p $HOME/.local/nodejs && VERSION=$(curl -sL https://nodejs.org/dist/index.tab | awk 'NR > 1 && $10 != "-" {print $1; exit}') && curl -L https://nodejs.org/download/release/$VERSION/node-$VERSION-linux-arm64.tar.gz | tar --strip-components=1 -xzf - -C $HOME/.local/nodejs && echo "$HOME/.local/nodejs/bin" >> $GITHUB_PATH
+      - run: which node && node --version
+      
+      - name: pkg_8zip
+        run: bash ./scripts/pkg_8zip.bash
+
+      - name: pkg_deno
+        run: bash ./scripts/pkg_deno.bash
+
+      - name: pkg_eza
+        run: bash ./scripts/pkg_eza.bash
+
+      - name: pkg_flatdir
+        run: bash ./scripts/pkg_flatdir.bash
+
+      - name: pkg_fnm
+        run: bash ./scripts/pkg_fnm.bash
+
+      - name: pkg_gh
+        run: bash ./scripts/pkg_gh.bash
+
+      - name: pkg_go
+        run: bash ./scripts/pkg_go.bash
+
+      - name: pkg_http-server-rs
+        run: bash ./scripts/pkg_http-server-rs.bash
+
+      - name: pkg_hyperfine
+        run: bash ./scripts/pkg_hyperfine.bash
+
+      - name: pkg_just
+        run: bash ./scripts/pkg_just.bash
+
+      - name: pkg_node
+        run: bash ./scripts/pkg_node.bash
+
+      - name: pkg_oha
+        run: bash ./scripts/pkg_oha.bash
+
+      - name: pkg_python
+        run: bash ./scripts/pkg_python.bash
+
+      - name: pkg_rrm
+        run: bash ./scripts/pkg_rrm.bash
+
+      - name: pkg_terraform
+        run: bash ./scripts/pkg_terraform.bash
+
+      - name: pkg_vultr-cli
+        run: bash ./scripts/pkg_vultr-cli.bash
+
+      - name: pkg_zenith
+        run: bash ./scripts/pkg_zenith.bash
+
       - uses: actions/upload-artifact@v6
         with:
           name: binaries_${{ github.job }}
           path: ${{ github.workspace }}/binaries/**/*
           if-no-files-found: warn
           retention-days: 1
-  pkg_deno:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v6
-      - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
-      - run: bash ./scripts/${{ github.job }}.bash
-      - uses: actions/upload-artifact@v6
-        with:
-          name: binaries_${{ github.job }}
-          path: ${{ github.workspace }}/binaries/**/*
-          if-no-files-found: warn
-          retention-days: 1
-  pkg_8zip:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v6
-      - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
-      - run: bash ./scripts/${{ github.job }}.bash
-      - uses: actions/upload-artifact@v6
-        with:
-          name: binaries_${{ github.job }}
-          path: ${{ github.workspace }}/binaries/**/*
-          if-no-files-found: warn
-          retention-days: 1
-  pkg_fnm:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v6
-      - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
-      - run: bash ./scripts/${{ github.job }}.bash
-      - uses: actions/upload-artifact@v6
-        with:
-          name: binaries_${{ github.job }}
-          path: ${{ github.workspace }}/binaries/**/*
-          if-no-files-found: warn
-          retention-days: 1
-  pkg_hyperfine:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v6
-      - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
-      - run: bash ./scripts/${{ github.job }}.bash
-      - uses: actions/upload-artifact@v6
-        with:
-          name: binaries_${{ github.job }}
-          path: ${{ github.workspace }}/binaries/**/*
-          if-no-files-found: warn
-          retention-days: 1
-  pkg_node:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v6
-      - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
-      - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip -O /tmp/deno.zip && unzip /tmp/deno.zip -d /usr/local/bin
-      - run: deno install
-      - run: bash ./scripts/${{ github.job }}.bash
-      - uses: actions/upload-artifact@v6
-        with:
-          name: binaries_${{ github.job }}
-          path: ${{ github.workspace }}/binaries/**/*
-          if-no-files-found: warn
-          retention-days: 1
-  pkg_just:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v6
-      - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
-      - run: bash ./scripts/${{ github.job }}.bash
-      - uses: actions/upload-artifact@v6
-        with:
-          name: binaries_${{ github.job }}
-          path: ${{ github.workspace }}/binaries/**/*
-          if-no-files-found: warn
-          retention-days: 1
-  pkg_python:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v6
-      - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
-      - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip -O /tmp/deno.zip && unzip /tmp/deno.zip -d /usr/local/bin
-      - run: bash ./scripts/${{ github.job }}.bash
-      - uses: actions/upload-artifact@v6
-        with:
-          name: binaries_${{ github.job }}
-          path: ${{ github.workspace }}/binaries/**/*
-          if-no-files-found: warn
-          retention-days: 1
-  pkg_go:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v6
-      - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
-      - run: bash ./scripts/${{ github.job }}.bash
-      - uses: actions/upload-artifact@v6
-        with:
-          name: binaries_${{ github.job }}
-          path: ${{ github.workspace }}/binaries/**/*
-          if-no-files-found: warn
-          retention-days: 1
-  pkg_terraform:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v6
-      - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
-      - run: bash ./scripts/${{ github.job }}.bash
-      - uses: actions/upload-artifact@v6
-        with:
-          name: binaries_${{ github.job }}
-          path: ${{ github.workspace }}/binaries/**/*
-          if-no-files-found: warn
-          retention-days: 1
-  pkg_vultr-cli:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v6
-      - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
-      - run: bash ./scripts/${{ github.job }}.bash
-      - uses: actions/upload-artifact@v6
-        with:
-          name: binaries_${{ github.job }}
-          path: ${{ github.workspace }}/binaries/**/*
-          if-no-files-found: warn
-          retention-days: 1
-  pkg_zenith:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v6
-      - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
-      - run: bash ./scripts/${{ github.job }}.bash
-      - uses: actions/upload-artifact@v6
-        with:
-          name: binaries_${{ github.job }}
-          path: ${{ github.workspace }}/binaries/**/*
-          if-no-files-found: warn
-          retention-days: 1
-  pkg_flatdir:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v6
-      - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
-      - run: bash ./scripts/${{ github.job }}.bash
-      - uses: actions/upload-artifact@v6
-        with:
-          name: binaries_${{ github.job }}
-          path: ${{ github.workspace }}/binaries/**/*
-          if-no-files-found: warn
-          retention-days: 1
-  pkg_rrm:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v6
-      - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
-      - run: bash ./scripts/${{ github.job }}.bash
-      - uses: actions/upload-artifact@v6
-        with:
-          name: binaries_${{ github.job }}
-          path: ${{ github.workspace }}/binaries/**/*
-          if-no-files-found: warn
-          retention-days: 1
-  pkg_oha:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v6
-      - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
-      - run: bash ./scripts/${{ github.job }}.bash
-      - uses: actions/upload-artifact@v6
-        with:
-          name: binaries_${{ github.job }}
-          path: ${{ github.workspace }}/binaries/**/*
-          if-no-files-found: warn
-          retention-days: 1
-  pkg_eza:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v6
-      - run: curl -L https://github.com/alshdavid/8zip/releases/download/$EZIP_VERSION/8zip-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin
-      - run: bash ./scripts/${{ github.job }}.bash
-      - uses: actions/upload-artifact@v6
-        with:
-          name: binaries_${{ github.job }}
-          path: ${{ github.workspace }}/binaries/**/*
-          if-no-files-found: warn
-          retention-days: 1
+ 
+  # Custom Builds
   pkg_eza_build_macos:
     runs-on: macos-latest
     steps:
@@ -235,72 +108,57 @@ jobs:
           if-no-files-found: warn
           retention-days: 1
 
-  publish-github-release:
-    name: "🔄 Publish Github Release"
-    runs-on: ubuntu-24.04
-    needs:
-      - pkg_gh
-      - pkg_deno
-      - pkg_8zip
-      - pkg_fnm
-      - pkg_node
-      - pkg_hyperfine
-      - pkg_just
-      - pkg_python
-      - pkg_go
-      - pkg_terraform
-      - pkg_vultr-cli
-      - pkg_zenith
-      - pkg_flatdir
-      - pkg_rrm
-      - pkg_oha
-      - pkg_eza
-      - pkg_eza_build_macos
-    steps:
-      - uses: actions/checkout@v6
-      - uses: actions/download-artifact@v7
-        with: 
-          path: binaries
-          merge-multiple: true
-      - run: cd binaries && for item in *; do echo "$item"; [ -d "$item" ] && for subitem in "$item"/*; do [ -e "$subitem" ] && echo "  $subitem"; done; done || true
-      # Install Deno
-      - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip -O /tmp/deno.zip && unzip /tmp/deno.zip -d /usr/local/bin
-      # Generate release
-      - run: deno install
-      - run: deno -A ./site/cmd/generate-release.mts --run
-  publish-pages:
-    name: "📃 Publish Pages"
-    runs-on: ubuntu-24.04
-    needs:
-      - publish-github-release
-    steps:
-      - uses: actions/checkout@v6
-      - uses: actions/configure-pages@v5
-      # Install Deno
-      - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip -O /tmp/deno.zip && unzip /tmp/deno.zip -d /usr/local/bin
-      # Generate pages
-      - run: deno install
-      - run: deno -A ./site/cmd/generate-package-index.mts --run
-      - run: deno -A ./site/cmd/copy-files.mts --run
-      - run: deno -A ./site/cmd/build-shell-scripts.mts --run
-      - run: deno -A ./site/cmd/build-page.mts --run
-      - uses: actions/upload-pages-artifact@v3
-        with: { path: 'dist' }
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-  release-latest:
-    name: "📃 Republish Latest"
-    runs-on: ubuntu-24.04
-    needs:
-      - publish-github-release
-    steps:
-      - uses: actions/checkout@v6
-      - uses: actions/configure-pages@v5
-      # Install Deno
-      - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip -O /tmp/deno.zip && unzip /tmp/deno.zip -d /usr/local/bin
-      # Generate pages
-      - run: deno install
-      - run: deno -A ./site/cmd/republish-latest.mts --run
+  # publish-github-release:
+  #   name: "🔄 Publish Github Release"
+  #   runs-on: ubuntu-24.04
+  #   needs:
+  #     - repackage
+  #     - pkg_eza_build_macos
+  #   steps:
+  #     - uses: actions/checkout@v6
+  #     - uses: actions/download-artifact@v7
+  #       with: 
+  #         path: binaries
+  #         merge-multiple: true
+  #     - run: cd binaries && for item in *; do echo "$item"; [ -d "$item" ] && for subitem in "$item"/*; do [ -e "$subitem" ] && echo "  $subitem"; done; done || true
+  #     # Install Deno
+  #     - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip -O /tmp/deno.zip && unzip /tmp/deno.zip -d /usr/local/bin
+  #     # Generate release
+  #     - run: deno install
+  #     - run: deno -A ./site/cmd/generate-release.mts --run
+  # publish-pages:
+  #   name: "📃 Publish Pages"
+  #   runs-on: ubuntu-24.04
+  #   needs:
+  #     - publish-github-release
+  #   steps:
+  #     - uses: actions/checkout@v6
+  #     - uses: actions/configure-pages@v5
+  #     # Install Deno
+  #     - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip -O /tmp/deno.zip && unzip /tmp/deno.zip -d /usr/local/bin
+  #     # Generate pages
+  #     - run: deno install
+  #     - run: deno -A ./site/cmd/generate-package-index.mts --run
+  #     - run: deno -A ./site/cmd/copy-files.mts --run
+  #     - run: deno -A ./site/cmd/build-shell-scripts.mts --run
+  #     - run: deno -A ./site/cmd/build-page.mts --run
+  #     - uses: actions/upload-pages-artifact@v3
+  #       with: { path: 'dist' }
+  #     - name: Deploy to GitHub Pages
+  #       id: deployment
+  #       uses: actions/deploy-pages@v4
+  # release-latest:
+  #   name: "📃 Republish Latest"
+  #   runs-on: ubuntu-24.04
+  #   needs:
+  #     - publish-github-release
+  #   steps:
+  #     - uses: actions/checkout@v6
+  #     - uses: actions/configure-pages@v5
+  #     # Install Deno
+  #     - run: wget https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip -O /tmp/deno.zip && unzip /tmp/deno.zip -d /usr/local/bin
+  #     # Generate pages
+  #     - run: deno install
+  #     - run: deno -A ./site/cmd/republish-latest.mts --run
   
 
